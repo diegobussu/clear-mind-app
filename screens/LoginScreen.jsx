@@ -23,13 +23,25 @@ const LoginScreen = () => {
       return;
     }
 
+    if (firstName.length < 3) {
+      Alert.alert('Attention', 'Le prénom ne peut pas être inférieur à 3 caractères.');
+      return;
+    }
+
     if (firstName.length > 50) {
       Alert.alert('Attention', 'Le prénom ne peut pas dépasser 50 caractères.');
       return;
     }
+    
+    // Vérifier si le prénom contient autre chose que des lettres et des chiffres
+    const regex = /^[a-zA-Z0-9]*$/;
+    if (!regex.test(firstName)) {
+      Alert.alert('Attention', 'Le prénom ne peut contenir que des lettres et des chiffres.');
+      return;
+    }
 
-    // Naviguer vers HomeScreen lorsque le bouton "Continuer" est pressé
-    navigation.navigate('Home');
+    // Naviguer vers MoodScreen lorsque le bouton "Continuer" est pressé
+    navigation.navigate('Mood');
   };
 
   return (
@@ -61,7 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 30,
+    paddingBottom: 150,
     paddingHorizontal: 20,
     backgroundColor: '#FFF'
   },
@@ -81,8 +93,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontFamily: 'SF-Semibold',
-    fontSize: 22,
-    marginTop: 10
+    fontSize: 22
   },
   input: {
     textAlign: 'center',
@@ -91,7 +102,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    marginTop: 50,
+    marginTop: 20,
     width: 250,
     fontFamily: 'SF-Regular',
     fontSize: 16,

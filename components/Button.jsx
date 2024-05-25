@@ -14,7 +14,7 @@ const Button = ({ text, onPress }) => {
         borderRadius: 50,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.10,
         shadowRadius: 4
       }}
     >
