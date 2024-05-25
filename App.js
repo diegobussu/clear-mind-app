@@ -8,6 +8,7 @@ import TutorialScreen from './screens/TutorialScreen';
 import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import MoodScreen from './screens/MoodScreen';
+import ActivityScreen from './screens/ActivityScreen';
 import HomeScreen from './screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
@@ -67,6 +68,14 @@ const App = () => {
         <Stack.Screen
           name="Mood"
           component={MoodScreen}
+          options={{
+            headerShown: false,
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="Activity"
+          component={ActivityScreen}
           options={{
             headerShown: false,
             gestureEnabled: false,

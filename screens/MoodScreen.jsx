@@ -1,3 +1,4 @@
+// screens/MoodScreen.jsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -37,7 +38,7 @@ const MoodScreen = () => {
         Alert.alert("Aucune sélection", "Veuillez sélectionner une image avant de continuer.");
         return;
       }
-      navigation.navigate('Home');
+      navigation.navigate('Activity', { moodIndex: selectedIndex });
     };
 
     const handleImagePress = (index) => {
@@ -71,11 +72,18 @@ const MoodScreen = () => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
                     source={require('../assets/img/left-arrow.png')}
-                    style={styles.icon}
+                    style={styles.arrow}
                     resizeMode="contain"
                 />
             </TouchableOpacity>
             <Text style={styles.progressText}>1/4</Text>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image
+                    source={require('../assets/img/cross.png')}
+                    style={styles.cross}
+                    resizeMode="contain"
+                />
+            </TouchableOpacity>
             <View style={{marginBottom: 150}} />
           </View>
         <View style={styles.middleContent}>
@@ -120,7 +128,7 @@ const MoodScreen = () => {
       alignItems: 'center',
       paddingBottom: 30,
       paddingHorizontal: 20,
-      backgroundColor: '#FFF'
+      backgroundColor: '#F9F9FF'
     },
     topContent: {
         flexDirection: 'row',
@@ -175,10 +183,14 @@ const MoodScreen = () => {
       flexDirection: 'row',
       alignItems: 'center'
     },
-    icon: {
+    arrow: {
       width: 20,
       height: 20,
       marginRight: 10
+    },
+    cross: {
+      width: 30,
+      height: 30
     },
     dateTimeText: {
       fontFamily: 'SF-Regular',

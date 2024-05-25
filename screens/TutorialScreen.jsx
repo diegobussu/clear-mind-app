@@ -69,7 +69,7 @@ const TutoScreen = () => {
   const buttonText = currentIndex === images.length - 1 ? "Commencer" : "Continuer";
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFF' }} {...panResponder.panHandlers}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F9FF' }} {...panResponder.panHandlers}>
       {/* Conteneur pour les éléments centraux */}
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         {/* Image avec texte en dessous */}

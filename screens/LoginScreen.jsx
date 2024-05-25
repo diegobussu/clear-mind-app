@@ -1,3 +1,4 @@
+// screens/LoginScreen.jsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 150,
     paddingHorizontal: 20,
-    backgroundColor: '#FFF'
+    backgroundColor: '#F9F9FF'
   },
   middleContent: {
     justifyContent: 'center',
