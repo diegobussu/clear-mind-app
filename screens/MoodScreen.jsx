@@ -183,6 +183,11 @@ const MoodScreen = () => {
       flexDirection: 'row',
       alignItems: 'center'
     },
+    icon: {
+      width: 20,
+      height: 20,
+      marginRight: 10
+    },
     arrow: {
       width: 20,
       height: 20,
@@ -190,7 +195,8 @@ const MoodScreen = () => {
     },
     cross: {
       width: 30,
-      height: 30
+      height: 30,
+      marginRight: 10
     },
     dateTimeText: {
       fontFamily: 'SF-Regular',
