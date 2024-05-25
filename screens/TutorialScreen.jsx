@@ -5,9 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
 
 const images = [
-  require('../assets/img/login-1.png'),
-  require('../assets/img/login-2.png'),
-  require('../assets/img/login-3.png')
+  require('../assets/img/tuto-1.png'),
+  require('../assets/img/tuto-2.png'),
+  require('../assets/img/tuto-3.png')
 ];
 
 const texts = [
@@ -22,7 +22,7 @@ const texts1 = [
   "Des conseils adaptés à vos besoins et un soutien disponible à tout moment."
 ];
 
-const LoginScreen = () => {
+const TutoScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigation = useNavigation(); // Initialiser useNavigation
 
@@ -38,7 +38,7 @@ const LoginScreen = () => {
       if (currentIndex + 1 < images.length) {
         setCurrentIndex(currentIndex + 1);
       } else {
-        // Naviguer vers LoginScreen lorsque vous atteignez le dernier point
+        // Naviguer vers TutoScreen lorsque vous atteignez le dernier point
         navigation.navigate('Login');
       }
     }
@@ -62,14 +62,14 @@ const LoginScreen = () => {
   });
 
   const handleSkip = () => {
-    // Naviguer vers LoginScreen lorsque le bouton "Passer" est pressé
+    // Naviguer vers TutoScreen lorsque le bouton "Passer" est pressé
     navigation.navigate('Login');
   };
 
   const buttonText = currentIndex === images.length - 1 ? "Commencer" : "Continuer";
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} {...panResponder.panHandlers}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFF' }} {...panResponder.panHandlers}>
       {/* Conteneur pour les éléments centraux */}
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         {/* Image avec texte en dessous */}
@@ -111,4 +111,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default TutoScreen;
