@@ -7,7 +7,7 @@ import splashImage from '../assets/img/logo-white.png';
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('Tuto');
+      navigation.replace('Tutorial');
     }, 1000);
 
     return () => clearTimeout(timer);

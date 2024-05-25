@@ -7,6 +7,7 @@ import * as Font from 'expo-font';
 import TutorialScreen from './screens/TutorialScreen';
 import SplashScreen from './screens/SplashScreen';
 import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,9 +44,10 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Tuto" component={TutorialScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/> 
+        <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Tutorial" component={TutorialScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/> 
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/> 
       </Stack.Navigator>
     </NavigationContainer>
   );

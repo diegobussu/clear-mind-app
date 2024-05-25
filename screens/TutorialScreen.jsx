@@ -1,12 +1,13 @@
+// screens/TutorialScreen.jsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, PanResponder } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import TutoButton from '../components/TutoButton';
+import Button from '../components/Button';
 
 const images = [
-  require('../assets/img/home-1.png'),
-  require('../assets/img/home-2.png'),
-  require('../assets/img/home-3.png')
+  require('../assets/img/login-1.png'),
+  require('../assets/img/login-2.png'),
+  require('../assets/img/login-3.png')
 ];
 
 const texts = [
@@ -21,7 +22,7 @@ const texts1 = [
   "Des conseils adaptés à vos besoins et un soutien disponible à tout moment."
 ];
 
-const TutorialScreen = () => {
+const LoginScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigation = useNavigation(); // Initialiser useNavigation
 
@@ -37,12 +38,11 @@ const TutorialScreen = () => {
       if (currentIndex + 1 < images.length) {
         setCurrentIndex(currentIndex + 1);
       } else {
-        // Naviguer vers HomeScreen lorsque vous atteignez le dernier point
-        navigation.navigate('HomeScreen');
+        // Naviguer vers LoginScreen lorsque vous atteignez le dernier point
+        navigation.navigate('Login');
       }
     }
   };
-  
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -62,9 +62,11 @@ const TutorialScreen = () => {
   });
 
   const handleSkip = () => {
-    // Naviguer vers HomeScreen lorsque le bouton "Passer" est pressé
-    navigation.navigate('HomeScreen');
+    // Naviguer vers LoginScreen lorsque le bouton "Passer" est pressé
+    navigation.navigate('Login');
   };
+
+  const buttonText = currentIndex === images.length - 1 ? "Commencer" : "Continuer";
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} {...panResponder.panHandlers}>
@@ -97,8 +99,8 @@ const TutorialScreen = () => {
           </View>
         </View>
 
-        {/* Bouton "Continuer" */}
-        <TutoButton text="Continuer" onPress={() => handleSwipe('left')} />
+        {/* Bouton "Continuer" ou "Commencer" */}
+        <Button text={buttonText} onPress={() => handleSwipe('left')} />
       </View>
 
       {/* Bouton "Passer" en haut à droite */}
@@ -109,4 +111,4 @@ const TutorialScreen = () => {
   );
 };
 
-export default TutorialScreen;
+export default LoginScreen;

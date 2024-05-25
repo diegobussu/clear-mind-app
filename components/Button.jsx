@@ -1,8 +1,8 @@
-// components/HomeButton.jsx
+// components/Button.jsx
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
-const HomeButton = ({ text, onPress }) => {
+const Button = ({ text, onPress }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -23,4 +23,4 @@ const HomeButton = ({ text, onPress }) => {
   );
 };
 
-export default HomeButton;
+export default Button;
