@@ -1,21 +1,22 @@
 // screens/SplashScreen.jsx
 import React, { useEffect } from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
-import splashImage from '../assets/img/favicon.png';
+import { View, Image, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import splashImage from '../assets/img/logo-white.png';
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.replace('Home');
-    }, 200);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={['rgba(157, 80, 255, 0.75)', 'rgba(76, 78, 255, 0.75)']} style={styles.container}>
       <Image source={splashImage} style={styles.image} />
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -23,14 +24,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#6A2D96',
+    alignItems: 'center'
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 317,
+    height: 111,
   }
 });
 
 export default SplashScreen;
-
