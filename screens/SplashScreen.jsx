@@ -1,14 +1,14 @@
 // screens/SplashScreen.jsx
 import React, { useEffect } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import splashImage from '../assets/img/logo-white.png';
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('Home');
-    }, 2000);
+      navigation.replace('Tuto');
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [navigation]);

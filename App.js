@@ -4,8 +4,9 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Font from 'expo-font';
-import HomeScreen from './screens/HomeScreen';
+import TutorialScreen from './screens/TutorialScreen';
 import SplashScreen from './screens/SplashScreen';
+import HomeScreen from './screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,7 +35,7 @@ const App = () => {
   if (!fontsLoaded) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Loading Fonts...</Text>
+        <Text>Chargement des polices ...</Text>
       </View>
     );
   }
@@ -43,7 +44,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Tuto" component={TutorialScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/> 
       </Stack.Navigator>
     </NavigationContainer>
   );
