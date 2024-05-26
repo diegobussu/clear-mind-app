@@ -21,6 +21,7 @@ const ActivityScreen = ({ route }) => {
 
   const [selectedIcons, setSelectedIcons] = useState(Array(18).fill(false));
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [iconListIndex, setIconListIndex] = useState(0); // Nouvel état pour contrôler la liste d'icônes affichée
 
   const toggleIcon = (index) => {
     const updatedIcons = [...selectedIcons];
@@ -42,80 +43,89 @@ const ActivityScreen = ({ route }) => {
 
   const continueHandler = () => {
     const selectedCount = selectedIcons.filter(icon => icon).length;
-  
+
     if (selectedCount === 0) {
       Alert.alert("Aucune sélection", "Une activité doit être sélectionnée.");
       return;
     }
-  
+
     if (selectedCount > 3) {
       Alert.alert("Limite atteinte", "Vous ne pouvez sélectionner que jusqu'à 3 activités.");
       return;
     }
-  
+
     navigation.navigate('Emotion');
   };
-  
 
-  const icons = [
-    { name: 'school-outline' },
-    { name: 'briefcase-outline' },
-    { name: 'time-outline' },
-    { name: 'people-outline' },
-    { name: 'home-outline' },
-    { name: 'fast-food-outline' },
-    { name: 'football-outline' },
-    { name: 'bed-outline' },
-    { name: 'cart-outline' },
-    { name: 'extension-puzzle-outline' },
-    { name: 'book-outline' },
-    { name: 'musical-notes-outline' },
-    { name: 'partly-sunny-outline' },
-    { name: 'airplane-outline' },
-    { name: 'game-controller-outline' },
-    { name: 'heart-circle-outline' },
-    { name: 'headset-outline' },
-    { name: 'paw-outline' },
+
+  const iconsList = [
+    [
+      { name: 'school-outline' },
+      { name: 'briefcase-outline' },
+      { name: 'time-outline' },
+      { name: 'people-outline' },
+      { name: 'home-outline' },
+      { name: 'fast-food-outline' },
+      { name: 'football-outline' },
+      { name: 'bed-outline' },
+      { name: 'cart-outline' }
+    ],
+    [
+      { name: 'extension-puzzle-outline' },
+      { name: 'book-outline' },
+      { name: 'musical-notes-outline' },
+      { name: 'partly-sunny-outline' },
+      { name: 'airplane-outline' },
+      { name: 'game-controller-outline' },
+      { name: 'heart-circle-outline' },
+      { name: 'headset-outline' },
+      { name: 'paw-outline' }
+    ]
   ];
 
-  const iconNames = [
-    'École',
-    'Travail',
-    'Rendez-vous',
-    'Amis',
-    'Famille',
-    'Restaurant',
-    'Sport',
-    'Sommeil',
-    'Shopping',
-    'Loisirs',
-    'Lecture',
-    'Musique',
-    'Sorties',
-    'Voyage',
-    'Jeux vidéos',
-    'Bien-être',
-    'Détente',
-    'Animaux'
+  const iconNamesList = [
+    [
+      'École',
+      'Travail',
+      'Rendez-vous',
+      'Amis',
+      'Famille',
+      'Restaurant',
+      'Sport',
+      'Sommeil',
+      'Shopping'
+    ],
+    [
+      'Loisirs',
+      'Lecture',
+      'Musique',
+      'Sorties',
+      'Voyage',
+      'Jeux vidéos',
+      'Bien-être',
+      'Détente',
+      'Animaux'
+    ]
   ];
 
   const renderIconGrid = () => {
     const iconRows = [];
+    const currentIcons = iconsList[iconListIndex]; // Utiliser la liste d'icônes appropriée selon l'index
+    const currentIconNames = iconNamesList[iconListIndex]; // Utiliser les noms d'icônes appropriés selon l'index
     for (let i = 0; i < 3; i++) {
       const iconsInRow = [];
       for (let j = 0; j < 3; j++) {
         const index = i * 3 + j;
-        const icon = icons[index];
+        const icon = currentIcons[index];
         const isSelected = selectedIcons[index];
         const iconName = isSelected ? icon.name.replace("-outline", "") : icon.name;
 
         iconsInRow.push(
           <TouchableOpacity key={index} onPress={() => toggleIcon(index)} style={styles.iconContainer}>
             <Ionicons name={iconName} size={30} color={'#6331FF'} />
-            <Text style={styles.iconName}>{iconNames[index]}</Text>
+            <Text style={styles.iconName}>{currentIconNames[index]}</Text>
           </TouchableOpacity>
         );
-
       }
       iconRows.push(
         <View key={i} style={styles.iconRow}>
@@ -126,6 +136,10 @@ const ActivityScreen = ({ route }) => {
     return iconRows;
   };
 
+  const handlePointPress = (index) => {
+    setCurrentIndex(index); // Modifier l'index actuel du point
+    setIconListIndex(index); // Changer la liste d'icônes affichée selon l'index du point
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -161,14 +175,14 @@ const ActivityScreen = ({ route }) => {
       </View>
       <View style={styles.pointsContainer}>
         <TouchableOpacity
-          onPress={() => setCurrentIndex(0)}
+          onPress={() => handlePointPress(0)}
           style={[
             styles.point,
             { backgroundColor: currentIndex === 0 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
           ]}
         />
         <TouchableOpacity
-          onPress={() => setCurrentIndex(1)}
+          onPress={() => handlePointPress(1)}
           style={[
             styles.point,
             { backgroundColor: currentIndex === 1 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
@@ -214,7 +228,7 @@ const styles = StyleSheet.create({
   },
   mainText: {
     fontFamily: 'SF-Regular',
-    fontSize:    20,
+    fontSize: 20,
     textAlign: 'center',
     marginBottom: 10
   },
@@ -276,7 +290,7 @@ const styles = StyleSheet.create({
   },
   pointsContainer: {
     flexDirection: 'row',
-    marginBottom: 20
+    marginTop: 20
   },
   point: {
     width: 10,
