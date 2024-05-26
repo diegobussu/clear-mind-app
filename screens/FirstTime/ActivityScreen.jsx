@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, Image, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -20,6 +20,7 @@ const ActivityScreen = ({ route }) => {
   const selectedImage = images[moodIndex];
 
   const [selectedIcons, setSelectedIcons] = useState(Array(18).fill(false));
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const toggleIcon = (index) => {
     const updatedIcons = [...selectedIcons];
@@ -40,13 +41,21 @@ const ActivityScreen = ({ route }) => {
   };
 
   const continueHandler = () => {
-    const atLeastOneSelected = selectedIcons.some(icon => icon);
-    if (atLeastOneSelected) {
-      navigation.navigate('Emotion');
-    } else {
+    const selectedCount = selectedIcons.filter(icon => icon).length;
+  
+    if (selectedCount === 0) {
       Alert.alert("Aucune sélection", "Une activité doit être sélectionnée.");
+      return;
     }
+  
+    if (selectedCount > 3) {
+      Alert.alert("Limite atteinte", "Vous ne pouvez sélectionner que jusqu'à 3 activités.");
+      return;
+    }
+  
+    navigation.navigate('Emotion');
   };
+  
 
   const icons = [
     { name: 'school-outline' },
@@ -99,7 +108,7 @@ const ActivityScreen = ({ route }) => {
         const icon = icons[index];
         const isSelected = selectedIcons[index];
         const iconName = isSelected ? icon.name.replace("-outline", "") : icon.name;
-  
+
         iconsInRow.push(
           <TouchableOpacity key={index} onPress={() => toggleIcon(index)} style={styles.iconContainer}>
             <Ionicons name={iconName} size={30} color={'#6331FF'} />
@@ -116,7 +125,7 @@ const ActivityScreen = ({ route }) => {
     }
     return iconRows;
   };
-  
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -149,6 +158,22 @@ const ActivityScreen = ({ route }) => {
         <View style={styles.iconGrid}>
           {renderIconGrid()}
         </View>
+      </View>
+      <View style={styles.pointsContainer}>
+        <TouchableOpacity
+          onPress={() => setCurrentIndex(0)}
+          style={[
+            styles.point,
+            { backgroundColor: currentIndex === 0 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
+          ]}
+        />
+        <TouchableOpacity
+          onPress={() => setCurrentIndex(1)}
+          style={[
+            styles.point,
+            { backgroundColor: currentIndex === 1 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
+          ]}
+        />
       </View>
       <View style={styles.bottomContent}>
         <Button text="Continuer" onPress={continueHandler} />
@@ -189,7 +214,7 @@ const styles = StyleSheet.create({
   },
   mainText: {
     fontFamily: 'SF-Regular',
-    fontSize: 20,
+    fontSize:    20,
     textAlign: 'center',
     marginBottom: 10
   },
@@ -248,6 +273,16 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Regular',
     fontSize: 14,
     color: '#6331FF'
+  },
+  pointsContainer: {
+    flexDirection: 'row',
+    marginBottom: 20
+  },
+  point: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 5
   }
 });
 
