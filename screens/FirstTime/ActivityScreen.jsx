@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, PanResponder } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,7 +21,7 @@ const ActivityScreen = ({ route }) => {
 
   const [selectedIcons, setSelectedIcons] = useState(Array(18).fill(false));
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [iconListIndex, setIconListIndex] = useState(0); // Nouvel état pour contrôler la liste d'icônes affichée
+  const [iconListIndex, setIconListIndex] = useState(0);
 
   const toggleIcon = (index) => {
     const updatedIcons = [...selectedIcons];
@@ -56,7 +56,6 @@ const ActivityScreen = ({ route }) => {
 
     navigation.navigate('Emotion');
   };
-
 
   const iconsList = [
     [
@@ -110,8 +109,8 @@ const ActivityScreen = ({ route }) => {
 
   const renderIconGrid = () => {
     const iconRows = [];
-    const currentIcons = iconsList[iconListIndex]; // Utiliser la liste d'icônes appropriée selon l'index
-    const currentIconNames = iconNamesList[iconListIndex]; // Utiliser les noms d'icônes appropriés selon l'index
+    const currentIcons = iconsList[iconListIndex];
+    const currentIconNames = iconNamesList[iconListIndex];
     for (let i = 0; i < 3; i++) {
       const iconsInRow = [];
       for (let j = 0; j < 3; j++) {
@@ -137,8 +136,37 @@ const ActivityScreen = ({ route }) => {
   };
 
   const handlePointPress = (index) => {
-    setCurrentIndex(index); // Modifier l'index actuel du point
-    setIconListIndex(index); // Changer la liste d'icônes affichée selon l'index du point
+    setCurrentIndex(index);
+    setIconListIndex(index);
+  };
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderTerminationRequest: () => false,
+    onPanResponderGrant: (evt, gestureState) => {},
+    onPanResponderMove: (evt, gestureState) => {},
+    onPanResponderRelease: (evt, gestureState) => {
+      const { dx } = gestureState;
+      if (Math.abs(dx) > 10) {
+        if (dx > 0) {
+          handleSwipeRight();
+        } else {
+          handleSwipeLeft();
+        }
+      }
+    }
+  });
+
+  const handleSwipeRight = () => {
+    const newIndex = currentIndex === 0 ? iconsList.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+    setIconListIndex(newIndex);
+  };
+
+  const handleSwipeLeft = () => {
+    const newIndex = currentIndex === iconsList.length - 1 ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+    setIconListIndex(newIndex);
   };
 
   return (
@@ -161,7 +189,7 @@ const ActivityScreen = ({ route }) => {
         </TouchableOpacity>
         <View style={{ marginBottom: 80 }} />
       </View>
-      <View style={styles.rectangle}>
+      <View style={styles.rectangle} {...panResponder.panHandlers}>
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
         <Text style={styles.mainText}>Aujourd'hui, je me sens</Text>
         <Text style={styles.moodText}>{mood}</Text>
@@ -169,7 +197,7 @@ const ActivityScreen = ({ route }) => {
       <View style={styles.activities}>
         <Text style={styles.changedText}>Quoi de neuf ?</Text>
         <Text style={styles.itemsText}>Plusieurs sélections possibles</Text>
-        <View style={styles.iconGrid}>
+        <View style={[styles.iconGrid, { ...panResponder.panHandlers }]}>
           {renderIconGrid()}
         </View>
       </View>
