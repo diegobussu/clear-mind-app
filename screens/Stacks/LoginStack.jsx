@@ -1,6 +1,6 @@
 // stacks/LoginStack.jsx
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MoodScreen from "../Mood/MoodScreen";
+import MoodScreen from "../FirstTime/Mood/MoodScreen";
 
 const stack = createNativeStackNavigator();
 

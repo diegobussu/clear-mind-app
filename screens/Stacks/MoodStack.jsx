@@ -1,6 +1,6 @@
 // stacks/MoodStack.jsx
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ActivityScreen from "../Activity/ActivityScreen";
+import ActivityScreen from "../FirstTime/Activity/ActivityScreen";
 
 const stack = createNativeStackNavigator();
 

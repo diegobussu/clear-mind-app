@@ -1,6 +1,6 @@
 // stacks/SplashStack.jsx
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TutorialScreen from "../Tutorial/TutorialScreen";
+import TutorialScreen from "../FirstTime/Tutorial/TutorialScreen";
 
 const stack = createNativeStackNavigator();
 

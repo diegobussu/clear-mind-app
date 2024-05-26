@@ -1,10 +1,12 @@
 // App.js
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as Font from 'expo-font';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TutorialStack from './screens/Stacks/TutorialStack';
 import SplashStack from './screens/Stacks/SplashStack';
@@ -39,13 +41,84 @@ async function loadFonts() {
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+
 function AuthenticatedApp() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          let iconColor;
+
+          if (route.name === 'HomeScreen') {
+            iconName = 'home';
+            size = focused ? 30 : 25;
+          } else if (route.name === 'StatisticsScreen') {
+            iconName = 'stats-chart-outline';
+            size = focused ? 30 : 25;
+          } else if (route.name === 'AddCircleScreen') {
+            iconName = 'add-circle';
+            size = 60;
+            focused = true; // Always keep AddCircleScreen focused
+          } else if (route.name === 'NoteScreen') {
+            iconName = 'document-text-outline';
+            size = focused ? 30 : 25;
+          } else if (route.name === 'SettingsScreen') {
+            iconName = 'settings-outline';
+            size = focused ? 30 : 25;
+          }
+
+          // Determine the icon color based on its state (active/inactive)
+          if (focused) {
+            iconColor = "#6331FF"; // Active
+          } else {
+            iconColor = "#828282"; // Inactive
+          }
+
+          const iconStyle = route.name === 'AddCircleScreen' ? styles.addCircleIcon : styles.defaultIcon;
+
+          return (
+            <View style={iconStyle}>
+              <Ionicons name={iconName} size={size} color={iconColor} />
+            </View>
+          );
+        },
+        tabBarShowLabel: false,
+        headerShown: false,
+        tabBarStyle: styles.tabBar
+      })}
+    >
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
+      <Tab.Screen name="StatisticsScreen" component={HomeScreen} />
+      <Tab.Screen name="AddCircleScreen" component={HomeScreen} />
+      <Tab.Screen name="NoteScreen" component={HomeScreen} />
+      <Tab.Screen name="SettingsScreen" component={HomeScreen} />
     </Tab.Navigator>
   );
 }
+
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: "#FFF",
+    height: 110,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  defaultIcon: {
+    position: 'absolute',
+    bottom: 10,
+  },
+  addCircleIcon: {
+    position: 'absolute',
+    bottom: 10,
+    shadowColor: '#5522AF',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 10,
+  },
+});
 
 function MainNavigator() {
   return (

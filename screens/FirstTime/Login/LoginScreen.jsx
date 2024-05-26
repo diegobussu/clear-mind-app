@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ButtonWhite from '../../components/ButtonWhite';
+import ButtonWhite from '../../../components/ButtonWhite';
 
 const images = [
-  require('../../assets/img/login-1.png')
+  require('../../../assets/img/login-1.png')
 ];
 
 const text = "Pour commencer comment devons nous t’appeler ?";

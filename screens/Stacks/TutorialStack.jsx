@@ -1,6 +1,6 @@
 // stacks/TutorialStack.jsx
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../Login/LoginScreen";
+import LoginScreen from "../FirstTime/Login/LoginScreen";
 
 const stack = createNativeStackNavigator();
 
