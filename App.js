@@ -6,13 +6,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as Font from 'expo-font';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import TutorialStack from './screens/Stacks/TutorialStack';
-import SplashStack from './screens/Stacks/SplashStack';
-import LoginStack from './screens/Stacks/LoginStack';
-import MoodStack from './screens/Stacks/MoodStack';
-import ActivityStack from './screens/Stacks/ActivityStack';
+import TutorialScreen from './screens/FirstTime/TutorialScreen';
+import SplashScreen from './screens/FirstTime/SplashScreen';
+import LoginScreen from './screens/FirstTime/LoginScreen';
+import MoodScreen from './screens/FirstTime/MoodScreen';
+import ActivityStack from './screens/FirstTime/ActivityScreen';
 import HomeScreen from './screens/HomeScreen';
 
 async function loadFonts() {
@@ -47,7 +45,7 @@ function AuthenticatedApp() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+          let iconName; 
           let iconColor;
 
           if (route.name === 'HomeScreen') {
@@ -122,11 +120,11 @@ const styles = StyleSheet.create({
 
 function MainNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Splash" component={SplashStack} />
-      <Stack.Screen name="Tutorial" component={TutorialStack} />
-      <Stack.Screen name="Login" component={LoginStack} />
-      <Stack.Screen name="Mood" component={MoodStack} />
+    <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
+      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="Tutorial" component={TutorialScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Mood" component={MoodScreen} />
       <Stack.Screen name="Activity" component={ActivityStack} />
       <Stack.Screen name="AuthenticatedApp" component={AuthenticatedApp} />
     </Stack.Navigator>
@@ -135,34 +133,22 @@ function MainNavigator() {
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [firstTimeUser, setFirstTimeUser] = useState(null);
 
   useEffect(() => {
-    // Check if it's the first time the user opens the app
-    AsyncStorage.getItem('firstTimeUser').then(value => {
-      if (value === null) {
-        setFirstTimeUser(true);
-        AsyncStorage.setItem('firstTimeUser', 'false'); // Set it to false for future openings
-      } else {
-        setFirstTimeUser(false);
-      }
-    });
-
     // Load fonts
     loadFonts().then(() => setFontsLoaded(true));
   }, []);
 
-  if (!fontsLoaded || firstTimeUser === null) {
+  if (!fontsLoaded) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Loading fonts...</Text>
       </View>
     );
   }
 
   return (
     <NavigationContainer>
-      {firstTimeUser ? <MainNavigator /> : <AuthenticatedApp />}
+      <MainNavigator />
     </NavigationContainer>
   );
 }
