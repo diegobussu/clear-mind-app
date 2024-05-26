@@ -20,29 +20,29 @@ const LoginScreen = () => {
   const handleStart = () => {
     // Vérifier si le prénom est vide ou dépasse 50 caractères
     if (firstName.trim() === '') {
-      Alert.alert('Attention', 'Le prénom ne peut pas être vide.');
+      Alert.alert('Attention', 'Le pseudo ne peut pas être vide.');
       return;
     }
 
     if (firstName.length < 3) {
-      Alert.alert('Attention', 'Le prénom ne peut pas être inférieur à 3 caractères.');
+      Alert.alert('Attention', 'Le pseudo ne peut pas être inférieur à 3 caractères.');
       return;
     }
 
     if (firstName.length > 50) {
-      Alert.alert('Attention', 'Le prénom ne peut pas dépasser 50 caractères.');
+      Alert.alert('Attention', 'Le pseudo ne peut pas dépasser 50 caractères.');
       return;
     }
     
-    // Vérifier si le prénom contient autre chose que des lettres et des chiffres
+    // Vérifier si le pseudo contient autre chose que des lettres et des chiffres
     const regex = /^[a-zA-Z0-9]*$/;
     if (!regex.test(firstName)) {
-      Alert.alert('Attention', 'Le prénom ne peut contenir que des lettres et des chiffres.');
+      Alert.alert('Attention', 'Le pseudo ne peut contenir que des lettres et des chiffres.');
       return;
     }
 
     // Naviguer vers MoodScreen lorsque le bouton "Continuer" est pressé
-    navigation.navigate('Mood');
+    navigation.navigate('Mood', { firstName: firstName });
   };
 
   return (
@@ -56,7 +56,7 @@ const LoginScreen = () => {
         <Text style={styles.text}>{text}</Text>
         <TextInput
           style={styles.input}
-          placeholder="Pseudonyme"
+          placeholder="Pseudo"
           placeholderTextColor="#C6A9FF"
           onChangeText={text => setFirstName(text)}
           value={firstName}
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 150,
     paddingHorizontal: 20,
+    paddingVertical: 20,
     backgroundColor: '#F9F9FF'
   },
   middleContent: {

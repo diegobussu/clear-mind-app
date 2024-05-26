@@ -70,6 +70,9 @@ const TutoScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F9FF' }} {...panResponder.panHandlers}>
+      <TouchableOpacity style={{ position: 'absolute', top: 70, right: 30 }} onPress={handleSkip}>
+        <Text style={{ color: '#6F26FF', fontSize: 16 }}>Passer</Text>
+      </TouchableOpacity>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <Image
           source={images[currentIndex]}
@@ -95,12 +98,7 @@ const TutoScreen = () => {
           ))}
         </View>
       </View>
-
       <Button text={buttonText} onPress={() => handleSwipe('left')} />
-
-      <TouchableOpacity style={{ position: 'absolute', top: 70, right: 30 }} onPress={handleSkip}>
-        <Text style={{ color: '#6F26FF', fontSize: 16 }}>Passer</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };

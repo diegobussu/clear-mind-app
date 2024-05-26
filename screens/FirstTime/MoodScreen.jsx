@@ -1,8 +1,9 @@
 // screens/MoodScreen.jsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Button from '../../components/Button';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const images = [
   require('../../assets/img/mood-1.png'),
@@ -22,9 +23,11 @@ const texts = [
 
 const MoodScreen = () => {
     const navigation = useNavigation();
+    const route = useRoute();
     const [currentDate, setCurrentDate] = useState('');
     const [currentTime, setCurrentTime] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const { firstName } = route.params;
 
     useEffect(() => {
       const date = new Date();
@@ -35,7 +38,7 @@ const MoodScreen = () => {
   
     const handleStart = () => {
       if (selectedIndex === null) {
-        Alert.alert("Aucune sélection", "Veuillez sélectionner une image avant de continuer.");
+        Alert.alert("Aucune sélection", "Une humeur doit être sélectionnée.");
         return;
       }
       navigation.navigate('Activity', { moodIndex: selectedIndex });
@@ -67,7 +70,7 @@ const MoodScreen = () => {
     const ItemSeparator = () => <View style={{ width: 20 }} />;
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.topContent}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -85,8 +88,9 @@ const MoodScreen = () => {
                 />
             </TouchableOpacity>
             <View style={{marginBottom: 150}} />
-          </View>
+        </View>
         <View style={styles.middleContent}>
+          <Text style={styles.greetingText}>Bonjour {firstName} !</Text>
           <Text style={styles.text}>Comment vas-tu aujourd’hui ?</Text>
           <View style={styles.dateContainer}>
             <View style={styles.dateTimeContainer}>
@@ -117,7 +121,7 @@ const MoodScreen = () => {
         <View style={styles.bottomContent}>
           <Button text="Continuer" onPress={handleStart} />
         </View>
-      </View>
+      </SafeAreaView>
     );
   };
   
@@ -131,18 +135,14 @@ const MoodScreen = () => {
       backgroundColor: '#F9F9FF'
     },
     topContent: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '100%',
-        marginTop: 10,
-        paddingRight: 30
-      },
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginTop: 20
+    },
     middleContent: {
       justifyContent: 'center',
       alignItems: 'center',
       flex: 1,
-      marginTop: 50,
     },
     bottomContent: {
       marginBottom: 50
@@ -167,17 +167,23 @@ const MoodScreen = () => {
     selectedText: {
       fontFamily: 'SF-Bold',
     },
+    greetingText: {
+      fontFamily: 'SF-Bold',
+      fontSize: 26,
+      marginBottom: 20,
+    },
     text: {
       fontFamily: 'SF-Semibold',
       fontSize: 22,
+      marginTop: 30,
       marginBottom: 30,
     },
     dateContainer: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 50,
-        borderWidth: 1,
-        borderColor: '#6331FF'
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 50,
+      borderWidth: 1,
+      borderColor: '#6331FF'
     },
     dateTimeContainer: {
       flexDirection: 'row',
@@ -191,12 +197,12 @@ const MoodScreen = () => {
     arrow: {
       width: 20,
       height: 20,
-      marginRight: 10
+      marginRight: 'auto'
     },
     cross: {
       width: 30,
       height: 30,
-      marginRight: 10
+      marginLeft: 'auto'
     },
     dateTimeText: {
       fontFamily: 'SF-Regular',
@@ -205,10 +211,11 @@ const MoodScreen = () => {
       textDecorationLine: 'underline'
     },
     progressText: {
-        fontFamily: 'SF-Bold',
-        fontSize: 20,
-        textAlign: 'center',
-      },
+      fontFamily: 'SF-Bold',
+      fontSize: 20,
+      textAlign: 'center',
+      flex: 1
+    },
   });
 
 export default MoodScreen;

@@ -1,6 +1,6 @@
 // App.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,7 +10,8 @@ import TutorialScreen from './screens/FirstTime/TutorialScreen';
 import SplashScreen from './screens/FirstTime/SplashScreen';
 import LoginScreen from './screens/FirstTime/LoginScreen';
 import MoodScreen from './screens/FirstTime/MoodScreen';
-import ActivityStack from './screens/FirstTime/ActivityScreen';
+import ActivityScreen from './screens/FirstTime/ActivityScreen';
+import EmotionScreen from './screens/FirstTime/EmotionScreen';
 import HomeScreen from './screens/HomeScreen';
 
 async function loadFonts() {
@@ -125,7 +126,8 @@ function MainNavigator() {
       <Stack.Screen name="Tutorial" component={TutorialScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Mood" component={MoodScreen} />
-      <Stack.Screen name="Activity" component={ActivityStack} />
+      <Stack.Screen name="Activity" component={ActivityScreen} />
+      <Stack.Screen name="Emotion" component={EmotionScreen} />
       <Stack.Screen name="AuthenticatedApp" component={AuthenticatedApp} />
     </Stack.Navigator>
   );
