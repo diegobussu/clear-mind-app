@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, PanResponder } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Button from '../components/Button';
+import Button from '../../components/Button';
 
 const images = [
-  require('../assets/img/tuto-1.png'),
-  require('../assets/img/tuto-2.png'),
-  require('../assets/img/tuto-3.png')
+  require('../../assets/img/tuto-1.png'),
+  require('../../assets/img/tuto-2.png'),
+  require('../../assets/img/tuto-3.png')
 ];
 
 const texts = [

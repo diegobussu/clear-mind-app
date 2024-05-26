@@ -9,11 +9,11 @@ const ActivityScreen = ({ route }) => {
   const moods = ["Super", "Bien", "Bof", "Mal", "Terrible"];
   const mood = moods[moodIndex];
   const images = [
-    require('../assets/img/mood-1.png'),
-    require('../assets/img/mood-2.png'),
-    require('../assets/img/mood-3.png'),
-    require('../assets/img/mood-4.png'),
-    require('../assets/img/mood-5.png')
+    require('../../assets/img/mood-1.png'),
+    require('../../assets/img/mood-2.png'),
+    require('../../assets/img/mood-3.png'),
+    require('../../assets/img/mood-4.png'),
+    require('../../assets/img/mood-5.png')
   ];
   const selectedImage = images[moodIndex];
 
@@ -22,15 +22,15 @@ const ActivityScreen = ({ route }) => {
       <View style={styles.topContent}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-                source={require('../assets/img/left-arrow.png')}
-                style={styles.icon}
+                source={require('../../assets/img/left-arrow.png')}
+                style={styles.arrow}
                 resizeMode="contain"
             />
         </TouchableOpacity>
         <Text style={styles.progressText}>2/4</Text>
         <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-                source={require('../assets/img/cross.png')}
+                source={require('../../assets/img/cross.png')}
                 style={styles.cross}
                 resizeMode="contain"
             />

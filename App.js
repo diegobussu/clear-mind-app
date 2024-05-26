@@ -3,14 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Font from 'expo-font';
-import TutorialScreen from './screens/TutorialScreen';
-import SplashScreen from './screens/SplashScreen';
-import LoginScreen from './screens/LoginScreen';
-import MoodScreen from './screens/MoodScreen';
-import ActivityScreen from './screens/ActivityScreen';
-import HomeScreen from './screens/HomeScreen';
+import TutorialStack from './screens/Stacks/TutorialStack';
+import SplashStack from './screens/Stacks/SplashStack';
+import LoginStack from './screens/Stacks/LoginStack';
+import MoodStack from './screens/Stacks/MoodStack';
+import ActivityStack from './screens/Stacks/ActivityStack';
 
+const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -54,42 +55,16 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Tutorial" component={TutorialScreen} options={{ headerShown: false }} />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="Mood"
-          component={MoodScreen}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="Activity"
-          component={ActivityScreen}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
+      <Stack.Navigator>
+        {/* Laissez le Stack.Navigator vide pour le moment */}
       </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Splash" component={SplashStack} />
+        <Tab.Screen name="Tutorial" component={TutorialStack} />
+        <Tab.Screen name="Login" component={LoginStack} />
+        <Tab.Screen name="Mood" component={MoodStack} />
+        <Tab.Screen name="Activity" component={ActivityStack} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
