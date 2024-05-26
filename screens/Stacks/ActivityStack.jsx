@@ -1,6 +1,6 @@
 // stacks/ActivityStack.jsx
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../Login/LoginScreen";
+import HomeScreen from "../HomeScreen";
 
 const stack = createNativeStackNavigator();
 
@@ -12,7 +12,7 @@ const ActivityStack = () => {
         gestureEnabled: false,
       }}
     >
-      <stack.Screen name="Login" component={LoginScreen} />
+      <stack.Screen name="Home" component={HomeScreen} />
     </stack.Navigator>
   );
 };
