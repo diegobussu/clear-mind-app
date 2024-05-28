@@ -1,4 +1,3 @@
-// screens/LoginScreen.jsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TextInput, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +9,7 @@ const images = [
 
 const text = "Pour commencer comment devons nous t’appeler ?";
 
-const LoginScreen = () => {
+const Started = () => {
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
 
@@ -113,4 +112,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+export default Started;

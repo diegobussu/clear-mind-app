@@ -1,18 +1,13 @@
-// App.js
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AuthContext, AuthProvider } from "./Authentification";
 import * as Font from 'expo-font';
-import TutorialScreen from './screens/FirstTime/TutorialScreen';
-import SplashScreen from './screens/FirstTime/SplashScreen';
-import LoginScreen from './screens/FirstTime/LoginScreen';
-import MoodScreen from './screens/FirstTime/MoodScreen';
-import ActivityScreen from './screens/FirstTime/ActivityScreen';
-import EmotionScreen from './screens/FirstTime/EmotionScreen';
 import HomeScreen from './screens/HomeScreen';
+import Authentification from "./screens/Stacks/Authentification";
 
 async function loadFonts() {
   await Font.loadAsync({
@@ -122,12 +117,6 @@ const styles = StyleSheet.create({
 function MainNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="Tutorial" component={TutorialScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Mood" component={MoodScreen} />
-      <Stack.Screen name="Activity" component={ActivityScreen} />
-      <Stack.Screen name="Emotion" component={EmotionScreen} />
       <Stack.Screen name="AuthenticatedApp" component={AuthenticatedApp} />
     </Stack.Navigator>
   );
@@ -137,20 +126,26 @@ export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
-    // Load fonts
     loadFonts().then(() => setFontsLoaded(true));
   }, []);
 
   if (!fontsLoaded) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>Loading Fonts...</Text>
       </View>
     );
   }
 
   return (
-    <NavigationContainer>
-      <MainNavigator />
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <AuthContext.Consumer>
+          {({ isAuthenticated }) =>
+            isAuthenticated ? <MainNavigator /> : <Authentification />
+          }
+        </AuthContext.Consumer>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }

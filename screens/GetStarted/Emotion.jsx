@@ -1,13 +1,12 @@
-// screens/EmotionScreen.jsx
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const EmotionScreen = () => {
+const Emotion = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Emotion Screen</Text>
+      <Text>Emotion</Text>
     </View>
   );
 };
 
-export default EmotionScreen;
+export default Emotion;

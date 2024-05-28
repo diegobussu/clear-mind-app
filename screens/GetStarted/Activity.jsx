@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
-const ActivityScreen = ({ route }) => {
+const Activity = ({ route }) => {
   const navigation = useNavigation();
   const { moodIndex } = route.params;
   const moods = ["Super", "Bien", "Bof", "Mal", "Terrible"];
@@ -328,5 +328,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ActivityScreen;
+export default Activity;
 

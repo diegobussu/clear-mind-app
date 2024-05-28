@@ -1,4 +1,3 @@
-// screens/MoodScreen.jsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -21,7 +20,7 @@ const texts = [
   "Terrible"
 ];
 
-const MoodScreen = () => {
+const Mood = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const [currentDate, setCurrentDate] = useState('');
@@ -218,4 +217,4 @@ const MoodScreen = () => {
     },
   });
 
-export default MoodScreen;
+export default Mood;

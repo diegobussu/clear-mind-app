@@ -1,4 +1,3 @@
-// screens/TutorialScreen.jsx
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, PanResponder, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -22,7 +21,7 @@ const texts1 = [
   "Des conseils adaptés à vos besoins et un soutien disponible à tout moment."
 ];
 
-const TutoScreen = () => {
+const Tutorial = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigation = useNavigation(); // Initialize useNavigation
 
@@ -62,7 +61,7 @@ const TutoScreen = () => {
   });
 
   const handleSkip = () => {
-    // Navigate to TutoScreen when "Skip" button is pressed
+    // Navigate to LoginScreen when "Skip" button is pressed
     navigation.navigate('Login');
   };
 
@@ -103,4 +102,4 @@ const TutoScreen = () => {
   );
 };
 
-export default TutoScreen;
+export default Tutorial;
