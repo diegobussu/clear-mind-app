@@ -68,18 +68,18 @@ const Tutorial = () => {
   const buttonText = currentIndex === images.length - 1 ? "Commencer" : "Continuer";
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F9F9FF' }} {...panResponder.panHandlers}>
-      <TouchableOpacity style={{ position: 'absolute', top: 70, right: 30 }} onPress={handleSkip}>
-        <Text style={{ color: '#6F26FF', fontSize: 16 }}>Passer</Text>
+    <SafeAreaView className="flex-1 justify-center px-5 bg-secondary-white" {...panResponder.panHandlers}>
+      <TouchableOpacity className="absolute top-20 right-5" onPress={handleSkip}>
+        <Text className="items-center absolute top-0 right-0 m-2 text-primary-purple text-lg">Passer</Text>
       </TouchableOpacity>
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <View className="items-center justify-center">
         <Image
           source={images[currentIndex]}
           style={{ width: 330, height: 280 }}
           resizeMode="contain"
         />
-        <Text style={{ marginTop: 30, paddingHorizontal: 10, textAlign: 'center', fontFamily: 'SF-Semibold', fontSize: 30 }}>{texts[currentIndex]}</Text>
-        <Text style={{ marginTop: 30, paddingHorizontal: 20, textAlign: 'center', fontFamily: 'SF-Thin', fontSize: 18 }}>{texts1[currentIndex]}</Text>
+        <Text className="mt-12 px-5 text-center font-sf-semibold text-2xl">{texts[currentIndex]}</Text>
+        <Text className="mt-12 px-10 text-center font-sf-thin text-lg">{texts1[currentIndex]}</Text>
         
         <View style={{ flexDirection: 'row', marginTop: 50, marginBottom: 50 }}>
           {images.map((_, index) => (

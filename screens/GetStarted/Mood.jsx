@@ -117,9 +117,7 @@ const Mood = () => {
             ItemSeparatorComponent={ItemSeparator}
           />
         </View>
-        <View style={styles.bottomContent}>
-          <Button text="Continuer" onPress={handleStart} />
-        </View>
+        <Button text="Continuer" onPress={handleStart} />
       </SafeAreaView>
     );
   };
@@ -142,9 +140,6 @@ const Mood = () => {
       justifyContent: 'center',
       alignItems: 'center',
       flex: 1,
-    },
-    bottomContent: {
-      marginBottom: 50
     },
     imageContainer: {
       alignItems: 'center',

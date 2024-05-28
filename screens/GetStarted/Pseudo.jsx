@@ -9,7 +9,7 @@ const images = [
 
 const text = "Pour commencer comment devons nous t’appeler ?";
 
-const Started = () => {
+const Pseudo = () => {
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState('');
 
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Started;
+export default Pseudo;

@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { Timestamp, doc, getFirestore, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,19 +19,53 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const navigation = useNavigation();
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  const handleSignUp = () => {
+  const isEmailValid = (email) => {
+    // Expression régulière pour valider l'email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isPasswordValid = (password) => {
+    // Expression régulière pour valider le mot de passe
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const handleSignUp = async () => {
+    if (!isEmailValid(email)) {
+      setError("Veuillez entrer une adresse e-mail valide");
+      return;
+    }
+    if (!isPasswordValid(password)) {
+      setError("Le mot de passe doit faire au moins 8 caractères et contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial");
+      return;
+    }
     if (password !== passwordConfirm) {
       setError("Les mots de passe ne correspondent pas");
       return;
     }
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigation.navigate("AuthenticatedApp");
-      })
-      .catch((error) => {
-        setError(error.message);
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+    
+      // Enregistrement des données supplémentaires dans Firestore
+      await addDoc(collection(db, "users"), {
+        email: user.email,
+        isPremium: false,
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now(),
       });
+    
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        setError("Cet e-mail est déjà associé à un compte.");
+      } else {
+        setError("Une erreur s'est produite lors de l'inscription.");
+      }
+    }
   };
 
   return (

@@ -19,38 +19,37 @@ const Activity = ({ route }) => {
   ];
   const selectedImage = images[moodIndex];
 
-  const [selectedIcons, setSelectedIcons] = useState(Array(18).fill(false));
+  const [selectedIcons1, setSelectedIcons1] = useState(Array(9).fill(false));
+  const [selectedIcons2, setSelectedIcons2] = useState(Array(9).fill(false));
+  const [totalSelectedCount, setTotalSelectedCount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [iconListIndex, setIconListIndex] = useState(0);
 
   const toggleIcon = (index) => {
-    const updatedIcons = [...selectedIcons];
-    const selectedCount = updatedIcons.filter(icon => icon).length;
-
-    if (updatedIcons[index]) {
-      updatedIcons[index] = false;
-    } else {
-      if (selectedCount < 3) {
-        updatedIcons[index] = true;
-      } else {
-        Alert.alert("Limite atteinte", "Vous ne pouvez sélectionner que jusqu'à 3 activités.");
-        return;
-      }
+    const currentIcons = iconListIndex === 0 ? selectedIcons1 : selectedIcons2;
+    const updatedIcons = [...currentIcons];
+    const isSelected = updatedIcons[index];
+    const selectedCount = totalSelectedCount + (isSelected ? -1 : 1);
+  
+    if (selectedCount > 3) {
+      Alert.alert("Limite atteinte", "Vous ne pouvez sélectionner que jusqu'à 3 activités.");
+      return;
     }
-
-    setSelectedIcons(updatedIcons);
+  
+    updatedIcons[index] = !isSelected;
+    if (iconListIndex === 0) {
+      setSelectedIcons1(updatedIcons);
+    } else {
+      setSelectedIcons2(updatedIcons);
+    }
+    setTotalSelectedCount(selectedCount);
   };
 
   const continueHandler = () => {
-    const selectedCount = selectedIcons.filter(icon => icon).length;
+    const selectedCount = iconListIndex === 0 ? selectedIcons1.filter(icon => icon).length : selectedIcons2.filter(icon => icon).length;
 
     if (selectedCount === 0) {
       Alert.alert("Aucune sélection", "Une activité doit être sélectionnée.");
-      return;
-    }
-
-    if (selectedCount > 3) {
-      Alert.alert("Limite atteinte", "Vous ne pouvez sélectionner que jusqu'à 3 activités.");
       return;
     }
 
@@ -116,7 +115,7 @@ const Activity = ({ route }) => {
       for (let j = 0; j < 3; j++) {
         const index = i * 3 + j;
         const icon = currentIcons[index];
-        const isSelected = selectedIcons[index];
+        const isSelected = iconListIndex === 0 ? selectedIcons1[index] : selectedIcons2[index];
         const iconName = isSelected ? icon.name.replace("-outline", "") : icon.name;
 
         iconsInRow.push(
@@ -189,15 +188,15 @@ const Activity = ({ route }) => {
         </TouchableOpacity>
         <View style={{ marginBottom: 80 }} />
       </View>
-      <View style={styles.rectangle} {...panResponder.panHandlers}>
+      <View style={styles.rectangle}>
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
         <Text style={styles.mainText}>Aujourd'hui, je me sens</Text>
         <Text style={styles.moodText}>{mood}</Text>
       </View>
-      <View style={styles.activities}>
+      <View style={styles.activities} {...panResponder.panHandlers}>
         <Text style={styles.changedText}>Quoi de neuf ?</Text>
         <Text style={styles.itemsText}>Plusieurs sélections possibles</Text>
-        <View style={[styles.iconGrid, { ...panResponder.panHandlers }]}>
+        <View style={[styles.iconGrid]}>
           {renderIconGrid()}
         </View>
       </View>
@@ -217,9 +216,7 @@ const Activity = ({ route }) => {
           ]}
         />
       </View>
-      <View style={styles.bottomContent}>
-        <Button text="Continuer" onPress={continueHandler} />
-      </View>
+      <Button text="Continuer" onPress={continueHandler} />
     </SafeAreaView>
   );
 };
@@ -238,9 +235,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20
-  },
-  bottomContent: {
-    marginBottom: 50
   },
   rectangle: {
     backgroundColor: '#FFF',

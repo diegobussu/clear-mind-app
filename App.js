@@ -6,7 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthContext, AuthProvider } from "./Authentification";
 import * as Font from 'expo-font';
-import HomeScreen from './screens/HomeScreen';
+import Home from './screens/Home';
+import Started from './screens/Stacks/Started';
 import Authentification from "./screens/Stacks/Authentification";
 
 async function loadFonts() {
@@ -82,11 +83,12 @@ function AuthenticatedApp() {
         tabBarStyle: styles.tabBar
       })}
     >
-      <Tab.Screen name="HomeScreen" component={HomeScreen} />
-      <Tab.Screen name="StatisticsScreen" component={HomeScreen} />
-      <Tab.Screen name="AddCircleScreen" component={HomeScreen} />
-      <Tab.Screen name="NoteScreen" component={HomeScreen} />
-      <Tab.Screen name="SettingsScreen" component={HomeScreen} />
+      <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }}/>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="StatisticsScreen" component={Home} />
+      <Tab.Screen name="AddCircleScreen" component={Home} />
+      <Tab.Screen name="NoteScreen" component={Home} />
+      <Tab.Screen name="SettingsScreen" component={Home} />
     </Tab.Navigator>
   );
 }
