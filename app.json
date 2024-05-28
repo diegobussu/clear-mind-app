@@ -4,7 +4,7 @@
     "slug": "clear-mind-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/icon.png",
+    "icon": "./assets/img/favicon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/img/splash.png",
@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/img/adaptive-icon.png",
+        "foregroundImage": "./assets/img/favicon.png",
         "backgroundColor": "#ffffff"
       }
     },

@@ -5,11 +5,11 @@ import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const images = [
-  require('../../assets/img/mood-1.png'),
-  require('../../assets/img/mood-2.png'),
-  require('../../assets/img/mood-3.png'),
-  require('../../assets/img/mood-4.png'),
-  require('../../assets/img/mood-5.png')
+  require('../../assets/img/mood/mood-1.png'),
+  require('../../assets/img/mood/mood-2.png'),
+  require('../../assets/img/mood/mood-3.png'),
+  require('../../assets/img/mood/mood-4.png'),
+  require('../../assets/img/mood/mood-5.png')
 ];
 
 const texts = [

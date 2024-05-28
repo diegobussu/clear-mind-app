@@ -11,11 +11,11 @@ const Activity = ({ route }) => {
   const moods = ["Super", "Bien", "Bof", "Mal", "Terrible"];
   const mood = moods[moodIndex];
   const images = [
-    require('../../assets/img/mood-1.png'),
-    require('../../assets/img/mood-2.png'),
-    require('../../assets/img/mood-3.png'),
-    require('../../assets/img/mood-4.png'),
-    require('../../assets/img/mood-5.png')
+    require('../../assets/img/mood/mood-1.png'),
+    require('../../assets/img/mood/mood-2.png'),
+    require('../../assets/img/mood/mood-3.png'),
+    require('../../assets/img/mood/mood-4.png'),
+    require('../../assets/img/mood/mood-5.png')
   ];
   const selectedImage = images[moodIndex];
 
@@ -47,14 +47,16 @@ const Activity = ({ route }) => {
 
   const continueHandler = () => {
     const selectedCount = iconListIndex === 0 ? selectedIcons1.filter(icon => icon).length : selectedIcons2.filter(icon => icon).length;
-
+  
     if (selectedCount === 0) {
       Alert.alert("Aucune sélection", "Une activité doit être sélectionnée.");
       return;
     }
-
-    navigation.navigate('Emotion');
+  
+    // Envoyer les données à l'écran Emotion
+    navigation.navigate('Emotion', { moodIndex });
   };
+  
 
   const iconsList = [
     [
@@ -196,7 +198,7 @@ const Activity = ({ route }) => {
       <View style={styles.activities} {...panResponder.panHandlers}>
         <Text style={styles.changedText}>Quoi de neuf ?</Text>
         <Text style={styles.itemsText}>Plusieurs sélections possibles</Text>
-        <View style={[styles.iconGrid]}>
+        <View style={styles.iconGrid}>
           {renderIconGrid()}
         </View>
       </View>
@@ -307,7 +309,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
     fontFamily: 'SF-Regular',
-    fontSize: 14,
+    fontSize: 15,
     color: '#6331FF'
   },
   pointsContainer: {
