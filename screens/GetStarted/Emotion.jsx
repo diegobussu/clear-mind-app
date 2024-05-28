@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, PanResponder } 
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 
 const Emotion = ({ route }) => {
   const navigation = useNavigation();
@@ -74,10 +73,10 @@ const Emotion = ({ route }) => {
       require('../../assets/img/emotions/desperate.png'),
       require('../../assets/img/emotions/confused.png'),
       require('../../assets/img/emotions/frustrated.png'),
-      require('../../assets/img/emotions/happy.png'),
-      require('../../assets/img/emotions/happy.png'),
-      require('../../assets/img/emotions/happy.png'),
-      require('../../assets/img/emotions/happy.png')
+      require('../../assets/img/emotions/depressed.png'),
+      require('../../assets/img/emotions/sick.png'),
+      require('../../assets/img/emotions/sad1.png'),
+      require('../../assets/img/emotions/inspired.png')
     ]
   ];
 
@@ -117,12 +116,15 @@ const Emotion = ({ route }) => {
         const icon = currentIcons[index];
         const isSelected = iconListIndex === 0 ? selectedIcons1[index] : selectedIcons2[index];
         const iconSource = icon;
+        const containerStyle = [styles.iconWrapper, isSelected ? styles.selectedIconWrapper : null];
         const iconStyle = styles.iconImage;
         const textStyle = isSelected ? styles.selectedIconName : styles.iconName;
 
         iconsInRow.push(
           <TouchableOpacity key={index} onPress={() => toggleIcon(index)} style={styles.iconContainer}>
-            <Image source={iconSource} style={iconStyle} />
+            <View style={containerStyle}>
+              <Image source={iconSource} style={iconStyle} />
+            </View>
             <Text style={textStyle}>{currentIconNames[index]}</Text>
           </TouchableOpacity>
         );
@@ -262,10 +264,10 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   changedText: {
-    fontFamily: 'SF-Medium',
+    fontFamily: 'SF-Bold',
     fontSize: 22,
     textAlign: 'center',
-    marginTop: 50,
+    marginTop: 25,
     marginBottom: 30
   },
   itemsText: {
@@ -293,7 +295,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 300,
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   iconRow: {
     flexDirection: 'row',
@@ -305,15 +307,30 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     alignItems: 'center'
   },
+  iconWrapper: {
+    borderWidth: 2,
+    borderColor: '#6331FF',
+    borderRadius: 15,
+    padding: 15,
+  },
+  selectedIconWrapper: {
+    borderWidth: 4,
+  },
   iconImage: {
     width: 30,
-    height: 30
+    height: 30,
   },
   iconName: {
     textAlign: 'center',
     marginTop: 5,
     fontFamily: 'SF-Regular',
-    fontSize: 15,
+    fontSize: 13,
+    color: '#6331FF'
+  },
+  selectedIconName: {
+    textAlign: 'center',
+    marginTop: 5,
+    fontFamily: 'SF-Bold',
     color: '#6331FF'
   },
   pointsContainer: {

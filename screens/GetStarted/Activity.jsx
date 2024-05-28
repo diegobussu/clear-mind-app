@@ -118,14 +118,18 @@ const Activity = ({ route }) => {
         const index = i * 3 + j;
         const icon = currentIcons[index];
         const isSelected = iconListIndex === 0 ? selectedIcons1[index] : selectedIcons2[index];
-        const iconName = isSelected ? icon.name.replace("-outline", "") : icon.name;
+        const containerStyle = [styles.iconWrapper, isSelected ? styles.selectedIconWrapper : null];
+        const iconSource = icon.name;
+        const textStyle = isSelected ? styles.selectedIconName : styles.iconName;
 
         iconsInRow.push(
           <TouchableOpacity key={index} onPress={() => toggleIcon(index)} style={styles.iconContainer}>
-            <Ionicons name={iconName} size={30} color={'#6331FF'} />
-            <Text style={styles.iconName}>{currentIconNames[index]}</Text>
+            <View style={containerStyle}>
+              <Ionicons name={iconSource} size={30} color={'#6331FF'} />
+            </View>
+            <Text style={textStyle}>{currentIconNames[index]}</Text>
           </TouchableOpacity>
-        );
+        )
       }
       iconRows.push(
         <View key={i} style={styles.iconRow}>
@@ -265,7 +269,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Medium',
     fontSize: 22,
     textAlign: 'center',
-    marginTop: 50,
+    marginTop: 25,
     marginBottom: 30
   },
   itemsText: {
@@ -293,7 +297,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 300,
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   iconRow: {
     flexDirection: 'row',
@@ -305,11 +309,30 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     alignItems: 'center'
   },
+  iconWrapper: {
+    borderWidth: 2,
+    borderColor: '#6331FF',
+    borderRadius: 15,
+    padding: 15,
+  },
+  selectedIconWrapper: {
+    borderWidth: 4,
+  },
+  iconImage: {
+    width: 30,
+    height: 30
+  },
   iconName: {
     textAlign: 'center',
     marginTop: 5,
     fontFamily: 'SF-Regular',
-    fontSize: 15,
+    fontSize: 13,
+    color: '#6331FF'
+  },
+  selectedIconName: {
+    textAlign: 'center',
+    marginTop: 5,
+    fontFamily: 'SF-Bold',
     color: '#6331FF'
   },
   pointsContainer: {
