@@ -10,7 +10,8 @@ const Started = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false
+        headerShown: false,
+        gestureEnabled: false
       }}
     >
       <Stack.Screen name="Pseudo" component={Pseudo} />

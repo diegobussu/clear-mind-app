@@ -72,16 +72,16 @@ const Tutorial = () => {
       <TouchableOpacity className="absolute top-20 right-5" onPress={handleSkip}>
         <Text className="items-center absolute top-0 right-0 m-2 text-primary-purple text-lg">Passer</Text>
       </TouchableOpacity>
-      <View className="items-center justify-center">
+      <View className="items-center justify-center mt-10">
         <Image
           source={images[currentIndex]}
-          style={{ width: 330, height: 280 }}
+          className="w-[330px] h-[280px]"
           resizeMode="contain"
         />
         <Text className="mt-12 px-5 text-center font-sf-semibold text-2xl">{texts[currentIndex]}</Text>
         <Text className="mt-12 px-10 text-center font-sf-thin text-lg">{texts1[currentIndex]}</Text>
         
-        <View style={{ flexDirection: 'row', marginTop: 50, marginBottom: 50 }}>
+        <View className="flex-row mt-10 mb-10">
           {images.map((_, index) => (
             <TouchableOpacity
               key={index}

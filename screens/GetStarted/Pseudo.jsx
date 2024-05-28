@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, SafeAreaView, Text, Image, TextInput, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ButtonWhite from '../../components/ButtonWhite';
 
@@ -45,57 +45,29 @@ const Pseudo = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.middleContent}>
+    <SafeAreaView className="flex-1 justify-center items-center px-5 bg-secondary-white">
+      <View className="items-center justify-center mb-[110px]">
         <Image
           source={images[0]}
-          style={styles.image}
+          className="w-[330px] h-[280px] mb-5"
           resizeMode="contain"
         />
-        <Text style={styles.text}>{text}</Text>
+        <Text className="text-center font-sf-semibold text-2xl mb-10">{text}</Text>
         <TextInput
           style={styles.input}
           placeholder="Pseudo"
           placeholderTextColor="#C6A9FF"
           onChangeText={text => setFirstName(text)}
           value={firstName}
+          className="mb-[120px]"
         />
-      </View>
-      <View style={styles.bottomContent}>
         <ButtonWhite text="Continuer" onPress={handleStart} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: 150,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    backgroundColor: '#F9F9FF'
-  },
-  middleContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
-  bottomContent: {
-    marginBottom: 50
-  },
-  image: {
-    width: 330,
-    height: 280,
-    marginBottom: 30
-  },
-  text: {
-    textAlign: 'center',
-    fontFamily: 'SF-Semibold',
-    fontSize: 22
-  },
   input: {
     textAlign: 'center',
     borderWidth: 1,
@@ -103,7 +75,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    marginTop: 20,
     width: 250,
     fontFamily: 'SF-Regular',
     fontSize: 16,

@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, PanResponder } 
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 
 const Emotion = ({ route }) => {
   const navigation = useNavigation();
@@ -173,26 +174,25 @@ const Emotion = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.topContent}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require('../../assets/img/left-arrow.png')}
-            style={styles.arrow}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-        <Text style={styles.progressText}>3/4</Text>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require('../../assets/img/cross.png')}
-            style={styles.cross}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-        <View style={{ marginBottom: 80 }} />
+    <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
+      <View className="flex-row mt-5">
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                  name="arrow-back-circle"
+                  size={40} 
+                  color={'#6331FF'}
+              />
+          </TouchableOpacity>
+          <Text className="flex-1 font-sf-bold text-xl mt-2 text-center">3/4</Text>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons
+                  name="close-circle"
+                  size={40} 
+                  color={'#6331FF'}
+              />
+          </TouchableOpacity>
       </View>
-      <View style={styles.rectangle}>
+      <View style={styles.rectangle} className="mt-5">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
         <Text style={styles.mainText}>Aujourd'hui, je me sens</Text>
         <Text style={styles.moodText}>{mood}</Text>
@@ -226,20 +226,6 @@ const Emotion = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F9F9FF',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingBottom: 30,
-    paddingHorizontal: 20
-  },
-  topContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20
-  },
   rectangle: {
     backgroundColor: '#FFF',
     borderRadius: 30,
@@ -274,16 +260,6 @@ const styles = StyleSheet.create({
     fontFamily: 'SF-Ultralight',
     fontSize: 18,
     textAlign: 'center'
-  },
-  arrow: {
-    width: 20,
-    height: 20,
-    marginRight: 'auto'
-  },
-  cross: {
-    width: 30,
-    height: 30,
-    marginLeft: 'auto'
   },
   progressText: {
     fontFamily: 'SF-Bold',

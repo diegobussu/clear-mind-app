@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity } from
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons, AntDesign} from '@expo/vector-icons';
 
 const images = [
   require('../../assets/img/mood/mood-1.png'),
@@ -52,7 +53,7 @@ const Mood = () => {
 
       return (
         <TouchableOpacity onPress={() => handleImagePress(index)}>
-          <View style={styles.imageContainer}>
+          <View className="items-center mt-10">
             <Image
               source={item}
               style={[styles.image, isSelected && styles.selectedImage]}
@@ -69,43 +70,43 @@ const Mood = () => {
     const ItemSeparator = () => <View style={{ width: 20 }} />;
 
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.topContent}>
+      <SafeAreaView className="flex-1 justify-center px-5 bg-secondary-white">
+        <View className="flex-row mt-5">
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Image
-                    source={require('../../assets/img/left-arrow.png')}
-                    style={styles.arrow}
-                    resizeMode="contain"
+                <Ionicons
+                    name="arrow-back-circle"
+                    size={40} 
+                    color={'#6331FF'}
                 />
             </TouchableOpacity>
-            <Text style={styles.progressText}>1/4</Text>
+            <Text className="flex-1 font-sf-bold text-xl mt-2 text-center">1/4</Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Image
-                    source={require('../../assets/img/cross.png')}
-                    style={styles.cross}
-                    resizeMode="contain"
+                <Ionicons
+                    name="close-circle"
+                    size={40} 
+                    color={'#6331FF'}
                 />
             </TouchableOpacity>
-            <View style={{marginBottom: 150}} />
+            <View className="mb-[150px]"/>
         </View>
-        <View style={styles.middleContent}>
-          <Text style={styles.greetingText}>Bonjour {firstName} !</Text>
-          <Text style={styles.text}>Comment vas-tu aujourd’hui ?</Text>
+        <View className="flex-1 justify-center items-center">
+          <Text className="font-sf-bold text-2xl">Bonjour {firstName} !</Text>
+          <Text className="font-sf-semibold text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>
           <View style={styles.dateContainer}>
-            <View style={styles.dateTimeContainer}>
-                <Image
-                source={require('../../assets/img/calendar.png')}
-                style={styles.icon}
-                resizeMode="contain"
+            <View className="flex-row items-center">
+                <Ionicons
+                  name="calendar-outline"
+                  size={20}
+                  color='#6331FF'
                 />
-                <Text style={styles.dateTimeText}>{currentDate}</Text>
+                <Text className="text-primary-purple ml-2 text-lg font-sf-regular underline">{currentDate}</Text>
                 <View style={{marginRight: 40}} />
-                <Image
-                source={require('../../assets/img/clock.png')}
-                style={styles.icon}
-                resizeMode="contain"
+                <AntDesign
+                  name="clockcircleo"
+                  size={20}
+                  color='#6331FF'
                 />
-                <Text style={styles.dateTimeText}>{currentTime}</Text>
+                <Text className="text-primary-purple ml-2 text-lg font-sf-regular underline">{currentTime}</Text>
             </View>
           </View>
           <FlatList
@@ -123,28 +124,6 @@ const Mood = () => {
   };
   
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingBottom: 30,
-      paddingHorizontal: 20,
-      backgroundColor: '#F9F9FF'
-    },
-    topContent: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginTop: 20
-    },
-    middleContent: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      flex: 1,
-    },
-    imageContainer: {
-      alignItems: 'center',
-      marginTop: 50
-    },
     image: {
       width: 50,
       height: 50,
@@ -161,55 +140,13 @@ const Mood = () => {
     selectedText: {
       fontFamily: 'SF-Bold',
     },
-    greetingText: {
-      fontFamily: 'SF-Bold',
-      fontSize: 26,
-      marginBottom: 20,
-    },
-    text: {
-      fontFamily: 'SF-Semibold',
-      fontSize: 22,
-      marginTop: 30,
-      marginBottom: 30,
-    },
     dateContainer: {
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 50,
       borderWidth: 1,
       borderColor: '#6331FF'
-    },
-    dateTimeContainer: {
-      flexDirection: 'row',
-      alignItems: 'center'
-    },
-    icon: {
-      width: 20,
-      height: 20,
-      marginRight: 10
-    },
-    arrow: {
-      width: 20,
-      height: 20,
-      marginRight: 'auto'
-    },
-    cross: {
-      width: 30,
-      height: 30,
-      marginLeft: 'auto'
-    },
-    dateTimeText: {
-      fontFamily: 'SF-Regular',
-      fontSize: 16,
-      color: '#6331FF',
-      textDecorationLine: 'underline'
-    },
-    progressText: {
-      fontFamily: 'SF-Bold',
-      fontSize: 20,
-      textAlign: 'center',
-      flex: 1
-    },
+    }
   });
 
 export default Mood;

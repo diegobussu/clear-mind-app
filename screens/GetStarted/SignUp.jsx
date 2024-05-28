@@ -4,11 +4,9 @@ import { Timestamp, doc, getFirestore, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 import { app } from "../../firebaseConfig";
 import Button from '../../components/Button';
 import Logo from '../../assets/img/favicon.png';
-import ArrowImage from '../../components/ArrowImage';
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +15,6 @@ const SignUp = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
   const [error, setError] = useState("");
-  const navigation = useNavigation();
   const auth = getAuth(app);
   const db = getFirestore(app);
 
@@ -39,7 +36,7 @@ const SignUp = () => {
       return;
     }
     if (!isPasswordValid(password)) {
-      setError("Le mot de passe doit faire au moins 8 caractères et contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial");
+      setError("Le mot de passe doit faire au moins 8 caractères et contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial.");
       return;
     }
     if (password !== passwordConfirm) {
@@ -70,7 +67,11 @@ const SignUp = () => {
 
   return (
     <SafeAreaView className="justify-center px-5 mr-10 ml-10 mt-20">
-        <ArrowImage source={require('../../assets/img/left-arrow.png')} />
+        <Ionicons
+            name="arrow-back-circle"
+            size={30} 
+            color={'#6331FF'}
+        />
         <View className="items-center">
           <Image source={Logo} className="mb-10" />
         </View>
