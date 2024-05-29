@@ -55,9 +55,11 @@ const Activity = ({ route }) => {
 
   
   const continueHandler = async () => {
-    const selectedCount = iconListIndex === 0 ? selectedIcons1.filter(icon => icon).length : selectedIcons2.filter(icon => icon).length;
-  
-    if (selectedCount === 0) {
+    const selectedCount1 = selectedIcons1.filter(icon => icon).length;
+    const selectedCount2 = selectedIcons2.filter(icon => icon).length;
+    
+    // Vérifier si aucune activité n'a été sélectionnée dans les deux listes
+    if (selectedCount1 === 0 && selectedCount2 === 0) {
       Alert.alert("Aucune sélection", "Une activité doit être sélectionnée.");
       return;
     }
@@ -159,7 +161,7 @@ const Activity = ({ route }) => {
         iconsInRow.push(
           <TouchableOpacity key={index} onPress={() => toggleIcon(index)} style={styles.iconContainer}>
             <View style={containerStyle}>
-              <Ionicons name={iconSource} size={30} color={'#6331FF'} />
+              <Ionicons name={iconSource} size={20} color={'#6331FF'} />
             </View>
             <Text style={textStyle}>{currentIconNames[index]}</Text>
           </TouchableOpacity>
@@ -210,7 +212,7 @@ const Activity = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View className="flex-row mt-5">
+      <View className="flex-row mt-10">
           <TouchableOpacity onPress={() => navigation.goBack()}>
               <Ionicons
                   name="arrow-back-circle"
@@ -219,7 +221,7 @@ const Activity = ({ route }) => {
               />
           </TouchableOpacity>
           <Text className="flex-1 font-sf-bold text-xl mt-2 text-center">2/4</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate('Username')}>
               <Ionicons
                   name="close-circle"
                   size={40} 
@@ -232,14 +234,14 @@ const Activity = ({ route }) => {
         <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
         <Text className="font-sf-bold text-xl mt-3">{mood}</Text>
       </View>
-      <View style={styles.activities} {...panResponder.panHandlers}>
-        <Text style={styles.changedText}>Quoi de neuf ?</Text>
-        <Text style={styles.itemsText}>Plusieurs sélections possibles</Text>
+      <View {...panResponder.panHandlers}>
+        <Text className="font-sf-medium text-[22px] text-center mb-5 mt-5">Quoi de neuf ?</Text>
+        <Text className="font-sf-ultralight text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
         <View style={styles.iconGrid}>
           {renderIconGrid()}
         </View>
       </View>
-      <View style={styles.pointsContainer}>
+      <View className="flex-row mt-3">
         <TouchableOpacity
           onPress={() => handlePointPress(0)}
           style={[
@@ -273,27 +275,8 @@ const styles = StyleSheet.create({
     height: 70,
     marginBottom: 20
   },
-  changedText: {
-    fontFamily: 'SF-Medium',
-    fontSize: 22,
-    textAlign: 'center',
-    marginTop: 25,
-    marginBottom: 30
-  },
-  itemsText: {
-    fontFamily: 'SF-Ultralight',
-    fontSize: 18,
-    textAlign: 'center'
-  },
-  progressText: {
-    fontFamily: 'SF-Bold',
-    fontSize: 20,
-    textAlign: 'center',
-    flex: 1
-  },
   iconGrid: {
     marginTop: 20,
-    width: 300,
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
@@ -316,10 +299,6 @@ const styles = StyleSheet.create({
   selectedIconWrapper: {
     borderWidth: 4,
   },
-  iconImage: {
-    width: 30,
-    height: 30
-  },
   iconName: {
     textAlign: 'center',
     marginTop: 5,
@@ -332,10 +311,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontFamily: 'SF-Bold',
     color: '#6331FF'
-  },
-  pointsContainer: {
-    flexDirection: 'row',
-    marginTop: 10
   },
   point: {
     width: 10,

@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 
 const Home = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
+    <SafeAreaView className="justify-center px-5 mr-10 ml-10 mt-20">
+      <View className="items-center">
+        
+      </View>
+    </SafeAreaView>
   );
 };
 

@@ -52,11 +52,11 @@ const Emotion = ({ route }) => {
   const db = getFirestore(app);
 
   const continueHandler = async () => {
-    const selectedIcons = iconListIndex === 0 ? selectedIcons1 : selectedIcons2;
-    const selectedCount = selectedIcons.filter(icon => icon).length;
+    const selectedCount1 = selectedIcons1.filter(icon => icon).length;
+    const selectedCount2 = selectedIcons2.filter(icon => icon).length;
   
-    if (selectedCount === 0) {
-      Alert.alert("Aucune sélection", "Une émotion doit être sélectionnée.");
+    if (selectedCount1 === 0 && selectedCount2 === 0) {
+      Alert.alert("Aucune sélection", "Une émotion doit être sélectionnée pour la première liste.");
       return;
     }
 
@@ -64,15 +64,20 @@ const Emotion = ({ route }) => {
     // Tableau pour stocker les noms des icônes sélectionnées
     const emotions = [];
 
-    // Ajouter les noms des icônes sélectionnées au tableau
-    selectedIcons.forEach((isSelected, index) => {
+    // Ajouter les noms des icônes sélectionnées pour la première liste
+    selectedIcons1.forEach((isSelected, index) => {
       if (isSelected) {
-        const currentIconNames = iconNamesList[iconListIndex];
-        emotions.push(currentIconNames[index]);
+        emotions.push(iconNamesList[0][index]);
       }
     });
 
-  
+    // Ajouter les noms des icônes sélectionnées pour la deuxième liste
+    selectedIcons2.forEach((isSelected, index) => {
+      if (isSelected) {
+        emotions.push(iconNamesList[1][index]);
+      }
+    });
+
     const journalID = route.params.journalID;
     const journalRef = doc(db, 'users', userId, 'journals', journalID);
     await updateDoc(journalRef, {
@@ -207,7 +212,7 @@ const Emotion = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View className="flex-row mt-5">
+      <View className="flex-row mt-10">
           <TouchableOpacity onPress={() => navigation.goBack()}>
               <Ionicons
                   name="arrow-back-circle"
@@ -216,7 +221,7 @@ const Emotion = ({ route }) => {
               />
           </TouchableOpacity>
           <Text className="flex-1 font-sf-bold text-xl mt-2 text-center">3/4</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate('Username')}>
               <Ionicons
                   name="close-circle"
                   size={40} 
@@ -229,14 +234,14 @@ const Emotion = ({ route }) => {
         <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
         <Text className="font-sf-bold text-xl mt-3">{mood}</Text>
       </View>
-      <View style={styles.activities} {...panResponder.panHandlers}>
-        <Text style={styles.changedText}>Comment te sens-tu ?</Text>
-        <Text style={styles.itemsText}>Plusieurs sélections possibles</Text>
+      <View {...panResponder.panHandlers}>
+        <Text className="font-sf-medium text-[22px] text-center mb-5 mt-5">Comment te sens-tu ?</Text>
+        <Text className="font-sf-ultralight text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
         <View style={styles.iconGrid}>
           {renderIconGrid()}
         </View>
       </View>
-      <View style={styles.pointsContainer}>
+      <View className="flex-row mt-3">
         <TouchableOpacity
           onPress={() => handlePointPress(0)}
           style={[
@@ -270,24 +275,6 @@ const styles = StyleSheet.create({
     height: 70,
     marginBottom: 20
   },
-  changedText: {
-    fontFamily: 'SF-Bold',
-    fontSize: 22,
-    textAlign: 'center',
-    marginTop: 25,
-    marginBottom: 30
-  },
-  itemsText: {
-    fontFamily: 'SF-Ultralight',
-    fontSize: 18,
-    textAlign: 'center'
-  },
-  progressText: {
-    fontFamily: 'SF-Bold',
-    fontSize: 20,
-    textAlign: 'center',
-    flex: 1
-  },
   iconGrid: {
     marginTop: 20,
     width: 300,
@@ -314,8 +301,8 @@ const styles = StyleSheet.create({
     borderWidth: 4,
   },
   iconImage: {
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
   },
   iconName: {
     textAlign: 'center',
@@ -329,10 +316,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontFamily: 'SF-Bold',
     color: '#6331FF'
-  },
-  pointsContainer: {
-    flexDirection: 'row',
-    marginTop: 20
   },
   point: {
     width: 10,

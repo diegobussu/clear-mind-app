@@ -29,7 +29,11 @@ const Comment = ({ route }) => {
 
   const continueHandler = async () => {
     try {
-
+      if (note.length > 200) {
+        Alert.alert('Erreur', 'La note ne doit pas dépasser 200 caractères.');
+        return;
+      }
+  
       const journalID = route.params.journalID;
       const journalRef = doc(db, 'users', userId, 'journals', journalID);
       await updateDoc(journalRef, {
@@ -55,7 +59,7 @@ const Comment = ({ route }) => {
               />
           </TouchableOpacity>
           <Text className="flex-1 font-sf-bold text-xl mt-2 text-center">4/4</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate('Username')}>
               <Ionicons
                   name="close-circle"
                   size={40} 
@@ -63,7 +67,7 @@ const Comment = ({ route }) => {
               />
           </TouchableOpacity>
       </View>
-      <View style={styles.rectangle} className="mt-[100px]">
+      <View style={styles.rectangle} className="mt-[50px]">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
         <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
         <Text className="font-sf-bold text-xl mt-3">{mood}</Text>
@@ -71,7 +75,7 @@ const Comment = ({ route }) => {
       <Text className="font-sf-regular text-2xl mt-10">Note</Text>
       <View className="w-[350px] h-[200px] bg-primary-white rounded-[30px] mt-5 mb-10">
         <TextInput
-          className="text-lg text-[#828282] top-5 left-5"
+          className="text-lg text-[#828282] top-5 left-5 w-100"
           placeholder="Ajouter une note..."
           onChangeText={setNote}
           value={note}

@@ -128,7 +128,7 @@ const Mood = () => {
                 />
             </TouchableOpacity>
             <Text className="flex-1 font-sf-bold text-xl mt-2 text-center">1/4</Text>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.navigate('Username')}>
                 <Ionicons
                     name="close-circle"
                     size={40} 
@@ -138,8 +138,8 @@ const Mood = () => {
             <View className="mb-[150px]"/>
         </View>
         <View className="flex-1 justify-center items-center">
-          <Text className="font-sf-bold text-2xl">Bonjour {userName} !</Text>
-          <Text className="font-sf-semibold text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>
+          <Text className="font-sf-bold text-[28px]">Bonjour {userName},</Text>
+          <Text className="font-sf-regular text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>
           <View style={styles.dateContainer}>
             <View className="flex-row items-center">
                 <Ionicons

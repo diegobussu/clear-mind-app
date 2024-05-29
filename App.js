@@ -41,8 +41,7 @@ const Stack = createNativeStackNavigator();
 
 
 function AuthenticatedApp() {
-  const { isAuthenticated } = useContext(AuthContext);
-  const [hasJournals, setHasJournals] = useState(false);
+  const [hasJournals, setHasJournalsWithEmotions] = useState(false);
 
   const auth = getAuth(app);
   const db = getFirestore(app);
@@ -54,15 +53,19 @@ function AuthenticatedApp() {
       const journalQuery = query(journalCollectionRef);
       getDocs(journalQuery)
         .then((snapshot) => {
-          if (!snapshot.empty) {
-            setHasJournals(true);
-          }
+          let found = false;
+          snapshot.forEach((doc) => {
+            if (doc.data().hasOwnProperty('note')) {
+              found = true;
+            }
+          });
+          setHasJournalsWithEmotions(found);
         })
         .catch((error) => {
           console.error('Error checking journal existence:', error);
         });
     }
-  }, []);
+  }, [auth, db]);
 
   return (
     <Tab.Navigator
