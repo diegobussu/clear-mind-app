@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,6 +9,9 @@ import * as Font from 'expo-font';
 import Home from './screens/Home';
 import Started from './screens/Stacks/Started';
 import Authentification from "./screens/Stacks/Authentification";
+import { app } from "./firebaseConfig";
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, query, getDocs } from "firebase/firestore";
 
 async function loadFonts() {
   await Font.loadAsync({
@@ -38,6 +41,29 @@ const Stack = createNativeStackNavigator();
 
 
 function AuthenticatedApp() {
+  const { isAuthenticated } = useContext(AuthContext);
+  const [hasJournals, setHasJournals] = useState(false);
+
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  useEffect(() => {
+    const userId = auth.currentUser?.uid;
+    if (userId) {
+      const journalCollectionRef = collection(db, 'users', userId, 'journals');
+      const journalQuery = query(journalCollectionRef);
+      getDocs(journalQuery)
+        .then((snapshot) => {
+          if (!snapshot.empty) {
+            setHasJournals(true);
+          }
+        })
+        .catch((error) => {
+          console.error('Error checking journal existence:', error);
+        });
+    }
+  }, []);
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -83,7 +109,7 @@ function AuthenticatedApp() {
         tabBarStyle: styles.tabBar
       })}
     >
-      <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }}/>
+      {!hasJournals && <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }} />}
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="StatisticsScreen" component={Home} />
       <Tab.Screen name="AddCircleScreen" component={Home} />
@@ -92,6 +118,7 @@ function AuthenticatedApp() {
     </Tab.Navigator>
   );
 }
+
 
 
 const styles = StyleSheet.create({
