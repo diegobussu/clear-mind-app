@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, AntDesign} from '@expo/vector-icons';
 import { getAuth } from "firebase/auth";
-import { Timestamp, collection, addDoc, getFirestore } from "firebase/firestore";
+import { Timestamp, doc, setDoc, getFirestore } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 import Button from '../../components/Button';
 
@@ -46,26 +46,30 @@ const Mood = () => {
         Alert.alert("Aucune sélection", "Une humeur doit être sélectionnée.");
         return;
       }
-  
+    
       try {
         const userId = auth.currentUser?.uid;
         const moodName = texts[selectedIndex];
-  
+    
         const journalData = {
-          userId: userId,
           moodName: moodName,
           createdAt: Timestamp.now(),
           updatedAt: Timestamp.now()
         };
-  
-        // Ajoutez le nouveau document dans la collection "journals" de l'utilisateur
-        const journalRef = await addDoc(collection(db, "users", userId, "journals"), journalData);
-  
+    
+        // Créez une référence au chemin du journal dans la collection "journals" de l'utilisateur
+        const journalRef = doc(db, "users", userId, "journals", userId);
+    
+        // Utilisez setDoc avec l'option merge:true pour mettre à jour ou ajouter le document
+        await setDoc(journalRef, journalData, { merge: true });
+    
         navigation.navigate('Activity', { moodIndex: selectedIndex, journalID: journalRef.id });
       } catch (error) {
+        console.log(error);
         Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du mood.');
       }
     };
+    
     
 
     const handleImagePress = (index) => {

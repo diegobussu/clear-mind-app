@@ -36,6 +36,8 @@ const Comment = ({ route }) => {
         note: note,
         updatedAt: Timestamp.now()
       });
+
+      navigation.navigate('Home');
     } catch (error) {
       Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout de la note.');
     }
