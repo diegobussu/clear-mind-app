@@ -4,9 +4,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, AntDesign} from '@expo/vector-icons';
 import { getAuth } from "firebase/auth";
-import { Timestamp, doc, setDoc, getFirestore } from "firebase/firestore";
+import { Timestamp, doc, setDoc, getDoc, updateDoc, getFirestore } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 import Button from '../../components/Button';
+import moment from 'moment';
 
 const images = [
   require('../../assets/img/mood/mood-1.png'),
@@ -41,6 +42,7 @@ const Mood = () => {
       setCurrentTime(date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}));
     }, []);
   
+
     const handleStart = async () => {
       if (selectedIndex === null) {
         Alert.alert("Aucune sélection", "Une humeur doit être sélectionnée.");
@@ -51,24 +53,42 @@ const Mood = () => {
         const userId = auth.currentUser?.uid;
         const moodName = texts[selectedIndex];
     
-        const journalData = {
-          moodName: moodName,
-          createdAt: Timestamp.now(),
-          updatedAt: Timestamp.now()
-        };
+        // Obtenir la date actuelle avec Moment.js
+        const currentDate = moment().startOf('day');
+        const currentFormattedDate = currentDate.format('DD-MM-YYYY');
     
-        // Créez une référence au chemin du journal dans la collection "journals" de l'utilisateur
-        const journalRef = doc(db, "users", userId, "journals", userId);
+        // Créer une référence à la date actuelle dans la collection "journals" de l'utilisateur
+        const currentJournalRef = doc(db, "users", userId, "journals", currentFormattedDate);
     
-        // Utilisez setDoc avec l'option merge:true pour mettre à jour ou ajouter le document
-        await setDoc(journalRef, journalData, { merge: true });
+        // Vérifier si un document existe déjà pour la date actuelle
+        const currentJournalSnap = await getDoc(currentJournalRef);
+        if (currentJournalSnap.exists()) {
+          // Un document existe déjà, mettez à jour le mood et la date de mise à jour
+          await updateDoc(currentJournalRef, {
+            moodName: moodName,
+            updatedAt: Timestamp.now()
+          });
+        } else {
+          // Aucun document pour la date actuelle, créer un nouveau document
+          const journalData = {
+            moodName: moodName,
+            createdAt: Timestamp.now(),
+            updatedAt: Timestamp.now()
+          };
+          
+          // Créez une nouvelle référence pour le nouveau journal
+          await setDoc(currentJournalRef, journalData);
+        }
     
-        navigation.navigate('Activity', { moodIndex: selectedIndex, journalID: journalRef.id });
+        navigation.navigate('Activity', { moodIndex: selectedIndex, journalID: currentFormattedDate });
       } catch (error) {
         console.log(error);
         Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du mood.');
       }
     };
+    
+    
+    
     
     
 
