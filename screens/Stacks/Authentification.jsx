@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Splash from '../GetStarted/Splash';
 import Tutorial from '../GetStarted/Tutorial';
 import Login from '../GetStarted/Login';
 import SignUp from '../GetStarted/SignUp';
@@ -13,7 +12,7 @@ const Authentification = () => {
         headerShown: false
       }}
     >
-      <stack.Screen name="Splash" component={Splash} />
+
       <stack.Screen name="Tutorial" component={Tutorial} />
       <stack.Screen name="Login" component={Login} />
       <stack.Screen name="SignUp" component={SignUp} />

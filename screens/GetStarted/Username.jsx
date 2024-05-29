@@ -45,7 +45,7 @@ const Username = () => {
 
     try {
       // Mettre à jour le document de l'utilisateur avec le nom d'utilisateur
-      await updateDoc(doc(db, 'users', userId), {
+      await updateDoc(doc(db, 'user', userId), {
         username: userName
       });
   
