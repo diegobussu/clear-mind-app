@@ -82,8 +82,8 @@ const Activity = ({ route }) => {
         activities: activities,
         updatedAt: Timestamp.now()
       });
-  
-      navigation.navigate('Emotion', { moodIndex });
+
+      navigation.navigate('Emotion', { moodIndex, journalID: journalRef.id });
     } catch (error) {
       Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout des activités.');
     }
@@ -229,8 +229,8 @@ const Activity = ({ route }) => {
       </View>
       <View style={styles.rectangle} className="mt-5">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
-        <Text style={styles.mainText}>Aujourd'hui, je me sens</Text>
-        <Text style={styles.moodText}>{mood}</Text>
+        <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
+        <Text className="font-sf-bold text-xl mt-3">{mood}</Text>
       </View>
       <View style={styles.activities} {...panResponder.panHandlers}>
         <Text style={styles.changedText}>Quoi de neuf ?</Text>
@@ -272,17 +272,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     marginBottom: 20
-  },
-  mainText: {
-    fontFamily: 'SF-Regular',
-    fontSize: 20,
-    textAlign: 'center',
-    marginBottom: 10
-  },
-  moodText: {
-    fontFamily: 'SF-Bold',
-    fontSize: 20,
-    textAlign: 'center'
   },
   changedText: {
     fontFamily: 'SF-Medium',

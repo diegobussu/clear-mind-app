@@ -24,104 +24,17 @@ const Comment = ({ route }) => {
 
   const auth = getAuth(app);
   const db = getFirestore(app);
+  const userId = auth.currentUser?.uid;
 
   const continueHandler = async () => {
-    try {
-      const userId = auth.currentUser?.uid;
-      await updateDoc(doc(db, 'diary', userId), {
-        updatedAt: Timestamp.now()
-      });
-    
-      navigation.navigate('Comment');
-    } catch (error) {
-      Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout des émotions.');
-    }
+
+    const journalID = route.params.journalID;
+    const journalRef = doc(db, 'users', userId, 'journals', journalID);
+    await updateDoc(journalRef, {
+      emotions: emotions,
+      updatedAt: Timestamp.now()
+    });
   };
-  
-
-  const iconsList = [
-    [
-      require('../../assets/img/emotions/happy.png'),
-      require('../../assets/img/emotions/excited.png'),
-      require('../../assets/img/emotions/relaxed.png'),
-      require('../../assets/img/emotions/satisfied.png'),
-      require('../../assets/img/emotions/sleep.png'),
-      require('../../assets/img/emotions/angry.png'),
-      require('../../assets/img/emotions/stress.png'),
-      require('../../assets/img/emotions/anxious.png'),
-      require('../../assets/img/emotions/sad.png')
-    ],
-    [
-      require('../../assets/img/emotions/bored.png'),
-      require('../../assets/img/emotions/uncertain.png'),
-      require('../../assets/img/emotions/desperate.png'),
-      require('../../assets/img/emotions/confused.png'),
-      require('../../assets/img/emotions/frustrated.png'),
-      require('../../assets/img/emotions/depressed.png'),
-      require('../../assets/img/emotions/sick.png'),
-      require('../../assets/img/emotions/sad1.png'),
-      require('../../assets/img/emotions/inspired.png')
-    ]
-  ];
-
-  const iconNamesList = [
-    [
-      'Heureux',
-      'Excité',
-      'Détendu',
-      'Satisfait',
-      'Fatigué',
-      'Enervé',
-      'Stressé',
-      'Anxieux',
-      'Triste'
-    ],
-    [
-      'Ennuyé',
-      'Incertain',
-      'Désespéré',
-      'Confus',
-      'Frustré',
-      'Déprimé',
-      'Malade',
-      'Ému',
-      'Inspiré',
-    ]
-  ];
-
-  const renderIconGrid = () => {
-    const iconRows = [];
-    const currentIcons = iconsList[iconListIndex];
-    const currentIconNames = iconNamesList[iconListIndex];
-    for (let i = 0; i < 3; i++) {
-      const iconsInRow = [];
-      for (let j = 0; j < 3; j++) {
-        const index = i * 3 + j;
-        const icon = currentIcons[index];
-        const isSelected = iconListIndex === 0 ? selectedIcons1[index] : selectedIcons2[index];
-        const iconSource = icon;
-        const containerStyle = [styles.iconWrapper, isSelected ? styles.selectedIconWrapper : null];
-        const iconStyle = styles.iconImage;
-        const textStyle = isSelected ? styles.selectedIconName : styles.iconName;
-
-        iconsInRow.push(
-          <TouchableOpacity key={index} onPress={() => toggleIcon(index)} style={styles.iconContainer}>
-            <View style={containerStyle}>
-              <Image source={iconSource} style={iconStyle} />
-            </View>
-            <Text style={textStyle}>{currentIconNames[index]}</Text>
-          </TouchableOpacity>
-        );
-      }
-      iconRows.push(
-        <View key={i} style={styles.iconRow}>
-          {iconsInRow}
-        </View>
-      );
-    }
-    return iconRows;
-  };
-
 
 
   return (
@@ -145,8 +58,8 @@ const Comment = ({ route }) => {
       </View>
       <View style={styles.rectangle} className="mt-5">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
-        <Text style={styles.mainText}>Aujourd'hui, je me sens</Text>
-        <Text style={styles.moodText}>{mood}</Text>
+        <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
+        <Text className="font-sf-bold text-xl mt-3">{mood}</Text>
       </View>
       <Button text="Terminer" onPress={continueHandler} />
     </SafeAreaView>
@@ -165,17 +78,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     marginBottom: 20
-  },
-  mainText: {
-    fontFamily: 'SF-Regular',
-    fontSize: 20,
-    textAlign: 'center',
-    marginBottom: 10
-  },
-  moodText: {
-    fontFamily: 'SF-Bold',
-    fontSize: 20,
-    textAlign: 'center'
   }
 });
 

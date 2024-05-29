@@ -52,15 +52,39 @@ const Emotion = ({ route }) => {
   const db = getFirestore(app);
 
   const continueHandler = async () => {
-    const selectedCount = iconListIndex === 0 ? selectedIcons1.filter(icon => icon).length : selectedIcons2.filter(icon => icon).length;
+    const selectedIcons = iconListIndex === 0 ? selectedIcons1 : selectedIcons2;
+    const selectedCount = selectedIcons.filter(icon => icon).length;
   
     if (selectedCount === 0) {
       Alert.alert("Aucune sélection", "Une émotion doit être sélectionnée.");
       return;
     }
 
-    navigation.navigate('Comment', { moodIndex });
+    const userId = auth.currentUser?.uid;
+    // Tableau pour stocker les noms des icônes sélectionnées
+    const emotions = [];
+
+    // Ajouter les noms des icônes sélectionnées au tableau
+    selectedIcons.forEach((isSelected, index) => {
+      if (isSelected) {
+        const currentIconNames = iconNamesList[iconListIndex];
+        emotions.push(currentIconNames[index]);
+      }
+    });
+
+  
+    const journalID = route.params.journalID;
+    const journalRef = doc(db, 'users', userId, 'journals', journalID);
+    await updateDoc(journalRef, {
+      emotions: emotions,
+      updatedAt: Timestamp.now()
+    });
+  
+    navigation.navigate('Comment', { moodIndex, journalID: journalRef.id });
   };
+  
+  
+  
   
   
 
@@ -202,8 +226,8 @@ const Emotion = ({ route }) => {
       </View>
       <View style={styles.rectangle} className="mt-5">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
-        <Text style={styles.mainText}>Aujourd'hui, je me sens</Text>
-        <Text style={styles.moodText}>{mood}</Text>
+        <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
+        <Text className="font-sf-bold text-xl mt-3">{mood}</Text>
       </View>
       <View style={styles.activities} {...panResponder.panHandlers}>
         <Text style={styles.changedText}>Comment te sens-tu ?</Text>
@@ -245,17 +269,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     marginBottom: 20
-  },
-  mainText: {
-    fontFamily: 'SF-Regular',
-    fontSize: 20,
-    textAlign: 'center',
-    marginBottom: 10
-  },
-  moodText: {
-    fontFamily: 'SF-Bold',
-    fontSize: 20,
-    textAlign: 'center'
   },
   changedText: {
     fontFamily: 'SF-Bold',
