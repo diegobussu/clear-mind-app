@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { Timestamp, doc, getFirestore, setDoc } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Timestamp, doc, setDoc, getFirestore } from "firebase/firestore";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,13 +19,11 @@ const SignUp = () => {
   const db = getFirestore(app);
 
   const isEmailValid = (email) => {
-    // Expression régulière pour valider l'email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const isPasswordValid = (password) => {
-    // Expression régulière pour valider le mot de passe
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   };
@@ -47,9 +45,7 @@ const SignUp = () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-    
-      // Enregistrement des données supplémentaires dans Firestore
-      await addDoc(collection(db, "users"), {
+      await setDoc(doc(db, "user", user.uid), {
         email: user.email,
         isPremium: false,
         createdAt: Timestamp.now(),
@@ -57,6 +53,7 @@ const SignUp = () => {
       });
     
     } catch (error) {
+
       if (error.code === "auth/email-already-in-use") {
         setError("Cet e-mail est déjà associé à un compte.");
       } else {
@@ -67,11 +64,6 @@ const SignUp = () => {
 
   return (
     <SafeAreaView className="justify-center px-5 mr-10 ml-10 mt-20">
-        <Ionicons
-            name="arrow-back-circle"
-            size={30} 
-            color={'#6331FF'}
-        />
         <View className="items-center">
           <Image source={Logo} className="mb-10" />
         </View>

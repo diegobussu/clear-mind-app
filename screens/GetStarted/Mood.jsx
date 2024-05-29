@@ -4,6 +4,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, AntDesign} from '@expo/vector-icons';
+import { getAuth } from "firebase/auth";
+import { Timestamp, doc, setDoc, getFirestore } from "firebase/firestore";
+import { app } from "../../firebaseConfig";
 
 const images = [
   require('../../assets/img/mood/mood-1.png'),
@@ -27,7 +30,9 @@ const Mood = () => {
     const [currentDate, setCurrentDate] = useState('');
     const [currentTime, setCurrentTime] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(null);
-    const { firstName } = route.params;
+    const { userName } = route.params;
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
     useEffect(() => {
       const date = new Date();
@@ -36,12 +41,28 @@ const Mood = () => {
       setCurrentTime(date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}));
     }, []);
   
-    const handleStart = () => {
+    const handleStart = async () => {
       if (selectedIndex === null) {
         Alert.alert("Aucune sélection", "Une humeur doit être sélectionnée.");
         return;
       }
-      navigation.navigate('Activity', { moodIndex: selectedIndex });
+
+      try {
+        const userId = auth.currentUser?.uid;
+        const moodName = texts[selectedIndex];
+
+        await setDoc(doc(db, "diary", userId), {
+          userId: userId,
+          moodName: moodName,
+          createdAt: Timestamp.now(),
+          updatedAt: Timestamp.now()
+        });
+
+        navigation.navigate('Activity', { moodIndex: selectedIndex });
+      } catch (error) {
+        console.log(error);
+        Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du mood.');
+      }
     };
 
     const handleImagePress = (index) => {
@@ -90,7 +111,7 @@ const Mood = () => {
             <View className="mb-[150px]"/>
         </View>
         <View className="flex-1 justify-center items-center">
-          <Text className="font-sf-bold text-2xl">Bonjour {firstName} !</Text>
+          <Text className="font-sf-bold text-2xl">Bonjour {userName} !</Text>
           <Text className="font-sf-semibold text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>
           <View style={styles.dateContainer}>
             <View className="flex-row items-center">

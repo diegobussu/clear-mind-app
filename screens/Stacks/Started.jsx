@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Pseudo from '../GetStarted/Pseudo';
+import Username from '../GetStarted/Username';
 import Mood from '../GetStarted/Mood';
 import Activity from '../GetStarted/Activity';
 import Emotion from '../GetStarted/Emotion';
@@ -14,7 +14,7 @@ const Started = () => {
         gestureEnabled: false
       }}
     >
-      <Stack.Screen name="Pseudo" component={Pseudo} />
+      <Stack.Screen name="Username" component={Username} />
       <Stack.Screen name="Mood" component={Mood} />
       <Stack.Screen name="Activity" component={Activity} />
       <Stack.Screen name="Emotion" component={Emotion} />

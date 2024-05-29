@@ -45,8 +45,8 @@ function AuthenticatedApp() {
           let iconName; 
           let iconColor;
 
-          if (route.name === 'HomeScreen') {
-            iconName = 'home';
+          if (route.name === 'Home') {
+            iconName = 'home-outline';
             size = focused ? 30 : 25;
           } else if (route.name === 'StatisticsScreen') {
             iconName = 'stats-chart-outline';

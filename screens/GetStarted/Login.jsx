@@ -29,11 +29,6 @@ const Login = () => {
 
   return (
     <SafeAreaView className="justify-center px-5 mr-10 ml-10 mt-20">
-      <Ionicons
-          name="arrow-back-circle"
-          size={30} 
-          color={'#6331FF'}
-      />
       <View className="items-center">
         <Image source={Logo} className="mb-10" />
       </View>

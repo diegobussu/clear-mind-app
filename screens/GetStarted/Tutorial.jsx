@@ -78,7 +78,7 @@ const Tutorial = () => {
           className="w-[330px] h-[280px]"
           resizeMode="contain"
         />
-        <Text className="mt-12 px-5 text-center font-sf-semibold text-2xl">{texts[currentIndex]}</Text>
+        <Text className="mt-12 px-5 text-center font-sf-semibold text-3xl">{texts[currentIndex]}</Text>
         <Text className="mt-12 px-10 text-center font-sf-thin text-lg">{texts1[currentIndex]}</Text>
         
         <View className="flex-row mt-10 mb-10">
