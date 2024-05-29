@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, AntDesign} from '@expo/vector-icons';
 import { getAuth } from "firebase/auth";
-import { Timestamp, doc, setDoc, getFirestore } from "firebase/firestore";
+import { Timestamp, collection, addDoc, getFirestore } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
-
+import Button from '../../components/Button';
 
 const images = [
   require('../../assets/img/mood/mood-1.png'),
@@ -47,23 +46,27 @@ const Mood = () => {
         Alert.alert("Aucune sélection", "Une humeur doit être sélectionnée.");
         return;
       }
-
+  
       try {
         const userId = auth.currentUser?.uid;
         const moodName = texts[selectedIndex];
-
-        await setDoc(doc(db, "diary", userId), {
+  
+        const journalData = {
           userId: userId,
           moodName: moodName,
           createdAt: Timestamp.now(),
           updatedAt: Timestamp.now()
-        });
-
-        navigation.navigate('Activity', { moodIndex: selectedIndex });
+        };
+  
+        // Ajoutez le nouveau document dans la collection "journals" de l'utilisateur
+        const journalRef = await addDoc(collection(db, "users", userId, "journals"), journalData);
+  
+        navigation.navigate('Activity', { moodIndex: selectedIndex, journalID: journalRef.id });
       } catch (error) {
         Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du mood.');
       }
     };
+    
 
     const handleImagePress = (index) => {
       setSelectedIndex(index);

@@ -12,7 +12,6 @@ const Authentification = () => {
         headerShown: false
       }}
     >
-
       <stack.Screen name="Tutorial" component={Tutorial} />
       <stack.Screen name="Login" component={Login} />
       <stack.Screen name="SignUp" component={SignUp} />

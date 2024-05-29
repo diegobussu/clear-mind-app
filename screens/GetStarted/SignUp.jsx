@@ -45,7 +45,7 @@ const SignUp = () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      await setDoc(doc(db, "user", user.uid), {
+      await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         isPremium: false,
         createdAt: Timestamp.now(),

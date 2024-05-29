@@ -53,6 +53,7 @@ const Activity = ({ route }) => {
   const db = getFirestore(app);
 
 
+  
   const continueHandler = async () => {
     const selectedCount = iconListIndex === 0 ? selectedIcons1.filter(icon => icon).length : selectedIcons2.filter(icon => icon).length;
   
@@ -74,8 +75,10 @@ const Activity = ({ route }) => {
         }
       });
   
-      // Mise à jour du document dans la collection 'diary'
-      await updateDoc(doc(db, 'diary', userId), {
+      // Mise à jour du document dans la collection 'journals' de l'utilisateur
+      const journalID = route.params.journalID; // Récupérez l'identifiant du journal depuis les paramètres de route
+      const journalRef = doc(db, 'users', userId, 'journals', journalID); // Référence au document journal de l'utilisateur
+      await updateDoc(journalRef, {
         activities: activities,
         updatedAt: Timestamp.now()
       });
@@ -85,6 +88,7 @@ const Activity = ({ route }) => {
       Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout des activités.');
     }
   };
+  
   
   
 

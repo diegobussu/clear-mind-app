@@ -45,13 +45,14 @@ const Username = () => {
 
     try {
       // Mettre à jour le document de l'utilisateur avec le nom d'utilisateur
-      await updateDoc(doc(db, 'user', userId), {
+      await updateDoc(doc(db, 'users', userId), {
         username: userName
       });
   
       // Naviguer vers la prochaine étape avec le nom d'utilisateur
       navigation.navigate('Mood', { userName: userName });
     } catch (error) {
+      console.log(error);
       Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du nom.');
     }
   };

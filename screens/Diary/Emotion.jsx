@@ -58,31 +58,10 @@ const Emotion = ({ route }) => {
       Alert.alert("Aucune sélection", "Une émotion doit être sélectionnée.");
       return;
     }
-  
-    try {
-      const userId = auth.currentUser?.uid;
-      const emotions = [];
-    
-      // Construction du tableau d'émotions avec les noms correspondants
-      const currentIconNames = iconNamesList[iconListIndex];
-      const selectedIcons = iconListIndex === 0 ? selectedIcons1 : selectedIcons2;
-      selectedIcons.forEach((isSelected, index) => {
-        if (isSelected) {
-          emotions.push(currentIconNames[index]);
-        }
-      });
-    
-      // Mise à jour du document dans la collection 'diary'
-      await updateDoc(doc(db, 'diary', userId), {
-        emotions: emotions,
-        updatedAt: Timestamp.now()
-      });
-    
-      navigation.navigate('Comment', { moodIndex });
-    } catch (error) {
-      Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout des émotions.');
-    }
+
+    navigation.navigate('Comment', { moodIndex });
   };
+  
   
 
   const iconsList = [
