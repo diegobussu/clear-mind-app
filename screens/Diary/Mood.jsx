@@ -8,6 +8,7 @@ import { getAuth } from "firebase/auth";
 import { Timestamp, doc, setDoc, getFirestore } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 
+
 const images = [
   require('../../assets/img/mood/mood-1.png'),
   require('../../assets/img/mood/mood-2.png'),
@@ -60,7 +61,6 @@ const Mood = () => {
 
         navigation.navigate('Activity', { moodIndex: selectedIndex });
       } catch (error) {
-        console.log(error);
         Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du mood.');
       }
     };

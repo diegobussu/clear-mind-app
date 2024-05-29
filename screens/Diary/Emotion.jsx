@@ -4,6 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { getAuth } from "firebase/auth";
+import { Timestamp, doc, updateDoc, getFirestore } from "firebase/firestore";
+import { app } from "../../firebaseConfig";
 
 const Emotion = ({ route }) => {
   const navigation = useNavigation();
@@ -45,16 +48,42 @@ const Emotion = ({ route }) => {
     setTotalSelectedCount(selectedCount);
   };
 
-  const continueHandler = () => {
-    const selectedCount = iconListIndex === 0 ? selectedIcons1.filter(icon => icon).length : selectedIcons2.filter(icon => icon).length;
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
+  const continueHandler = async () => {
+    const selectedCount = iconListIndex === 0 ? selectedIcons1.filter(icon => icon).length : selectedIcons2.filter(icon => icon).length;
+  
     if (selectedCount === 0) {
-      Alert.alert("Aucune sélection", "Une activité doit être sélectionnée.");
+      Alert.alert("Aucune sélection", "Une émotion doit être sélectionnée.");
       return;
     }
-
-    navigation.navigate('Emotion');
+  
+    try {
+      const userId = auth.currentUser?.uid;
+      const emotions = [];
+    
+      // Construction du tableau d'émotions avec les noms correspondants
+      const currentIconNames = iconNamesList[iconListIndex];
+      const selectedIcons = iconListIndex === 0 ? selectedIcons1 : selectedIcons2;
+      selectedIcons.forEach((isSelected, index) => {
+        if (isSelected) {
+          emotions.push(currentIconNames[index]);
+        }
+      });
+    
+      // Mise à jour du document dans la collection 'diary'
+      await updateDoc(doc(db, 'diary', userId), {
+        emotions: emotions,
+        updatedAt: Timestamp.now()
+      });
+    
+      navigation.navigate('Comment', { moodIndex });
+    } catch (error) {
+      Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout des émotions.');
+    }
   };
+  
 
   const iconsList = [
     [

@@ -134,7 +134,6 @@ export default function App() {
   if (!fontsLoaded) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Loading Fonts...</Text>
       </View>
     );
   }

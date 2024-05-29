@@ -4,6 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { getAuth } from "firebase/auth";
+import { Timestamp, doc, updateDoc, getFirestore } from "firebase/firestore";
+import { app } from "../../firebaseConfig";
+
 
 const Activity = ({ route }) => {
   const navigation = useNavigation();
@@ -45,7 +49,11 @@ const Activity = ({ route }) => {
     setTotalSelectedCount(selectedCount);
   };
 
-  const continueHandler = () => {
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+
+  const continueHandler = async () => {
     const selectedCount = iconListIndex === 0 ? selectedIcons1.filter(icon => icon).length : selectedIcons2.filter(icon => icon).length;
   
     if (selectedCount === 0) {
@@ -53,9 +61,31 @@ const Activity = ({ route }) => {
       return;
     }
   
-    // Envoyer les données à l'écran Emotion
-    navigation.navigate('Emotion', { moodIndex });
+    try {
+      const userId = auth.currentUser?.uid;
+      const activities = [];
+  
+      // Construction du tableau d'activités avec les noms correspondants
+      const currentIconNames = iconNamesList[iconListIndex];
+      const selectedIcons = iconListIndex === 0 ? selectedIcons1 : selectedIcons2;
+      selectedIcons.forEach((isSelected, index) => {
+        if (isSelected) {
+          activities.push(currentIconNames[index]);
+        }
+      });
+  
+      // Mise à jour du document dans la collection 'diary'
+      await updateDoc(doc(db, 'diary', userId), {
+        activities: activities,
+        updatedAt: Timestamp.now()
+      });
+  
+      navigation.navigate('Emotion', { moodIndex });
+    } catch (error) {
+      Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout des activités.');
+    }
   };
+  
   
 
   const iconsList = [
