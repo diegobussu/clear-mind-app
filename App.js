@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthContext, AuthProvider } from "./Authentification";
 import * as Font from 'expo-font';
 import Home from './screens/Home';
+import Setting from './screens/Setting';
 import Started from './screens/Stacks/Started';
 import Authentification from "./screens/Stacks/Authentification";
 import { app } from "./firebaseConfig";
@@ -77,17 +78,17 @@ function AuthenticatedApp() {
           if (route.name === 'Home') {
             iconName = 'home-outline';
             size = focused ? 30 : 25;
-          } else if (route.name === 'StatisticsScreen') {
+          } else if (route.name === 'Data') {
             iconName = 'stats-chart-outline';
             size = focused ? 30 : 25;
-          } else if (route.name === 'AddCircleScreen') {
+          } else if (route.name === 'Journal') {
             iconName = 'add-circle';
             size = 60;
             focused = true; // Always keep AddCircleScreen focused
-          } else if (route.name === 'NoteScreen') {
+          } else if (route.name === 'Ressource') {
             iconName = 'document-text-outline';
             size = focused ? 30 : 25;
-          } else if (route.name === 'SettingsScreen') {
+          } else if (route.name === 'Setting') {
             iconName = 'settings-outline';
             size = focused ? 30 : 25;
           }
@@ -114,10 +115,10 @@ function AuthenticatedApp() {
     >
       {!hasJournals && <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }} />}
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="StatisticsScreen" component={Home} />
-      <Tab.Screen name="AddCircleScreen" component={Home} />
-      <Tab.Screen name="NoteScreen" component={Home} />
-      <Tab.Screen name="SettingsScreen" component={Home} />
+      <Tab.Screen name="Data" component={Home} />
+      <Tab.Screen name="Journal" component={Home} />
+      <Tab.Screen name="Ressource" component={Home} />
+      <Tab.Screen name="Setting" component={Setting} options={{ tabBarStyle: { display: 'none' } }} />
     </Tab.Navigator>
   );
 }
@@ -129,20 +130,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     height: 110,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   defaultIcon: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 10
   },
   addCircleIcon: {
     position: 'absolute',
-    bottom: 10,
-    shadowColor: '#5522AF',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 10,
+    bottom: 10
   },
 });
 
