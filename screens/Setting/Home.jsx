@@ -5,29 +5,62 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { getAuth, signOut} from "firebase/auth";
 import { app } from "../../firebaseConfig";
+import { doc, getFirestore, getDoc } from "firebase/firestore";
 
 const Home = () => {
     const navigation = useNavigation();
     const auth = getAuth(app);
+    const db = getFirestore(app);
+    const userId = auth.currentUser?.uid;
 
-    const handlePress = (item) => {
+    const checkPremiumStatus = async () => {
+        try {
+            const userRef = doc(db, 'users', userId);
+            const userDoc = await getDoc(userRef);
+    
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                return userData.isPremium === true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            return false;
+        }
+    };
+
+    const handlePress = async (item) => {
+        const isPremium = await checkPremiumStatus();
         switch (item) {
-            case "Rappels":
-                navigation.navigate('Rappel');
+            case "Profil":
+                navigation.navigate('Profil');
                 break;
             case "Sécurité":
                 navigation.navigate('Security');
                 break;
             case "Succès":
-                Alert.alert("Cette fonctionnalité est reservée aux premium.");
+                if (isPremium) {
+                    navigation.navigate('Success');
+                } else {
+                    Alert.alert("Cette fonctionnalité est réservée aux utilisateurs premium.");
+                }
                 break;
-            case "Personnalisation":
-                navigation.navigate('Mood');
+            case "Icônes":
+                case "Succès":
+                    if (isPremium) {
+                        navigation.navigate('Icons');
+                    } else {
+                        Alert.alert("Cette fonctionnalité est réservée aux utilisateurs premium.");
+                    }
                 break;
             case "Thèmes":
-                Alert.alert("Cette fonctionnalité est reservée aux premium.");
+                if (isPremium) {
+                    navigation.navigate('Themes');
+                } else {
+                    Alert.alert("Cette fonctionnalité est réservée aux utilisateurs premium.");
+                }
                 break;
-            case "Votre avis":
+            case "Avis":
                 navigation.navigate('Review');
                 break;
             case "Partager":
@@ -101,9 +134,12 @@ const Home = () => {
                 </TouchableOpacity>
 
                 <View className="bg-primary-white rounded-lg p-7 mb-10">
-                    {["Rappels", "Succès", "Thèmes"].map((item, index) => (
+                    {["Thèmes", "Succès", "Icônes"].map((item, index) => (
                         <TouchableOpacity key={index} onPress={() => handlePress(item)}>
                             <View key={index} className="flex-row justify-between items-center mb-4">
+                                {item === "Succès" || item === "Thèmes" || item === "Icônes" ? (
+                                    <Ionicons name="diamond-outline" size={30} color={'#6331FF'} />
+                                ) : null}
                                 <Text className="font-sf-regular text-[18px]">{item}</Text>
                                 <Ionicons name="chevron-forward" size={30} color={'#6331FF'} />
                             </View>
@@ -111,8 +147,10 @@ const Home = () => {
                     ))}
                 </View>
 
+
+
                 <View className="bg-primary-white rounded-lg p-7 mb-10">
-                    {["Personnalisation", "Sécurité", "Votre avis"].map((item, index) => (
+                    {["Profil", "Sécurité", "Avis"].map((item, index) => (
                         <TouchableOpacity key={index} onPress={() => handlePress(item)}>
                             <View key={index} className="flex-row justify-between items-center mb-4">
                                 <Text className="font-sf-regular text-[18px]">{item}</Text>
@@ -133,7 +171,7 @@ const Home = () => {
                     ))}
                 </View>
 
-                <View className="flex-row justify-center space-x-3">
+                <View className="flex-row justify-center space-x-3 mb-10">
                     <Ionicons name="logo-instagram" size={30} color={'#6331FF'} onPress={() => handlePress("Instagram")}/>
                     <Ionicons name="logo-tiktok" size={30} color={'#6331FF'} onPress={() => handlePress("TikTok")}/>
                 </View>

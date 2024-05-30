@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-na
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const Rappel = () => {
+const Icons = () => {
   const navigation = useNavigation();
 
   return (
@@ -17,11 +17,11 @@ const Rappel = () => {
           />
         </TouchableOpacity>
         <View className="items-center">
-          <Text className="font-sf-medium text-[25px]">Rappels</Text>
+          <Text className="font-sf-medium text-[25px]">Icons</Text>
         </View>
       </View>
     </SafeAreaView>
   );
 };
 
-export default Rappel;
+export default Icons;

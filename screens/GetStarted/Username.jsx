@@ -52,7 +52,6 @@ const Username = () => {
       // Naviguer vers la prochaine étape avec le nom d'utilisateur
       navigation.navigate('Mood', { userName: userName });
     } catch (error) {
-      console.log(error);
       Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du nom.');
     }
   };

@@ -3,14 +3,45 @@ import { View, Text, SafeAreaView, TouchableOpacity, Alert, ScrollView } from 'r
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import ButtonWhite from '../../components/ButtonWhite';
+import { getAuth } from "firebase/auth";
+import { doc, getFirestore, updateDoc, Timestamp, getDoc } from "firebase/firestore";
+import { app } from "../../firebaseConfig";
+
 
 const Premium = () => {
   const navigation = useNavigation();
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const userId = auth.currentUser?.uid;
 
-  const subscribe = () => {
-    Alert.alert('Bienvenue chez Clear Mind Premium !');
-    navigation.navigate('Home');
+  const subscribe = async () => {
+    if (userId) {
+      const userDocRef = doc(db, 'users', userId);
+      try {
+        const userDoc = await getDoc(userDocRef);
+        const userData = userDoc.data();
+        
+        if (userData && userData.isPremium) {
+          // Si l'utilisateur est déjà abonné, affiche une alerte
+          Alert.alert('Félicitations', 'Vous êtes déjà abonné à Clear Mind Premium.');
+        } else {
+          // Sinon, met à jour le document
+          Alert.alert('Bienvenue chez Clear Mind Premium !');
+          await updateDoc(userDocRef, {
+            isPremium: true,
+            premiumSince: Timestamp.now(),
+            updateAt: Timestamp.now()
+          });
+          navigation.navigate('Home');
+        }
+      } catch (error) {
+        Alert.alert('Erreur', 'Une erreur s\'est produite lors de la mise à jour de l\'abonnement.');
+      }
+    } else {
+      Alert.alert('Erreur', 'Impossible de trouver l\'utilisateur.');
+    }
   };
+  
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center bg-secondary-white">
