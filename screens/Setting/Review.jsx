@@ -9,7 +9,6 @@ import moment from 'moment';
 
 const Review = () => {
   const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
   const auth = getAuth(app);
@@ -87,7 +86,7 @@ const Review = () => {
         </View>
 
         <View className="bg-white rounded-lg p-7 w-11/12">
-            <Text className="font-sf-bold text-center text-[22px] mb-5">Votre Avis Clear Mind</Text>
+            <Text className="font-sf-bold text-center text-[22px] mb-5">Nous avons besoin de vous !</Text>
             <View className="flex-row justify-center mb-5">
                 {renderRatingStars()}
             </View>

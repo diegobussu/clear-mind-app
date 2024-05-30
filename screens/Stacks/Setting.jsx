@@ -4,6 +4,7 @@ import Mood from '../Setting/Mood';
 import Rappel from '../Setting/Rappel';
 import Home from '../Setting/Home';
 import Review from '../Setting/Review';
+import Premium from '../Setting/Premium';
 
 const stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ const SettingStack = () => {
       <stack.Screen name="Security" component={Security} />
       <stack.Screen name="Mood" component={Mood} />
       <stack.Screen name="Review" component={Review} />
+      <stack.Screen name="Premium" component={Premium} />
     </stack.Navigator>
   );
 };
