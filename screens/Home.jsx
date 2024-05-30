@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView } from 'react-native';
 
 const Home = () => {
   return (
-    <SafeAreaView className="justify-center px-5 mr-10 ml-10 mt-20">
+    <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <View className="items-center">
         
       </View>

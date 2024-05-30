@@ -7,7 +7,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthContext, AuthProvider } from "./Authentification";
 import * as Font from 'expo-font';
 import Home from './screens/Home';
-import Setting from './screens/Setting';
+import Setting from './screens/Stacks/Setting';
+import Data from './screens/Data';
+import Ressource from './screens/Ressource';
+import Journal from './screens/Journal';
 import Started from './screens/Stacks/Started';
 import Authentification from "./screens/Stacks/Authentification";
 import { app } from "./firebaseConfig";
@@ -115,9 +118,9 @@ function AuthenticatedApp() {
     >
       {!hasJournals && <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }} />}
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Data" component={Home} />
-      <Tab.Screen name="Journal" component={Home} />
-      <Tab.Screen name="Ressource" component={Home} />
+      <Tab.Screen name="Data" component={Data} options={{ tabBarStyle: { display: 'none' } }} />
+      <Tab.Screen name="Journal" component={Journal} />
+      <Tab.Screen name="Ressource" component={Ressource} options={{ tabBarStyle: { display: 'none' } }} />
       <Tab.Screen name="Setting" component={Setting} options={{ tabBarStyle: { display: 'none' } }} />
     </Tab.Navigator>
   );
