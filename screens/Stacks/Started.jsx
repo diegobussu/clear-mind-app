@@ -4,6 +4,8 @@ import Mood from '../Diary/Mood';
 import Activity from '../Diary/Activity';
 import Emotion from '../Diary/Emotion';
 import Comment from '../Diary/Comment';
+import Home from '../Home';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,7 @@ const Started = () => {
       <Stack.Screen name="Activity" component={Activity} />
       <Stack.Screen name="Emotion" component={Emotion} />
       <Stack.Screen name="Comment" component={Comment} />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 };

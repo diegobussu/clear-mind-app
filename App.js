@@ -5,38 +5,24 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthContext, AuthProvider } from "./Authentification";
-import * as Font from 'expo-font';
-import Home from './screens/Home';
-import Setting from './screens/Stacks/Setting';
-import Data from './screens/Data';
-import Ressource from './screens/Ressource';
-import Journal from './screens/Journal';
-import Started from './screens/Stacks/Started';
-import Authentification from "./screens/Stacks/Authentification";
 import { app } from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, getDocs } from "firebase/firestore";
+import * as Font from 'expo-font';
+
+import Home from './screens/Home';
+import Setting from './screens/Stacks/Setting';
+
+import Started from './screens/Stacks/Started';
+import Authentification from "./screens/Stacks/Authentification";
 
 async function loadFonts() {
   await Font.loadAsync({
-    'SF-Black': require('./assets/fonts/SF-Pro-Text-Black.otf'),
-    'SF-BlackItalic': require('./assets/fonts/SF-Pro-Text-BlackItalic.otf'),
-    'SF-Bold': require('./assets/fonts/SF-Pro-Text-Bold.otf'),
-    'SF-BoldItalic': require('./assets/fonts/SF-Pro-Text-BoldItalic.otf'),
-    'SF-Heavy': require('./assets/fonts/SF-Pro-Text-Heavy.otf'),
-    'SF-HeavyItalic': require('./assets/fonts/SF-Pro-Text-HeavyItalic.otf'),
-    'SF-Light': require('./assets/fonts/SF-Pro-Text-Light.otf'),
-    'SF-LightItalic': require('./assets/fonts/SF-Pro-Text-LightItalic.otf'),
-    'SF-Medium': require('./assets/fonts/SF-Pro-Text-Medium.otf'),
-    'SF-MediumItalic': require('./assets/fonts/SF-Pro-Text-MediumItalic.otf'),
-    'SF-Regular': require('./assets/fonts/SF-Pro-Text-Regular.otf'),
-    'SF-RegularItalic': require('./assets/fonts/SF-Pro-Text-RegularItalic.otf'),
-    'SF-Semibold': require('./assets/fonts/SF-Pro-Text-Semibold.otf'),
-    'SF-SemiboldItalic': require('./assets/fonts/SF-Pro-Text-SemiboldItalic.otf'),
-    'SF-Text-Thin': require('./assets/fonts/SF-Pro-Text-Thin.otf'),
-    'SF-ThinItalic': require('./assets/fonts/SF-Pro-Text-ThinItalic.otf'),
-    'SF-Ultralight': require('./assets/fonts/SF-Pro-Text-Ultralight.otf'),
-    'SF-UltralightItalic': require('./assets/fonts/SF-Pro-Text-UltralightItalic.otf'),
+    'SF-Bold': require('./assets/fonts/Quicksand-Bold.ttf'),
+    'SF-Light': require('./assets/fonts/Quicksand-Light.ttf'),
+    'SF-Medium': require('./assets/fonts/Quicksand-Medium.ttf'),
+    'SF-Regular': require('./assets/fonts/Quicksand-Regular.ttf'),
+    'SF-SemiBold': require('./assets/fonts/Quicksand-SemiBold.ttf')
   });
 }
 
@@ -87,7 +73,7 @@ function AuthenticatedApp() {
           } else if (route.name === 'Journal') {
             iconName = 'add-circle';
             size = 60;
-            focused = true; // Always keep AddCircleScreen focused
+            focused = true;
           } else if (route.name === 'Ressource') {
             iconName = 'document-text-outline';
             size = focused ? 30 : 25;
@@ -96,11 +82,10 @@ function AuthenticatedApp() {
             size = focused ? 30 : 25;
           }
 
-          // Determine the icon color based on its state (active/inactive)
           if (focused) {
-            iconColor = "#6331FF"; // Active
+            iconColor = "#6331FF";
           } else {
-            iconColor = "#828282"; // Inactive
+            iconColor = "#828282";
           }
 
           const iconStyle = route.name === 'AddCircleScreen' ? styles.addCircleIcon : styles.defaultIcon;
@@ -118,10 +103,10 @@ function AuthenticatedApp() {
     >
       {!hasJournals && <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }} />}
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Data" component={Data} options={{ tabBarStyle: { display: 'none' } }} />
-      <Tab.Screen name="Journal" component={Journal} />
-      <Tab.Screen name="Ressource" component={Ressource} options={{ tabBarStyle: { display: 'none' } }} />
-      <Tab.Screen name="Setting" component={Setting} options={{ tabBarStyle: { display: 'none' } }} />
+      <Tab.Screen name="Data" component={Home} />
+      <Tab.Screen name="Journal" component={Home} />
+      <Tab.Screen name="Ressource" component={Home} />
+      <Tab.Screen name="Setting" component={Setting} />
     </Tab.Navigator>
   );
 }
