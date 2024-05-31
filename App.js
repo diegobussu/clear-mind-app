@@ -10,7 +10,10 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, collection, query, getDocs } from "firebase/firestore";
 import * as Font from 'expo-font';
 
-import Home from './screens/Home';
+import Home from './screens/Stacks/Home';
+import Data from './screens/Stacks/Data';
+import Journal from './screens/Stacks/Journal';
+import Ressource from './screens/Stacks/Ressource';
 import Setting from './screens/Stacks/Setting';
 
 import Started from './screens/Stacks/Started';
@@ -103,9 +106,9 @@ function AuthenticatedApp() {
     >
       {!hasJournals && <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }} />}
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Data" component={Home} />
-      <Tab.Screen name="Journal" component={Home} />
-      <Tab.Screen name="Ressource" component={Home} />
+      <Tab.Screen name="Data" component={Data} />
+      <Tab.Screen name="Journal" component={Journal} />
+      <Tab.Screen name="Ressource" component={Ressource} />
       <Tab.Screen name="Setting" component={Setting} />
     </Tab.Navigator>
   );

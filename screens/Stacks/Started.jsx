@@ -4,7 +4,7 @@ import Mood from '../Diary/Mood';
 import Activity from '../Diary/Activity';
 import Emotion from '../Diary/Emotion';
 import Comment from '../Diary/Comment';
-import Home from '../Home';
+import Home from './Home';
 
 
 const Stack = createNativeStackNavigator();

@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 
 const Home = () => {
+
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View className="items-center">
-        
-      </View>
+        <View className="items-center">
+          <Text className="font-sf-medium text-[25px]">Accueil</Text>
+        </View>
     </SafeAreaView>
   );
 };
