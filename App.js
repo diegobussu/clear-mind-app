@@ -34,35 +34,8 @@ const Stack = createNativeStackNavigator();
 
 
 function AuthenticatedApp() {
-  const [hasJournals, setHasJournalsWithEmotions] = useState(false);
-
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  useEffect(() => {
-    const userId = auth.currentUser?.uid;
-    if (userId) {
-      const journalCollectionRef = collection(db, 'users', userId, 'journals');
-      const journalQuery = query(journalCollectionRef);
-      getDocs(journalQuery)
-        .then((snapshot) => {
-          let found = false;
-          snapshot.forEach((doc) => {
-            if (doc.data().hasOwnProperty('note')) {
-              found = true;
-            }
-          });
-          setHasJournalsWithEmotions(found);
-        })
-        .catch((error) => {
-          console.error('Error checking journal existence:', error);
-        });
-    }
-  }, [auth, db]);
-
   return (
     <Tab.Navigator
-      initialRouteName="HomeStack"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName; 
@@ -106,7 +79,6 @@ function AuthenticatedApp() {
         tabBarStyle: styles.tabBar
       })}
     >
-      {!hasJournals && <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }} />}
       <Tab.Screen name="HomeStack" component={Home} />
       <Tab.Screen name="DataStack" component={Data} />
       <Tab.Screen name="JournalStack" component={Journal} />
@@ -136,8 +108,36 @@ const styles = StyleSheet.create({
 });
 
 function MainNavigator() {
+
+  const [hasJournals, setHasJournalsWithEmotions] = useState(false);
+
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  useEffect(() => {
+    const userId = auth.currentUser?.uid;
+    if (userId) {
+      const journalCollectionRef = collection(db, 'users', userId, 'journals');
+      const journalQuery = query(journalCollectionRef);
+      getDocs(journalQuery)
+        .then((snapshot) => {
+          let found = false;
+          snapshot.forEach((doc) => {
+            if (doc.data().hasOwnProperty('note')) {
+              found = true;
+            }
+          });
+          setHasJournalsWithEmotions(found);
+        })
+        .catch((error) => {
+          console.error('Error checking journal existence:', error);
+        });
+    }
+  }, [auth, db]);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
+      {!hasJournals && <Stack.Screen name="Started" component={Started} />}
       <Stack.Screen name="AuthenticatedApp" component={AuthenticatedApp} />
     </Stack.Navigator>
   );

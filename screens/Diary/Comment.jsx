@@ -43,7 +43,7 @@ const Comment = ({ route }) => {
       
       navigation.reset({
         index: 0,
-        routes: [{ name: 'HomeStack' }],
+        routes: [{ name: 'AuthenticatedApp' }],
       });
 
     } catch (error) {
@@ -79,7 +79,7 @@ const Comment = ({ route }) => {
       <Text className="font-sf-regular text-2xl mt-10">Note</Text>
       <View className="w-[350px] h-[200px] bg-primary-white rounded-[30px] mt-5 mb-10">
         <TextInput
-          className="text-lg text-[#828282] top-5 left-5 w-100"
+          className="text-lg text-[#828282] top-5 left-5 w-screen"
           placeholder="Ajouter une note..."
           onChangeText={setNote}
           value={note}
