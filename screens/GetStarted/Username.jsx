@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, Text, Image, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, SafeAreaView, Text, Image, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAuth } from "firebase/auth";
-import { doc, getFirestore, updateDoc } from "firebase/firestore";
+import { doc, getFirestore, updateDoc, Timestamp } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 import ButtonWhite from '../../components/ButtonWhite';
 
@@ -21,38 +21,39 @@ const Username = () => {
 
   const handleStart = async () => {
     if (userName.trim() === '') {
-      Alert.alert('Attention', 'Le nom ne peut pas être vide.');
+      Alert.alert('Attention', 'Le prénom ne peut pas être vide.');
       return;
     }
 
     if (userName.length < 3) {
-      Alert.alert('Attention', 'Le nom ne peut pas être inférieur à 3 caractères.');
+      Alert.alert('Attention', 'Le prénom ne peut pas être inférieur à 3 caractères.');
       return;
     }
 
     if (userName.length > 20) {
-      Alert.alert('Attention', 'Le nom ne peut pas dépasser 20 caractères.');
+      Alert.alert('Attention', 'Le prénom ne peut pas dépasser 20 caractères.');
       return;
     }
     
     // Vérifier si le nom contient autre chose que des lettres et des chiffres
     const regex = /^[a-zA-Z0-9]*$/;
     if (!regex.test(userName)) {
-      Alert.alert('Attention', 'Le nom ne peut contenir que des lettres et des chiffres.');
+      Alert.alert('Attention', 'Le prénom ne peut contenir que des lettres et des chiffres.');
       return;
     }
 
 
     try {
-      // Mettre à jour le document de l'utilisateur avec le nom d'utilisateur
+      // Mettre à jour le document de l'utilisateur avec le prénom d'utilisateur
       await updateDoc(doc(db, 'users', userId), {
-        username: userName
+        username: userName,
+        updatedAt: Timestamp.now()
       });
   
-      // Naviguer vers la prochaine étape avec le nom d'utilisateur
+      // Naviguer vers la prochaine étape avec le prénom d'utilisateur
       navigation.navigate('Mood', { userName: userName });
     } catch (error) {
-      Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du nom.');
+      Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du prénom.');
     }
   };
 
