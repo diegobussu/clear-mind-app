@@ -67,20 +67,20 @@ function AuthenticatedApp() {
           let iconName; 
           let iconColor;
 
-          if (route.name === 'Home') {
+          if (route.name === 'HomeStack') {
             iconName = 'home-outline';
             size = focused ? 30 : 25;
-          } else if (route.name === 'Data') {
+          } else if (route.name === 'DataStack') {
             iconName = 'stats-chart-outline';
             size = focused ? 30 : 25;
-          } else if (route.name === 'Journal') {
+          } else if (route.name === 'JournalStack') {
             iconName = 'add-circle';
             size = 60;
             focused = true;
-          } else if (route.name === 'Ressource') {
+          } else if (route.name === 'RessourceStack') {
             iconName = 'document-text-outline';
             size = focused ? 30 : 25;
-          } else if (route.name === 'Setting') {
+          } else if (route.name === 'SettingStack') {
             iconName = 'settings-outline';
             size = focused ? 30 : 25;
           }
@@ -105,11 +105,11 @@ function AuthenticatedApp() {
       })}
     >
       {!hasJournals && <Tab.Screen name="Started" component={Started} options={{ tabBarStyle: { display: 'none' } }} />}
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Data" component={Data} />
-      <Tab.Screen name="Journal" component={Journal} />
-      <Tab.Screen name="Ressource" component={Ressource} />
-      <Tab.Screen name="Setting" component={Setting} />
+      <Tab.Screen name="HomeStack" component={Home} />
+      <Tab.Screen name="DataStack" component={Data} />
+      <Tab.Screen name="JournalStack" component={Journal} />
+      <Tab.Screen name="RessourceStack" component={Ressource} />
+      <Tab.Screen name="SettingStack" component={Setting} />
     </Tab.Navigator>
   );
 }
