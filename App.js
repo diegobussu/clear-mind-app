@@ -62,11 +62,13 @@ function AuthenticatedApp() {
 
   return (
     <Tab.Navigator
+      initialRouteName="HomeStack"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName; 
           let iconColor;
-
+          if (route.name === 'Started') {
+          }
           if (route.name === 'HomeStack') {
             iconName = 'home-outline';
             size = focused ? 30 : 25;
