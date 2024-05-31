@@ -69,10 +69,10 @@ const Home = () => {
                 });
                 break;
             case "Nous contacter":
-                Linking.openURL('https://clear-mind.fr/pages/contact.php');
+                Linking.openURL('https://clear-mind.fr/pages/contact');
                 break;
             case "Aide":
-                Linking.openURL('https://clear-mind.fr/pages/help.php');
+                Linking.openURL('https://clear-mind.fr/pages/help');
                 break;
             case "Se déconnecter":
                 Alert.alert(

@@ -57,7 +57,7 @@ const Security = () => {
 
 
         <TouchableOpacity
-          onPress={() => Linking.openURL('https://clear-mind.fr/pages/contact.php')}
+          onPress={() => Linking.openURL('https://clear-mind.fr/pages/contact')}
           className="bg-primary-purple mt-8 py-3 rounded-full shadow flex items-center justify-center w-[250px] mx-auto"
         >
           <Text className="text-white font-sf-regular text-lg">Signaler un problème ?</Text>
