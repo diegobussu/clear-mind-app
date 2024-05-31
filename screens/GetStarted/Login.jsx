@@ -20,7 +20,6 @@ const Login = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, username, password)
       .then(() => {
-        navigation.navigate("AuthenticatedApp");
       })
       .catch((error) => {
         setError("Identifiants ou mot de passe incorrects");
