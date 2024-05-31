@@ -67,7 +67,7 @@ const Comment = ({ route }) => {
               />
           </TouchableOpacity>
       </View>
-      <View style={styles.rectangle} className="mt-[50px]">
+      <View style={styles.rectangle} className="mt-[70px]">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
         <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
         <Text className="font-sf-bold text-xl mt-3">{mood}</Text>

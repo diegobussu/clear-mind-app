@@ -212,7 +212,7 @@ const Emotion = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View className="flex-row mt-10">
+      <View className="flex-row">
           <TouchableOpacity onPress={() => navigation.goBack()}>
               <Ionicons
                   name="arrow-back-circle"
