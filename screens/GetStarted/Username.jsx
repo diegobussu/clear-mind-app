@@ -64,35 +64,18 @@ const Username = () => {
           className="w-[330px] h-[280px] mb-5"
           resizeMode="contain"
         />
-        <Text className="text-center font-sf-semibold text-2xl mb-10">{text}</Text>
+        <Text className="text-center font-sf-medium text-2xl mb-10">{text}</Text>
         <TextInput
-          style={styles.input}
-          placeholder="Nom"
-          placeholderTextColor="#C6A9FF"
+          placeholder="Prénom"
+          placeholderTextColor="#6331FF"
           onChangeText={text => setUserName(text)}
           value={userName}
-          className="mb-[120px]"
+          className="text-center bg-[#F2EDFF] p-3 mb-[120px] w-[250px] font-sf-medium text-[16px] rounded-[15px] border border-[#6331FF]"
         />
         <ButtonWhite text="Continuer" onPress={handleStart} />
       </View>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: '#F2EDFF',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    width: 250,
-    fontFamily: 'SF-Regular',
-    fontSize: 16,
-    backgroundColor: '#F9F9FF',
-    color: '#000'
-  }
-});
 
 export default Username;
