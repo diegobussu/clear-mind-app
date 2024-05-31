@@ -35,7 +35,7 @@ const Emotion = ({ route }) => {
     const selectedCount = totalSelectedCount + (isSelected ? -1 : 1);
   
     if (selectedCount > 3) {
-      Alert.alert("Limite atteinte", "Vous ne pouvez sélectionner que jusqu'à 3 activités.");
+      Alert.alert("Limite atteinte", "Vous ne pouvez sélectionner que jusqu'à 3 émotions.");
       return;
     }
   
