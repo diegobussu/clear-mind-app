@@ -40,8 +40,12 @@ const Comment = ({ route }) => {
         note: note,
         updatedAt: Timestamp.now()
       });
+      
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HomeStack' }],
+      });
 
-      navigation.navigate('Home');
     } catch (error) {
       Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout de la note.');
     }
