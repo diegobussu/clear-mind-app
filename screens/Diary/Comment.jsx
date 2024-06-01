@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } fro
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import { getAuth } from "firebase/auth";
 import { Timestamp, doc, updateDoc, getFirestore } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
