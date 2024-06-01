@@ -116,16 +116,7 @@ const Profil = () => {
 
     return (
         <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-            <View className="absolute top-20 left-50 flex-row items-center">
-                <TouchableOpacity className="top-0 right-20" onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back-circle" size={40} color={'#6331FF'} />
-                </TouchableOpacity>
-                <View className="items-center mr-10">
-                    <Text className="font-sf-medium text-[25px]">Profil</Text>
-                </View>
-            </View>
-
-            <View className="bg-primary-white rounded-[30px] items-center px-5 py-5 mt-20">
+            <View className="bg-primary-white rounded-[30px] items-center px-5 py-5">
                 {userData ? (
                     <>
                         {items.map((item, index) => (

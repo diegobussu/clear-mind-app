@@ -74,13 +74,7 @@ const Review = () => {
 
 
   return (
-    <SafeAreaView className="flex-1 justify-center items-center bg-secondary-purple">
-        <View className="flex-row items-center absolute top-20 left-10 mb-5 mt-5">
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Ionicons name="arrow-back-circle" size={40} color={'#FFF'} />
-          </TouchableOpacity>
-        </View>
-
+    <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
         <View className="bg-white rounded-lg p-7 w-11/12">
             <Text className="font-sf-bold text-center text-[22px] mb-5">Nous avons besoin de vous !</Text>
             <View className="flex-row justify-center mb-5">

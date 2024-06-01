@@ -75,17 +75,8 @@ const Security = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View className="flex-row items-center mb-10 mt-5">
-        <TouchableOpacity className="top-0 right-20" onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back-circle" size={40} color={'#6331FF'} />
-        </TouchableOpacity>
-        <View className="items-center mr-10">
-            <Text className="font-sf-medium text-[25px]">Sécurité</Text>
-        </View>
-      </View>
-
       <ScrollView contentContainerStyle={{ paddingVertical: 20, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
-        <View className="bg-primary-white rounded-[30px] px-10 py-5 mb-5">
+        <View className="bg-primary-white rounded-[30px] px-10 py-5 mb-5 mt-20">
           <TouchableOpacity onPress={() => setEmailModalVisible(true)}>
             <View className="flex-row justify-between items-center mb-10">
               <Text className="font-sf-regular text-[20px] p-2">Modifier votre email</Text>

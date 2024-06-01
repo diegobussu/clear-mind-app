@@ -8,18 +8,6 @@ const Succès = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View className="flex-row items-center mb-5 mt-5">
-        <TouchableOpacity className="top-0 right-20" onPress={() => navigation.goBack()}>
-          <Ionicons
-            name="arrow-back-circle"
-            size={40}
-            color={'#6331FF'}
-          />
-        </TouchableOpacity>
-        <View className="items-center">
-          <Text className="font-sf-medium text-[25px]">Succès</Text>
-        </View>
-      </View>
     </SafeAreaView>
   );
 };

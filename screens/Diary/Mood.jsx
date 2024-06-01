@@ -119,23 +119,6 @@ const Mood = () => {
 
     return (
       <SafeAreaView className="flex-1 justify-center px-5 bg-secondary-white">
-        <View className="flex-row mt-10">
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons
-                    name="arrow-back-circle"
-                    size={40} 
-                    color={'#6331FF'}
-                />
-            </TouchableOpacity>
-            <Text className="flex-1 font-sf-bold text-xl mt-2 text-center">1/4</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Username')}>
-                <Ionicons
-                    name="close-circle"
-                    size={40} 
-                    color={'#6331FF'}
-                />
-            </TouchableOpacity>
-        </View>
         <View className="flex-1 justify-center items-center mt-[50px]">
           <Text className="font-sf-bold text-[28px]">Bonjour {userName},</Text>
           <Text className="font-sf-regular text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>

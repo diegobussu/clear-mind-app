@@ -212,23 +212,6 @@ const Emotion = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View className="flex-row">
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Ionicons
-                  name="arrow-back-circle"
-                  size={40} 
-                  color={'#6331FF'}
-              />
-          </TouchableOpacity>
-          <Text className="flex-1 font-sf-bold text-xl mt-2 text-center">3/4</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Username')}>
-              <Ionicons
-                  name="close-circle"
-                  size={40} 
-                  color={'#6331FF'}
-              />
-          </TouchableOpacity>
-      </View>
       <View style={styles.rectangle} className="mt-5">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
         <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
