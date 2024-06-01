@@ -120,8 +120,8 @@ const Mood = () => {
     return (
       <SafeAreaView className="flex-1 justify-center px-5 bg-secondary-white">
         <View className="flex-1 justify-center items-center mt-[50px]">
-          <Text className="font-sf-bold text-[28px]">Bonjour {userName},</Text>
-          <Text className="font-sf-regular text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>
+          <Text className="font-Qs-SemiBold text-[28px]">Bonjour {userName},</Text>
+          <Text className="font-Qs-Medium text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>
           <View style={styles.dateContainer}>
             <View className="flex-row items-center">
                 <Ionicons
@@ -129,14 +129,14 @@ const Mood = () => {
                   size={20}
                   color='#6331FF'
                 />
-                <Text className="text-primary-purple ml-2 text-lg font-sf-regular underline">{currentDate}</Text>
+                <Text className="text-primary-purple ml-2 text-lg font-Qs-Medium underline">{currentDate}</Text>
                 <View style={{marginRight: 40}} />
                 <AntDesign
                   name="clockcircleo"
                   size={20}
                   color='#6331FF'
                 />
-                <Text className="text-primary-purple ml-2 text-lg font-sf-regular underline">{currentTime}</Text>
+                <Text className="text-primary-purple ml-2 text-lg font-Qs-Medium underline">{currentTime}</Text>
             </View>
           </View>
           <FlatList

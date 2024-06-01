@@ -79,21 +79,21 @@ const Security = () => {
         <View className="bg-primary-white rounded-[30px] px-10 py-5 mb-5 mt-20">
           <TouchableOpacity onPress={() => setEmailModalVisible(true)}>
             <View className="flex-row justify-between items-center mb-10">
-              <Text className="font-sf-regular text-[20px] p-2">Modifier votre email</Text>
+              <Text className="font-Qs-SemiBold text-[20px] p-2">Modifier votre email</Text>
               <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={handleChangePassword}>
             <View className="flex-row justify-between items-center mb-10">
-              <Text className="font-sf-regular text-[20px] p-2">Modifier votre mot de passe</Text>
+              <Text className="font-Qs-SemiBold text-[20px] p-2">Modifier votre mot de passe</Text>
               <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => setDeleteModalVisible(true)}>
             <View className="flex-row justify-between items-center mb-10">
-              <Text className="font-sf-regular text-[20px] p-2">Supprimer votre compte</Text>
+              <Text className="font-Qs-SemiBold text-[20px] p-2">Supprimer votre compte</Text>
               <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
             </View>
           </TouchableOpacity>
@@ -103,7 +103,7 @@ const Security = () => {
           onPress={() => Linking.openURL('https://clear-mind.fr/pages/contact')}
           className="bg-primary-purple mt-8 py-3 rounded-full shadow flex items-center justify-center w-[250px] mx-auto"
         >
-          <Text className="text-white font-sf-regular text-lg">Signaler un problème ?</Text>
+          <Text className="text-white font-Qs-SemiBold text-lg">Signaler un problème ?</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -120,17 +120,17 @@ const Security = () => {
               placeholderTextColor="#6331FF"
               value={newEmail}
               onChangeText={formatNewEmail}
-              className="text-primary-purple bg-[#F2EDFF] font-sf-medium text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
+              className="text-primary-purple bg-[#F2EDFF] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
             />
             <TouchableOpacity onPress={handleChangeEmail}>
               <View className="flex-row justify-between items-center mb-5">
-                <Text className="font-sf-medium text-[20px] p-2">Confirmer</Text>
+                <Text className="font-Qs-SemiBold text-[20px] p-2">Confirmer</Text>
                 <Ionicons name="checkmark-circle" size={30} color={'#6331FF'}/>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setEmailModalVisible(false)}>
               <View className="flex-row justify-between items-center">
-                <Text className="font-sf-medium text-[20px] p-2">Annuler</Text>
+                <Text className="font-Qs-SemiBold text-[20px] p-2">Annuler</Text>
                 <Ionicons name="close-circle" size={30} color={'#6331FF'}/>
               </View>
             </TouchableOpacity>
@@ -152,17 +152,17 @@ const Security = () => {
               secureTextEntry
               value={password}
               onChangeText={setPassword}
-              className="text-primary-purple bg-[#F2EDFF] font-sf-medium text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
+              className="text-primary-purple bg-[#F2EDFF] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
             />
             <TouchableOpacity onPress={handleDeleteAccount}>
               <View className="flex-row justify-between items-center mb-5">
-                <Text className="font-sf-medium text-[20px] p-2">Confirmer</Text>
+                <Text className="font-Qs-SemiBold text-[20px] p-2">Confirmer</Text>
                 <Ionicons name="checkmark-circle" size={30} color={'#6331FF'}/>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setDeleteModalVisible(false)}>
               <View className="flex-row justify-between items-center">
-                <Text className="font-sf-medium text-[20px] p-2">Annuler</Text>
+                <Text className="font-Qs-SemiBold text-[20px] p-2">Annuler</Text>
                 <Ionicons name="close-circle" size={30} color={'#6331FF'}/>
               </View>
             </TouchableOpacity>

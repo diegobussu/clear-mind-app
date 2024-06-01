@@ -67,9 +67,9 @@ const SignUp = () => {
         <View className="items-center">
           <Image source={Logo} className="mb-10" />
         </View>
-        <Text className="text-4xl mb-5 font-sf-medium text-center">Inscription</Text>
+        <Text className="text-4xl mb-5 font-Qs-Medium text-center">Inscription</Text>
         <TextInput
-          className="border border-gray-300 p-2 mb-2 rounded"
+          className="border border-gray-300 p-2 mb-2 rounded font-Qs-Regular"
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
@@ -78,7 +78,7 @@ const SignUp = () => {
         />
         <View className="flex-row items-center border border-gray-300 p-2 mb-2 rounded">
           <TextInput
-            className="flex-1"
+            className="flex-1 font-Qs-Regular"
             placeholder="Mot de passe"
             value={password}
             onChangeText={setPassword}
@@ -90,7 +90,7 @@ const SignUp = () => {
         </View>
         <View className="flex-row items-center border border-gray-300 p-2 mb-10 rounded">
           <TextInput
-            className="flex-1"
+            className="flex-1 font-Qs-Regular"
             placeholder="Confirmer le mot de passe"
             value={passwordConfirm}
             onChangeText={setPasswordConfirm}

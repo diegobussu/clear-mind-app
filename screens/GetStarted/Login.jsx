@@ -31,9 +31,9 @@ const Login = () => {
       <View className="items-center">
         <Image source={Logo} className="mb-10" />
       </View>
-      <Text className="text-4xl mb-5 font-sf-medium text-center">Connexion</Text>
+      <Text className="text-4xl mb-5 font-Qs-Medium text-center">Connexion</Text>
       <TextInput
-        className="border border-gray-300 p-2 mb-2 rounded"
+        className="border border-gray-300 p-2 mb-2 rounded font-Qs-Regular"
         placeholder="Email"
         value={username}
         onChangeText={setUsername}
@@ -42,7 +42,7 @@ const Login = () => {
       />
       <View className="flex-row items-center border border-gray-300 p-2 mb-2 rounded">
         <TextInput
-          className="flex-1"
+          className="flex-1 font-Qs-Regular"
           placeholder="Mot de passe"
           value={password}
           onChangeText={setPassword}
@@ -54,7 +54,7 @@ const Login = () => {
       </View>
       {error ? <Text className="text-red-500 text-center mb-3">{error}</Text> : null}
       <Button text="Connexion" onPress={handleLogin}></Button>
-      <Text className="text-white-purple text-center mt-10">Vous n'avez pas encore de compte ? Inscrivez-vous !</Text>
+      <Text className="font-Qs-SemiBold text-white-purple text-center mt-10">Vous n'avez pas encore de compte ? Inscrivez-vous !</Text>
       <ButtonWhite text="Inscription" onPress={() => navigation.navigate("SignUp")}></ButtonWhite>
     </SafeAreaView>
   );

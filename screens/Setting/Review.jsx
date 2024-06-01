@@ -76,12 +76,12 @@ const Review = () => {
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
         <View className="bg-white rounded-lg p-7 w-11/12">
-            <Text className="font-sf-bold text-center text-[22px] mb-5">Nous avons besoin de vous !</Text>
+            <Text className="font-Qs-Bold text-center text-[22px] mb-5">Nous avons besoin de vous !</Text>
             <View className="flex-row justify-center mb-5">
                 {renderRatingStars()}
             </View>
             <TextInput
-                className="bg-gray-100 p-3 rounded-lg"
+                className="bg-gray-100 p-3 rounded-lg font-Qs-Regular"
                 placeholder="Écrire un avis"
                 value={review}
                 onChangeText={setReview}
@@ -90,7 +90,7 @@ const Review = () => {
                 style={{ textAlignVertical: 'top', height: 80, width: '100%', marginBottom: 10 }}
             />
             <TouchableOpacity onPress={handleSubmit}>
-                <Text className="font-sf-medium text-[20px] mt-3 text-center text-primary-purple">Valider</Text>
+                <Text className="font-Qs-SemiBold text-[20px] mt-3 text-center text-primary-purple">Valider</Text>
             </TouchableOpacity>
         </View>
     </SafeAreaView>

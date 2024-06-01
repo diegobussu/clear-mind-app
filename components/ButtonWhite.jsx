@@ -7,7 +7,7 @@ const ButtonWhite = ({ text, onPress }) => {
       onPress={onPress}
       className="bg-white mt-3 py-2 rounded-full shadow flex items-center justify-center w-48 mx-auto border border-[#B08FFF]"
     >
-      <Text className="text-white-purple font-sf-bold text-lg">{text}</Text>
+      <Text className="text-white-purple font-Qs-SemiBold text-lg">{text}</Text>
     </TouchableOpacity>
   );
 };

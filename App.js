@@ -21,11 +21,11 @@ import Authentification from "./screens/Stacks/Authentification";
 
 async function loadFonts() {
   await Font.loadAsync({
-    'SF-Bold': require('./assets/fonts/Quicksand-Bold.ttf'),
-    'SF-Light': require('./assets/fonts/Quicksand-Light.ttf'),
-    'SF-Medium': require('./assets/fonts/Quicksand-Medium.ttf'),
-    'SF-Regular': require('./assets/fonts/Quicksand-Regular.ttf'),
-    'SF-SemiBold': require('./assets/fonts/Quicksand-SemiBold.ttf')
+    'Qs-Bold': require('./assets/fonts/Quicksand-Bold.ttf'),
+    'Qs-Light': require('./assets/fonts/Quicksand-Light.ttf'),
+    'Qs-Medium': require('./assets/fonts/Quicksand-Medium.ttf'),
+    'Qs-Regular': require('./assets/fonts/Quicksand-Regular.ttf'),
+    'Qs-SemiBold': require('./assets/fonts/Quicksand-SemiBold.ttf')
   });
 }
 

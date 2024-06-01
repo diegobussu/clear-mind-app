@@ -113,11 +113,11 @@ const Premium = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
           {["Déblocage des succès", "Déblocage des thèmes", "Accès à la liste des psychologues", "Accès à la totalité de nos cours personnalisés", "Accès aux données complètes de votre profil", "Exporter son journal en format PDF"].map((index) => (
             <View key={index} className="w-[380px] bg-primary-purple h-[80px] rounded-[10px] justify-center items-center py-2 px-3 mb-10">
-              <Text className="items-center text-white text-center font-sf-bold text-[20px]">{index}</Text>
+              <Text className="items-center text-white text-center font-Qs-Bold text-[20px]">{index}</Text>
             </View>
           ))}
 
-        <Text className="text-center text-[20px] mb-10 mt-10 font-sf-bold text-white-purple">Seulement 3,99 € / mois</Text>
+        <Text className="text-center text-[20px] mb-10 mt-10 font-Qs-SemiBold text-white-purple">Seulement 3,99 € / mois</Text>
 
         <View className="mb-10">
           <ButtonWhite text={userData?.isPremium ? "Se désabonner" : "S'abonner"} onPress={handleSubscriptionChange} />

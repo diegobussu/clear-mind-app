@@ -56,13 +56,13 @@ const Comment = ({ route }) => {
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <View style={styles.rectangle} className="mt-10">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
-        <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
-        <Text className="font-sf-bold text-xl mt-3">{mood}</Text>
+        <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
+        <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
       </View>
-      <Text className="font-sf-regular text-2xl mt-10">Note</Text>
+      <Text className="font-Qs-Medium text-2xl mt-10">Note</Text>
       <View className="w-[350px] h-[200px] bg-primary-white rounded-[30px] mt-5 mb-10">
         <TextInput
-          className="text-lg text-[#828282] top-5 left-5 w-screen"
+          className="font-Qs-Regular text-lg text-[#828282] top-5 left-5 w-screen"
           placeholder="Ajouter une note..."
           onChangeText={setNote}
           value={note}

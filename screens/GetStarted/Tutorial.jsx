@@ -70,7 +70,7 @@ const Tutorial = () => {
   return (
     <SafeAreaView className="flex-1 justify-center px-5 bg-secondary-white" {...panResponder.panHandlers}>
       <TouchableOpacity className="absolute top-20 right-5" onPress={handleSkip}>
-        <Text className="items-center absolute top-0 right-0 m-2 text-primary-purple text-lg">Passer</Text>
+        <Text className="items-center absolute top-0 right-0 m-2 font-Qs-Medium text-primary-purple text-lg">Passer</Text>
       </TouchableOpacity>
       <View className="items-center justify-center mt-10">
         <Image
@@ -78,8 +78,8 @@ const Tutorial = () => {
           className="w-[330px] h-[280px]"
           resizeMode="contain"
         />
-        <Text className="mt-12 px-5 text-center font-sf-semibold text-3xl">{texts[currentIndex]}</Text>
-        <Text className="mt-12 px-10 text-center font-sf-thin text-lg">{texts1[currentIndex]}</Text>
+        <Text className="mt-12 px-5 text-center font-Qs-Bold text-3xl">{texts[currentIndex]}</Text>
+        <Text className="mt-12 px-10 text-center font-Qs-Regular text-lg">{texts1[currentIndex]}</Text>
         
         <View className="flex-row mt-10 mb-10">
           {images.map((_, index) => (

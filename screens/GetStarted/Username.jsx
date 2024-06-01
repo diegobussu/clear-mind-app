@@ -65,13 +65,13 @@ const Username = () => {
           className="w-[330px] h-[280px] mb-5"
           resizeMode="contain"
         />
-        <Text className="text-center font-sf-medium text-2xl mb-10">{text}</Text>
+        <Text className="text-center font-Qs-SemiBold text-2xl mb-10">{text}</Text>
         <TextInput
           placeholder="Prénom"
           placeholderTextColor="#6331FF"
           onChangeText={text => setUserName(text)}
           value={userName}
-          className="text-center text-primary-purple bg-[#F2EDFF] p-3 mb-[120px] w-[250px] font-sf-medium text-[16px] rounded-[15px] border border-primary-purple"
+          className="text-center text-primary-purple bg-[#F2EDFF] p-3 mb-[120px] w-[250px] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple"
         />
         <ButtonWhite text="Continuer" onPress={handleStart} />
       </View>

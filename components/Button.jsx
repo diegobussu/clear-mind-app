@@ -7,7 +7,7 @@ const Button = ({ text, onPress }) => {
       onPress={onPress}
       className="bg-primary-purple mt-8 py-2 rounded-full shadow flex items-center justify-center w-48 mx-auto"
     >
-      <Text className="text-white font-sf-bold text-lg">{text}</Text>
+      <Text className="text-white font-Qs-SemiBold text-lg">{text}</Text>
     </TouchableOpacity>
   );
 };

@@ -7,11 +7,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sf-bold': ['SF-Bold', 'sans-serif'],
-        'sf-light': ['SF-Light', 'sans-serif'],
-        'sf-medium': ['SF-Medium', 'sans-serif'],
-        'sf-regular': ['SF-Regular', 'sans-serif'],
-        'sf-semibold': ['SF-Semibold', 'sans-serif']
+        'Qs-Bold': ['Qs-Bold', 'sans-serif'],
+        'Qs-Light': ['Qs-Light', 'sans-serif'],
+        'Qs-Medium': ['Qs-Medium', 'sans-serif'],
+        'Qs-Regular': ['Qs-Regular', 'sans-serif'],
+        'Qs-SemiBold': ['Qs-SemiBold', 'sans-serif']
       },
       colors: {
         'primary-purple': '#6331FF',

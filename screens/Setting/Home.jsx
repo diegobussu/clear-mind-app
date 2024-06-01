@@ -117,10 +117,10 @@ const Home = () => {
                 <TouchableOpacity onPress={() => navigation.navigate('Premium')}>
                     <View className="bg-[#E2D2FF] rounded-lg p-7 mb-10 w-[300px]">
                         <View className="flex-row justify-center items-center mb-4">
-                            <Text className="font-sf-medium text-[18px] text-primary-purple mr-5">Pass Premium</Text>
+                            <Text className="font-Qs-SemiBold text-[18px] text-primary-purple mr-5">Pass Premium</Text>
                             <Ionicons name="diamond-outline" size={30} color="#6331FF" />
                         </View>
-                        <Text className="font-sf-regular text-[14px] text-center text-primary-purple">Accéder à toutes les fonctionnalités</Text>
+                        <Text className="font-Qs-Regular text-[14px] text-center text-primary-purple">Accéder à toutes les fonctionnalités</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -131,7 +131,7 @@ const Home = () => {
                                 {item === "Succès" || item === "Thèmes" || item === "Icônes" ? (
                                     <Ionicons name="diamond-outline" size={30} color={'#6331FF'} />
                                 ) : null}
-                                <Text className="font-sf-regular text-[18px]">{item}</Text>
+                                <Text className="font-Qs-SemiBold text-[18px]">{item}</Text>
                                 <Ionicons name="chevron-forward" size={30} color={'#6331FF'} />
                             </View>
                         </TouchableOpacity>
@@ -144,7 +144,7 @@ const Home = () => {
                     {["Profil", "Sécurité", "Avis"].map((item, index) => (
                         <TouchableOpacity key={index} onPress={() => handlePress(item)}>
                             <View key={index} className="flex-row justify-between items-center mb-4">
-                                <Text className="font-sf-regular text-[18px]">{item}</Text>
+                                <Text className="font-Qs-SemiBold text-[18px]">{item}</Text>
                                 <Ionicons name="chevron-forward" size={30} color={'#6331FF'} />
                             </View>
                         </TouchableOpacity>
@@ -155,7 +155,7 @@ const Home = () => {
                     {["Partager", "Nous contacter", "Aide"].map((item, index) => (
                         <TouchableOpacity key={index} onPress={() => handlePress(item)}>
                             <View key={index} className="flex-row justify-between items-center mb-4">
-                                <Text className="font-sf-regular text-[18px]">{item}</Text>
+                                <Text className="font-Qs-SemiBold text-[18px]">{item}</Text>
                                 <Ionicons name="chevron-forward" size={30} color={'#6331FF'} />
                             </View>
                         </TouchableOpacity>
@@ -169,7 +169,7 @@ const Home = () => {
 
                 <Button text="Se déconnecter" onPress={() => handlePress("Se déconnecter")} />
 
-                <Text className="font-sf-ultralightitalic text-primary-grey mt-10 text-center text-[14px]">Copyright © 2024 Clear Mind app inc.</Text>
+                <Text className="font-Qs-Regular text-primary-grey mt-10 text-center text-[14px]">Copyright © 2024 Clear Mind app inc.</Text>
             </ScrollView>
         </SafeAreaView>
     );

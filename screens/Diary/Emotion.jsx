@@ -214,12 +214,12 @@ const Emotion = ({ route }) => {
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <View style={styles.rectangle} className="mt-5">
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
-        <Text className="font-sf-regular text-xl mt-3">Aujourd'hui, je me sens</Text>
-        <Text className="font-sf-bold text-xl mt-3">{mood}</Text>
+        <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
+        <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
       </View>
       <View {...panResponder.panHandlers}>
-        <Text className="font-sf-medium text-[22px] text-center mb-5 mt-5">Comment te sens-tu ?</Text>
-        <Text className="font-sf-ultralight text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
+        <Text className="font-Qs-Medium text-[22px] text-center mb-5 mt-5">Comment te sens-tu ?</Text>
+        <Text className="font-Qs-Regular text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
         <View style={styles.iconGrid}>
           {renderIconGrid()}
         </View>

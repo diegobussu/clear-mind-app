@@ -21,7 +21,8 @@ const Started = () => {
           borderBottomWidth: 0,
         },
         headerTitleStyle: {
-          fontSize: 20
+          fontSize: 20,
+          fontFamily: 'Qs-SemiBold',
         },
         headerLeft: () => (
           <Ionicons

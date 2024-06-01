@@ -123,7 +123,7 @@ const Profil = () => {
                             <View key={index} className="flex-row justify-between items-center mb-10">
                                 <View className="flex-row items-center">
                                     <Ionicons name={item.icon} size={30} color={'#6331FF'} />
-                                    <Text className="font-sf-medium text-[20px] p-2">
+                                    <Text className="font-Qs-SemiBold text-[20px] p-2">
                                         {item.label} {item.key === 'isPremium' ? (userData[item.key] ? 'Oui' : 'Non') : userData[item.key]}
                                     </Text>
                                 </View>
@@ -138,7 +138,7 @@ const Profil = () => {
                             <View className="flex-row justify-between items-center mb-10">
                                 <View className="flex-row items-center">
                                     <Ionicons name="calendar-number-outline" size={30} color={'#6331FF'} />
-                                    <Text className="font-sf-medium text-[20px] p-2">
+                                    <Text className="font-Qs-SemiBold text-[20px] p-2">
                                         Depuis le : {userData.premiumSince}
                                     </Text>
                                 </View>
@@ -147,7 +147,7 @@ const Profil = () => {
                         <View className="flex-row justify-between items-center mb-10">
                             <View className="flex-row items-center">
                                 <Ionicons name="calendar-outline" size={30} color={'#6331FF'} />
-                                <Text className="font-sf-medium text-[20px] p-2">
+                                <Text className="font-Qs-SemiBold text-[20px] p-2">
                                     Compte créé le : {userData.createdAt}
                                 </Text>
                             </View>
@@ -171,17 +171,17 @@ const Profil = () => {
                             placeholderTextColor="#6331FF"
                             value={newUsername}
                             onChangeText={setNewUsername}
-                            className="text-primary-purple bg-[#F2EDFF] font-sf-medium text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
+                            className="text-primary-purple bg-[#F2EDFF] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
                         />
                         <TouchableOpacity onPress={changeUsername}>
                             <View className="flex-row justify-between items-center mb-5">
-                            <Text className="font-sf-medium text-[20px] p-2">Confirmer</Text>
+                            <Text className="font-Qs-SemiBold text-[20px] p-2">Confirmer</Text>
                             <Ionicons name="checkmark-circle" size={30} color={'#6331FF'}/>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setUsernameModalVisible(false)}>
                             <View className="flex-row justify-between items-center">
-                            <Text className="font-sf-medium text-[20px] p-2">Annuler</Text>
+                            <Text className="font-Qs-SemiBold text-[20px] p-2">Annuler</Text>
                             <Ionicons name="close-circle" size={30} color={'#6331FF'}/>
                             </View>
                         </TouchableOpacity>
