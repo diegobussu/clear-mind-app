@@ -37,7 +37,7 @@ const Premium = () => {
     
     if (userData.isPremium) {
         Alert.alert(
-            "Confirmation",
+            "Clear Mind Premium",
             "Voulez-vous vraiment vous désabonner ?",
             [
                 {
@@ -52,7 +52,7 @@ const Premium = () => {
                             await updateDoc(userDocRef, {
                                 isPremium: false,
                                 premiumCancel: Timestamp.now(),
-                                updateAt: Timestamp.now()
+                                updatedAt: Timestamp.now()
                             });
                             setUserData(prevState => ({ ...prevState, isPremium: false }));
                             Alert.alert(
@@ -72,7 +72,7 @@ const Premium = () => {
         );
     } else {
         Alert.alert(
-            "Confirmation",
+            "Clear Mind Premium",
             "Voulez-vous vraiment vous abonner ?",
             [
                 {
@@ -87,7 +87,7 @@ const Premium = () => {
                             await updateDoc(userDocRef, {
                                 isPremium: true,
                                 premiumSince: Timestamp.now(),
-                                updateAt: Timestamp.now()
+                                updatedAt: Timestamp.now()
                             });
                             setUserData(prevState => ({ ...prevState, isPremium: true, premiumSince: Timestamp.now().toDate().toLocaleDateString() }));
                             Alert.alert(
@@ -133,7 +133,9 @@ const Premium = () => {
 
         <Text className="text-center text-[20px] mb-10 mt-10 font-sf-bold text-white-purple">Seulement 3,99 € / mois</Text>
 
-        <ButtonWhite text={userData?.isPremium ? "Se désabonner" : "S'abonner"} onPress={handleSubscriptionChange} />
+        <View className="mb-10">
+          <ButtonWhite text={userData?.isPremium ? "Se désabonner" : "S'abonner"} onPress={handleSubscriptionChange} />
+        </View>
       </ScrollView>
       
     </SafeAreaView>
