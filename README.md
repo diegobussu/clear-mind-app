@@ -12,3 +12,15 @@
 Clear Mind, a revolutionary mental health app for young people. Our vision was clear, to provide a safe, inclusive space where everyone could find resources and advice for cultivating a healthy mind in an increasingly anxiety-provoking society.
 
 &nbsp;
+
+<p align="center" margin-bottom="0">
+  <a href="https://clear-mind.fr">
+    <img alt="Clear Mind" width="300" height="auto" src="https://firebasestorage.googleapis.com/v0/b/my-digital-project-aa48f.appspot.com/o/web%2F0.png?alt=media&token=e03bba8a-b358-41ea-b076-5a638a39b95d">
+  </a>
+</p>
+
+## Overview
+
+In this repository you'll find the source code of the Clear Mind mobile app.
+
+Clear Mind is a tiny React-Native app that I developed for my school project.
