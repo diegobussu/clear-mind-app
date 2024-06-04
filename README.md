@@ -15,7 +15,7 @@ Clear Mind, a revolutionary mental health app for young people. Our vision was c
 
 <p align="center" margin-bottom="0">
   <a href="https://clear-mind.fr">
-    <img alt="Clear Mind" width="300" height="auto" src="https://firebasestorage.googleapis.com/v0/b/my-digital-project-aa48f.appspot.com/o/web%2F0.png?alt=media&token=e03bba8a-b358-41ea-b076-5a638a39b95d">
+    <img alt="Clear Mind" width="300" height="auto" src="https://firebasestorage.googleapis.com/v0/b/my-digital-project-aa48f.appspot.com/o/web%2F0.png?alt=media&token=495c50c3-9e45-46c5-aca4-3427b81ff36d">
   </a>
 </p>
 
