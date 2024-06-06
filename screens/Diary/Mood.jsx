@@ -82,7 +82,6 @@ const Mood = () => {
     
         navigation.navigate('Activity', { moodIndex: selectedIndex, journalID: currentFormattedDate });
       } catch (error) {
-        console.log(error);
         Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du mood.');
       }
     };

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text, View, Image, ScrollView } from 'react-native';
+import { SafeAreaView, Text, View, Image, ScrollView, Modal, TouchableOpacity, Alert, TextInput } from 'react-native';
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { doc, getDoc, getFirestore, collection, query, where, getDocs, setDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 import { Ionicons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import moment from 'moment';
 
 const moodImages = [
@@ -22,6 +23,9 @@ const Home = () => {
   const [userNote, setUserNote] = useState('');
   const [userEmotions, setUserEmotions] = useState([]);
   const [userActivities, setUserActivities] = useState([]);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [positiveAffirmations, setPositiveAffirmations] = useState([]);
+  const [showAcceptButton, setShowAcceptButton] = useState(true);
 
   const auth = getAuth(app);
   const db = getFirestore(app);
@@ -83,9 +87,29 @@ const Home = () => {
       }
     };
 
+    const fetchChallenge = async () => {
+      if (userId) {
+        const today = moment().format('DD-MM-YYYY');
+        const q = query(collection(db, 'users', userId, 'challenges'), where('__name__', '==', today));
+        const querySnapshot = await getDocs(q);
+
+        let affirmationsExist = false;
+        querySnapshot.forEach((doc) => {
+          if (doc.data().word_1 && doc.data().word_2 && doc.data().word_3) {
+            affirmationsExist = true;
+          }
+        });
+
+        if (affirmationsExist) {
+          setShowAcceptButton(false);
+        }
+      }
+    };
+
     fetchUserMood();
     fetchUserNote();
     fetchUserEmotionsAndActivities();
+    fetchChallenge();
 
   }, [userId]);
 
@@ -117,6 +141,61 @@ const Home = () => {
 
   // Rendu de l'image de mood
   const moodImage = moodIndex !== -1 ? moodImages[moodIndex] : null;
+
+  const [input1, setInput1] = useState('');
+  const [input2, setInput2] = useState('');
+  const [input3, setInput3] = useState('');
+
+  const handleAccept = async () => {
+    if (input1 && input2 && input3) {
+      if (input1.length <= 20 && input2.length <= 20 && input3.length <= 20) {
+
+        try {
+          const userId = auth.currentUser?.uid;
+      
+          // Obtenir la date actuelle avec Moment.js
+          const currentDate = moment().startOf('day');
+          const currentFormattedDate = currentDate.format('DD-MM-YYYY');
+      
+          // Créer une référence à la date actuelle dans la collection "challenges" de l'utilisateur
+          const currentChallengeRef = doc(db, "users", userId, "challenges", currentFormattedDate);
+      
+          // Vérifier si un document existe déjà pour la date actuelle
+          const currentChallengeSnap = await getDoc(currentChallengeRef);
+          if (currentChallengeSnap.exists()) {
+            await updateDoc(currentChallengeRef, {
+              word_1: input1,
+              word_2: input2,
+              word_3: input3,
+              updatedAt: Timestamp.now()
+            });
+          } else {
+            const challengeData = {
+              word_1: input1,
+              word_2: input2,
+              word_3: input3,
+              createdAt: Timestamp.now(),
+              updatedAt: Timestamp.now()
+            };
+            
+            // Créez une nouvelle référence pour le nouveau challenge
+            await setDoc(currentChallengeRef, challengeData);
+          }
+
+          setModalVisible(false);
+          Alert.alert("Challenge confirmé.");
+        } catch (error) {
+          Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du challenge.');
+        }
+
+      } else {
+        Alert.alert("Veuillez entrer des valeurs valides (moins de 20 caractères) pour tous les champs.");
+      }
+    } else {
+      Alert.alert("Veuillez remplir tous les champs.");
+    }
+  };
+  
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
@@ -152,7 +231,7 @@ const Home = () => {
           <View className="flex-row mt-5">
             {userActivities.map((activity, index) => (
               <View key={index} className="bg-primary-purple rounded-full py-2 px-3 m-2">
-                <Text className="text-primary-white">{activity}</Text>
+                <Text className="text-primary-white font-Qs-SemiBold">{activity}</Text>
               </View>
             ))}
           </View>
@@ -160,7 +239,7 @@ const Home = () => {
           <View className="flex-row">
             {userEmotions.map((emotion, index) => (
               <View key={index} className="bg-primary-purple rounded-full py-2 px-3 m-2">
-                <Text className="text-primary-white">{emotion}</Text>
+                <Text className="text-primary-white font-Qs-SemiBold">{emotion}</Text>
               </View>
             ))}
           </View>
@@ -168,6 +247,82 @@ const Home = () => {
           <Text className="text-center font-Qs-SemiBold text-[18px] mt-3">Note</Text>
           <Text className="text-center font-Qs-SemiBold text-[14px] px-10 mt-3">{userNote}</Text>
         </View>
+
+        <View className="bg-primary-white rounded-[30px] py-5 items-center mt-10 mx-5">
+          <Text className="text-center font-Qs-Bold text-xl mt-3">Citation du jour</Text>
+          <Text className="text-center font-Qs-Medium px-5 text-xl mt-3">“Le bien-être est le carburant d’une vie épanouie.”</Text>
+          <Text className="text-center text[#828282] font-Qs-Regular px-5 text-lg mt-3">- Yann Feliz -</Text>
+        </View>
+
+        <View className="bg-third-purple rounded-[30px] py-5 items-center mt-10 mx-5">
+          <Text className="text-center text-primary-white font-Qs-Bold text-xl mt-3">Challenge du jour</Text>
+          <Text className="text-center text-primary-white font-Qs-Medium text-lg mt-3">Écrivez et répétez trois affirmations positives pour vous-même.</Text>
+
+          <View className="flex-row mt-5">
+            {positiveAffirmations.map((affirmation, index) => (
+              <View key={index} className="bg-primary-purple rounded-full py-2 px-3 m-2">
+                <Text className="text-primary-white font-Qs-SemiBold">{affirmation}</Text>
+              </View>
+            ))}
+          </View>
+
+          {showAcceptButton && (
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <Text className="text-center text-primary-white underline font-Qs-Bold px-5 text-lg mt-3">Acceptez</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
+
+
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <BlurView intensity={50} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View className="bg-primary-white border border-primary-purple rounded-[30px] px-10 py-5 w-[90%]">
+              <Text className="text-center font-Qs-Bold text-xl mb-3">Challenge du jour</Text>
+              <TextInput
+                placeholder="Affirmation positive n°1"
+                placeholderTextColor="#6331FF"
+                value={input1}
+                onChangeText={(text) => setInput1(text)}
+                className="text-primary-purple bg-[#F2EDFF] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
+              />
+              <TextInput
+                placeholder="Affirmation positive n°2"
+                placeholderTextColor="#6331FF"
+                value={input2}
+                onChangeText={(text) => setInput2(text)}
+                className="text-primary-purple bg-[#F2EDFF] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
+              />
+              <TextInput
+                placeholder="Affirmation positive n°3"
+                placeholderTextColor="#6331FF"
+                value={input3}
+                onChangeText={(text) => setInput3(text)}
+                className="text-primary-purple bg-[#F2EDFF] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple p-2 mb-5"
+              />
+              <TouchableOpacity onPress={handleAccept}>
+                <View className="flex-row justify-between items-center mb-5">
+                  <Text className="font-Qs-SemiBold text-[20px] p-2">Confirmer</Text>
+                  <Ionicons name="checkmark-circle" size={30} color={'#6331FF'}/>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <View className="flex-row justify-between items-center">
+                  <Text className="font-Qs-SemiBold text-[20px] p-2">Annuler</Text>
+                  <Ionicons name="close-circle" size={30} color={'#6331FF'}/>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </BlurView>
+        </Modal>
+
+
         </ScrollView>
     </SafeAreaView>
   );
