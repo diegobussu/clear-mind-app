@@ -57,34 +57,34 @@ const Profil = () => {
     const changeUsername = async () => {
         try {
             if (!newUsername) {
-                Alert.alert("Veuillez entrer un nouveau prénom.");
+                Alert.alert("Veuillez entrer un nouveau pseudo.");
                 return;
             }
 
-            // Vérifier si le nouveau prénom est différent de l'ancien
+            // Vérifier si le nouveau pseudo est différent de l'ancien
             if (newUsername === userData.username) {
-                Alert.alert("Le nouveau prénom est identique à l'ancien.");
+                Alert.alert("Le nouveau pseudo est identique à l'ancien.");
                 return;
             }     
 
             if (newUsername.length < 3) {
-                Alert.alert('Attention', 'Le prénom ne peut pas être inférieur à 3 caractères.');
+                Alert.alert('Attention', 'Le pseudo ne peut pas être inférieur à 3 caractères.');
                 return;
             }
           
             if (newUsername.length > 20) {
-                Alert.alert('Attention', 'Le prénom ne peut pas dépasser 20 caractères.');
+                Alert.alert('Attention', 'Le pseudo ne peut pas dépasser 20 caractères.');
                 return;
             }
               
             // Vérifier si le nom contient autre chose que des lettres et des chiffres
             const regex = /^[a-zA-Z0-9]*$/;
             if (!regex.test(newUsername)) {
-                Alert.alert('Attention', 'Le prénom ne peut contenir que des lettres et des chiffres.');
+                Alert.alert('Attention', 'Le pseudo ne peut contenir que des lettres et des chiffres.');
                 return;
             }
 
-            // Récupérer la date du dernier changement de pseudo de l'utilisateur depuis la base de données
+            // Récupérer la date du dernier changement du pseudo de l'utilisateur depuis la base de données
             const userDataSnapshot = await getDoc(doc(db, "users", userId));
             const lastUsernameChangeTimestamp = userDataSnapshot.data().usernameChangedAt.toMillis();
 
@@ -93,7 +93,7 @@ const Profil = () => {
             const millisecondsSinceLastChange = Date.now() - lastUsernameChangeTimestamp;
 
             if (millisecondsSinceLastChange < millisecondsInMonth) {
-                Alert.alert("Vous ne pouvez changer votre prénom qu'une fois par mois.");
+                Alert.alert("Vous ne pouvez changer votre pseudo qu'une fois par mois.");
                 return;
             }
 
@@ -104,12 +104,12 @@ const Profil = () => {
                 usernameChangedAt: Timestamp.now()
             });
 
-            Alert.alert("Votre prénom a bien été changé.");
+            Alert.alert("Votre pseudo a bien été changé.");
             setUsernameModalVisible(false);
             navigation.navigate("Home");
             navigation.navigate("Profil");
         } catch (error) {
-            Alert.alert("Erreur lors du changement de prénom." + error.message);
+            Alert.alert("Erreur lors du changement du pseudo." + error.message);
         }
     };
 
@@ -154,7 +154,7 @@ const Profil = () => {
                         </View>
                     </>
                 ) : (
-                    <Text>Chargement...</Text>
+                    <Text>Chargement du profil...</Text>
                 )}
 
 
@@ -167,7 +167,7 @@ const Profil = () => {
                     <BlurView intensity={50} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View className="bg-primary-white border border-primary-purple rounded-[30px] px-10 py-5 w-[90%]">
                         <TextInput
-                            placeholder="Nouveau prénom"
+                            placeholder="Nouveau pseudo"
                             placeholderTextColor="#6331FF"
                             value={newUsername}
                             onChangeText={setNewUsername}

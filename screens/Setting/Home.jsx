@@ -90,7 +90,7 @@ const Home = () => {
                                     .then(() => {
                                         console.log("Déconnexion réussie");
                                     })
-                                    .catch((error) => {
+                                    .catch(() => {
                                         console.error("Erreur lors de la déconnexion.");
                                     });
                             }

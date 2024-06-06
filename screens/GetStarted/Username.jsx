@@ -21,39 +21,39 @@ const Username = () => {
 
   const handleStart = async () => {
     if (userName.trim() === '') {
-      Alert.alert('Attention', 'Le prénom ne peut pas être vide.');
+      Alert.alert('Attention', 'Le pseudo ne peut pas être vide.');
       return;
     }
 
     if (userName.length < 3) {
-      Alert.alert('Attention', 'Le prénom ne peut pas être inférieur à 3 caractères.');
+      Alert.alert('Attention', 'Le pseudo ne peut pas être inférieur à 3 caractères.');
       return;
     }
 
     if (userName.length > 20) {
-      Alert.alert('Attention', 'Le prénom ne peut pas dépasser 20 caractères.');
+      Alert.alert('Attention', 'Le pseudo ne peut pas dépasser 20 caractères.');
       return;
     }
     
     // Vérifier si le nom contient autre chose que des lettres et des chiffres
     const regex = /^[a-zA-Z0-9]*$/;
     if (!regex.test(userName)) {
-      Alert.alert('Attention', 'Le prénom ne peut contenir que des lettres et des chiffres.');
+      Alert.alert('Attention', 'Le pseudo ne peut contenir que des lettres et des chiffres.');
       return;
     }
 
 
     try {
-      // Mettre à jour le document de l'utilisateur avec le prénom d'utilisateur
+      // Mettre à jour le document de l'utilisateur avec le pseudo d'utilisateur
       await updateDoc(doc(db, 'users', userId), {
         username: userName,
         updatedAt: Timestamp.now()
       });
   
-      // Naviguer vers la prochaine étape avec le prénom d'utilisateur
+      // Naviguer vers la prochaine étape avec le pseudo d'utilisateur
       navigation.navigate('Mood', { userName: userName });
     } catch (error) {
-      Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du prénom.');
+      Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du pseudo.');
     }
   };
 
