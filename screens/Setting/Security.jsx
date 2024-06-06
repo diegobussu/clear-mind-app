@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, Linking, Alert, TextInput, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
 import { getAuth, updateEmail, sendPasswordResetEmail, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { app } from "../../firebaseConfig";
 
 const Security = () => {
-  const navigation = useNavigation();
   const auth = getAuth(app);
   const [newEmail, setNewEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +20,7 @@ const Security = () => {
       }
 
       if (!isEmailValid(newEmail)) {
-        Alert.alert("Veuillez entrer une adresse e-mail valide");
+        Alert.alert("Veuillez entrer une adresse mail valide.");
         return;
       }
 
@@ -116,7 +114,7 @@ const Security = () => {
         <BlurView intensity={50} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <View className="bg-primary-white border border-primary-purple rounded-[30px] px-10 py-5 w-[90%]">
             <TextInput
-              placeholder="Nouvel Email"
+              placeholder="Saisir un nouvel email"
               placeholderTextColor="#6331FF"
               value={newEmail}
               onChangeText={formatNewEmail}

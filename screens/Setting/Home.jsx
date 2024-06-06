@@ -76,7 +76,7 @@ const Home = () => {
                 break;
             case "Se déconnecter":
                 Alert.alert(
-                    "Confirmation",
+                    "Déconnexion",
                     "Êtes-vous sûr de vouloir vous déconnecter ?",
                     [
                         {
@@ -84,7 +84,7 @@ const Home = () => {
                             style: "cancel"
                         },
                         {
-                            text: "Déconnexion",
+                            text: "Confirmer",
                             onPress: () => {
                                 signOut(auth)
                                     .then(() => {
@@ -151,7 +151,7 @@ const Home = () => {
                     ))}
                 </View>
 
-                <View className="bg-primary-white rounded-lg p-7 mb-10">
+                <View className="bg-primary-white rounded-lg p-7 mb-3">
                     {["Partager", "Nous contacter", "Aide"].map((item, index) => (
                         <TouchableOpacity key={index} onPress={() => handlePress(item)}>
                             <View key={index} className="flex-row justify-between items-center mb-4">
@@ -162,7 +162,23 @@ const Home = () => {
                     ))}
                 </View>
 
-                <View className="flex-row justify-center space-x-3 mb-10">
+                <View className="flex-row justify-center mb-10">
+
+                    <TouchableOpacity onPress={() => Linking.openURL('https://clear-mind.fr/pages/cgu')}>
+                        <Text className="font-Qs-Regular text-primary-purple text-center text-[14px] mx-2">CGU</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => Linking.openURL('https://clear-mind.fr/pages/legal')}>
+                        <Text className="font-Qs-Regular text-primary-purple text-center text-[14px] mx-2">Mentions légales</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => Linking.openURL('https://clear-mind.fr/pages/cgv')}>
+                        <Text className="font-Qs-Regular text-primary-purple text-center text-[14px] mx-2">CGV</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+                <View className="flex-row justify-center space-x-3">
                     <Ionicons name="logo-instagram" size={30} color={'#6331FF'} onPress={() => handlePress("Instagram")}/>
                     <Ionicons name="logo-tiktok" size={30} color={'#6331FF'} onPress={() => handlePress("TikTok")}/>
                 </View>

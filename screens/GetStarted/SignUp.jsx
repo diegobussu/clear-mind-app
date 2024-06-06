@@ -30,7 +30,7 @@ const SignUp = () => {
 
   const handleSignUp = async () => {
     if (!isEmailValid(email)) {
-      setError("Veuillez entrer une adresse e-mail valide");
+      setError("Veuillez entrer une adresse e-mail valide.");
       return;
     }
     if (!isPasswordValid(password)) {
