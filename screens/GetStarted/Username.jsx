@@ -67,7 +67,7 @@ const Username = () => {
         />
         <Text className="text-center font-Qs-SemiBold text-2xl mb-10">{text}</Text>
         <TextInput
-          placeholder="Prénom"
+          placeholder="Pseudo"
           placeholderTextColor="#6331FF"
           onChangeText={text => setUserName(text)}
           value={userName}

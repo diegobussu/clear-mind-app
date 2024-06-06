@@ -65,13 +65,13 @@ const Mood = () => {
         if (currentJournalSnap.exists()) {
           // Un document existe déjà, mettez à jour le mood et la date de mise à jour
           await updateDoc(currentJournalRef, {
-            moodName: moodName,
+            mood: moodName,
             updatedAt: Timestamp.now()
           });
         } else {
           // Aucun document pour la date actuelle, créer un nouveau document
           const journalData = {
-            moodName: moodName,
+            mood: moodName,
             createdAt: Timestamp.now(),
             updatedAt: Timestamp.now()
           };
