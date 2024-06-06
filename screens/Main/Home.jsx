@@ -26,7 +26,7 @@ const Home = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [positiveAffirmations, setPositiveAffirmations] = useState([]);
   const [showAcceptButton, setShowAcceptButton] = useState(true);
-
+  
   const auth = getAuth(app);
   const db = getFirestore(app);
   const userId = auth.currentUser?.uid;
@@ -92,19 +92,29 @@ const Home = () => {
         const today = moment().format('DD-MM-YYYY');
         const q = query(collection(db, 'users', userId, 'challenges'), where('__name__', '==', today));
         const querySnapshot = await getDocs(q);
-
+    
         let affirmationsExist = false;
+        const affirmations = []; // Créez un tableau pour stocker les affirmations
+    
         querySnapshot.forEach((doc) => {
-          if (doc.data().word_1 && doc.data().word_2 && doc.data().word_3) {
+          const { word_1, word_2, word_3 } = doc.data(); // Destructure les données du document
+    
+          // Vérifiez si les affirmations existent et ajoutez-les au tableau
+          if (word_1 && word_2 && word_3) {
+            affirmations.push(word_1, word_2, word_3);
             affirmationsExist = true;
           }
         });
-
+    
+        // Mettez à jour l'état des affirmations positives avec le tableau
+        setPositiveAffirmations(affirmations);
+    
         if (affirmationsExist) {
           setShowAcceptButton(false);
         }
       }
-    };
+    };    
+
 
     fetchUserMood();
     fetchUserNote();
@@ -231,7 +241,7 @@ const Home = () => {
           <View className="flex-row mt-5">
             {userActivities.map((activity, index) => (
               <View key={index} className="bg-primary-purple rounded-full py-2 px-3 m-2">
-                <Text className="text-primary-white font-Qs-SemiBold">{activity}</Text>
+                <Text className="text-primary-white font-Qs-Bold">{activity}</Text>
               </View>
             ))}
           </View>
@@ -239,7 +249,7 @@ const Home = () => {
           <View className="flex-row">
             {userEmotions.map((emotion, index) => (
               <View key={index} className="bg-primary-purple rounded-full py-2 px-3 m-2">
-                <Text className="text-primary-white font-Qs-SemiBold">{emotion}</Text>
+                <Text className="text-primary-white font-Qs-Bold">{emotion}</Text>
               </View>
             ))}
           </View>
@@ -261,7 +271,7 @@ const Home = () => {
           <View className="flex-row mt-5">
             {positiveAffirmations.map((affirmation, index) => (
               <View key={index} className="bg-primary-purple rounded-full py-2 px-3 m-2">
-                <Text className="text-primary-white font-Qs-SemiBold">{affirmation}</Text>
+                <Text className="text-primary-white font-Qs-Bold">{affirmation}</Text>
               </View>
             ))}
           </View>
