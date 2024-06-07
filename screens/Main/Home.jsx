@@ -32,6 +32,32 @@ const Home = () => {
   const db = getFirestore(app);
   const userId = auth.currentUser?.uid;
 
+  const fetchDataForSelectedDate = async (date) => {
+    const formattedDate = date.format('DD-MM-YYYY');
+    const moodDoc = await getDoc(doc(db, 'users', userId, 'journals', formattedDate));
+    if (moodDoc.exists()) {
+      setUserMood(moodDoc.data().mood);
+      setUserNote(moodDoc.data().note);
+      setUserEmotions(moodDoc.data().emotions || []);
+      setUserActivities(moodDoc.data().activities || []);
+    } else {
+      setUserMood('');
+      setUserNote('');
+      setUserEmotions([]);
+      setUserActivities([]);
+    }
+
+    const challengeDoc = await getDoc(doc(db, 'users', userId, 'challenges', formattedDate));
+    if (challengeDoc.exists()) {
+      const { word_1, word_2, word_3 } = challengeDoc.data();
+      setPositiveAffirmations([word_1, word_2, word_3]);
+      setShowAcceptButton(false);
+    } else {
+      setPositiveAffirmations([]);
+      setShowAcceptButton(true);
+    }
+  };
+
   useEffect(() => {
     const fetchUsername = async () => {
       if (userId) {
@@ -50,32 +76,6 @@ const Home = () => {
       dates.push(startOfWeek.clone().add(i, 'days').format('DD'));
     }
     setWeekDates(dates);
-
-    const fetchDataForSelectedDate = async (date) => {
-      const formattedDate = date.format('DD-MM-YYYY');
-      const moodDoc = await getDoc(doc(db, 'users', userId, 'journals', formattedDate));
-      if (moodDoc.exists()) {
-        setUserMood(moodDoc.data().mood);
-        setUserNote(moodDoc.data().note);
-        setUserEmotions(moodDoc.data().emotions || []);
-        setUserActivities(moodDoc.data().activities || []);
-      } else {
-        setUserMood('');
-        setUserNote('');
-        setUserEmotions([]);
-        setUserActivities([]);
-      }
-
-      const challengeDoc = await getDoc(doc(db, 'users', userId, 'challenges', formattedDate));
-      if (challengeDoc.exists()) {
-        const { word_1, word_2, word_3 } = challengeDoc.data();
-        setPositiveAffirmations([word_1, word_2, word_3]);
-        setShowAcceptButton(false);
-      } else {
-        setPositiveAffirmations([]);
-        setShowAcceptButton(true);
-      }
-    };
 
     fetchDataForSelectedDate(selectedDate);
 
@@ -156,7 +156,9 @@ const Home = () => {
 
           setModalVisible(false);
           Alert.alert("Challenge confirmé.");
+          fetchDataForSelectedDate(selectedDate);
         } catch (error) {
+          console.log(error);
           Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du challenge.');
         }
 
@@ -167,7 +169,7 @@ const Home = () => {
       Alert.alert("Veuillez remplir tous les champs.");
     }
   };
-
+  
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <ScrollView contentContainerStyle={{ paddingVertical: 20, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
