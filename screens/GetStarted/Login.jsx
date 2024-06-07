@@ -59,7 +59,7 @@ const Login = () => {
   };
 
   return (
-    <SafeAreaView className="justify-center px-5 mr-10 ml-10 mt-20">
+    <SafeAreaView className="justify-center px-5 mr-10 ml-10 mt-[125px]">
       <View className="items-center">
         <Image source={Logo} className="mb-10" />
       </View>

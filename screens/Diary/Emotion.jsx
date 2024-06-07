@@ -117,6 +117,31 @@ const Emotion = ({ route }) => {
     ]
   ];
 
+  const iconsList1 = [
+    [
+      require('../../assets/img/emotions/happy-white.png'),
+      require('../../assets/img/emotions/excited-white.png'),
+      require('../../assets/img/emotions/relaxed-white.png'),
+      require('../../assets/img/emotions/satisfied-white.png'),
+      require('../../assets/img/emotions/sleep-white.png'),
+      require('../../assets/img/emotions/angry-white.png'),
+      require('../../assets/img/emotions/stress-white.png'),
+      require('../../assets/img/emotions/anxious-white.png'),
+      require('../../assets/img/emotions/sad-white.png')
+    ],
+    [
+      require('../../assets/img/emotions/bored-white.png'),
+      require('../../assets/img/emotions/uncertain-white.png'),
+      require('../../assets/img/emotions/desperate-white.png'),
+      require('../../assets/img/emotions/confused-white.png'),
+      require('../../assets/img/emotions/frustrated-white.png'),
+      require('../../assets/img/emotions/depressed-white.png'),
+      require('../../assets/img/emotions/sick-white.png'),
+      require('../../assets/img/emotions/sad1-white.png'),
+      require('../../assets/img/emotions/inspired-white.png')
+    ]
+  ];
+
   const iconNamesList = [
     [
       'Heureux',
@@ -145,22 +170,25 @@ const Emotion = ({ route }) => {
   const renderIconGrid = () => {
     const iconRows = [];
     const currentIcons = iconsList[iconListIndex];
+    const currentIcons1 = iconsList1[iconListIndex];
     const currentIconNames = iconNamesList[iconListIndex];
     for (let i = 0; i < 3; i++) {
       const iconsInRow = [];
       for (let j = 0; j < 3; j++) {
         const index = i * 3 + j;
         const icon = currentIcons[index];
+        const icon1 = currentIcons1[index];
         const isSelected = iconListIndex === 0 ? selectedIcons1[index] : selectedIcons2[index];
         const iconSource = icon;
+        const iconSource1 = icon1;
         const containerStyle = [styles.iconWrapper, isSelected ? styles.selectedIconWrapper : null];
         const iconStyle = styles.iconImage;
-        const textStyle = isSelected ? styles.selectedIconName : styles.iconName;
+        const textStyle = styles.iconName;
 
         iconsInRow.push(
           <TouchableOpacity key={index} onPress={() => toggleIcon(index)} style={styles.iconContainer}>
             <View style={containerStyle}>
-              <Image source={iconSource} style={iconStyle} />
+              <Image source={isSelected ? iconSource1 : iconSource} style={iconStyle} />
             </View>
             <Text style={textStyle}>{currentIconNames[index]}</Text>
           </TouchableOpacity>
@@ -280,7 +308,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   selectedIconWrapper: {
-    borderWidth: 4,
+    backgroundColor: '#6331FF'
   },
   iconImage: {
     width: 20,
@@ -291,12 +319,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontFamily: 'SF-Regular',
     fontSize: 13,
-    color: '#6331FF'
-  },
-  selectedIconName: {
-    textAlign: 'center',
-    marginTop: 5,
-    fontFamily: 'SF-Bold',
     color: '#6331FF'
   },
   point: {

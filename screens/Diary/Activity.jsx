@@ -156,12 +156,12 @@ const Activity = ({ route }) => {
         const isSelected = iconListIndex === 0 ? selectedIcons1[index] : selectedIcons2[index];
         const containerStyle = [styles.iconWrapper, isSelected ? styles.selectedIconWrapper : null];
         const iconSource = icon.name;
-        const textStyle = isSelected ? styles.selectedIconName : styles.iconName;
+        const textStyle = styles.iconName;
 
         iconsInRow.push(
           <TouchableOpacity key={index} onPress={() => toggleIcon(index)} style={styles.iconContainer}>
             <View style={containerStyle}>
-              <Ionicons name={iconSource} size={20} color={'#6331FF'} />
+              <Ionicons name={iconSource} size={20} color={isSelected ? '#FFF' : '#6331FF'} />
             </View>
             <Text style={textStyle}>{currentIconNames[index]}</Text>
           </TouchableOpacity>
@@ -280,19 +280,13 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   selectedIconWrapper: {
-    borderWidth: 4,
+    backgroundColor: '#6331FF'
   },
   iconName: {
     textAlign: 'center',
     marginTop: 5,
     fontFamily: 'SF-Regular',
     fontSize: 13,
-    color: '#6331FF'
-  },
-  selectedIconName: {
-    textAlign: 'center',
-    marginTop: 5,
-    fontFamily: 'SF-Bold',
     color: '#6331FF'
   },
   point: {

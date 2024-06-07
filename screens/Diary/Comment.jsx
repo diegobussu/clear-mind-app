@@ -53,12 +53,12 @@ const Comment = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View style={styles.rectangle} className="mt-10">
+      <View style={styles.rectangle}>
         <Image source={selectedImage} style={styles.image} resizeMode="contain" />
         <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
         <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
       </View>
-      <Text className="font-Qs-Medium text-2xl mt-10">Note</Text>
+      <Text className="font-Qs-Medium text-2xl mt-5">Note</Text>
       <View className="w-[350px] h-[200px] bg-primary-white rounded-[30px] mt-5 mb-10">
         <TextInput
           className="font-Qs-Regular text-lg text-[#828282] top-5 left-5 w-screen"
@@ -82,8 +82,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 70,
-    height: 70,
-    marginBottom: 20
+    height: 70
   }
 });
 
