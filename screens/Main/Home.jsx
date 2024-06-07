@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, View, Image, ScrollView, Modal, TouchableOpacity, Alert, TextInput } from 'react-native';
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc, updateDoc, Timestamp } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc, Timestamp } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import moment from 'moment';
+import Calendar from '../../components/Calendar';
 
 const moodImages = [
   require('../../assets/img/mood/mood-1.png'),
@@ -17,7 +18,6 @@ const moodImages = [
 
 const Home = () => {
   const [username, setUsername] = useState('');
-  const [currentDate, setCurrentDate] = useState(moment().format('DD MMMM'));
   const [weekDates, setWeekDates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(moment().startOf('day'));
   const [userMood, setUserMood] = useState('');
@@ -27,7 +27,8 @@ const Home = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [positiveAffirmations, setPositiveAffirmations] = useState([]);
   const [showAcceptButton, setShowAcceptButton] = useState(true);
-  
+  const [showCalendar, setShowCalendar] = useState(false);
+
   const auth = getAuth(app);
   const db = getFirestore(app);
   const userId = auth.currentUser?.uid;
@@ -129,20 +130,10 @@ const Home = () => {
         try {
           const userId = auth.currentUser?.uid;
       
-          const currentDate = moment().startOf('day');
-          const currentFormattedDate = currentDate.format('DD-MM-YYYY');
+          const selectedFormattedDate = selectedDate.format('DD-MM-YYYY');
       
-          const currentChallengeRef = doc(db, "users", userId, "challenges", currentFormattedDate);
+          const currentChallengeRef = doc(db, "users", userId, "challenges", selectedFormattedDate);
       
-          const currentChallengeSnap = await getDoc(currentChallengeRef);
-          if (currentChallengeSnap.exists()) {
-            await updateDoc(currentChallengeRef, {
-              word_1: input1,
-              word_2: input2,
-              word_3: input3,
-              updatedAt: Timestamp.now()
-            });
-          } else {
             const challengeData = {
               word_1: input1,
               word_2: input2,
@@ -152,13 +143,11 @@ const Home = () => {
             };
             
             await setDoc(currentChallengeRef, challengeData);
-          }
 
           setModalVisible(false);
           Alert.alert("Challenge confirmé.");
           fetchDataForSelectedDate(selectedDate);
         } catch (error) {
-          console.log(error);
           Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du challenge.');
         }
 
@@ -169,18 +158,44 @@ const Home = () => {
       Alert.alert("Veuillez remplir tous les champs.");
     }
   };
-  
+
+  const handleModalClose = () => {
+    setInput1('');
+    setInput2('');
+    setInput3('');
+    setModalVisible(false);
+  };
+
+  const handleCalendarPress = () => {
+    setShowCalendar(true);
+  };
+
+
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <ScrollView contentContainerStyle={{ paddingVertical: 20, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
-        <View className="absolute top-5 right-10 flex-row items-center">
-          <View className="bg-white p-2 rounded-[30px] flex-row items-center">
-            <Text className="font-Qs-SemiBold font-bold text-[20px] mr-2">{selectedDate.format('DD MMMM')}</Text>
-            <Ionicons name="calendar-outline" size={30} color={'#6331FF'} />
-          </View>
+        <View className="absolute top-5 right-1 flex-row items-center">
+          <TouchableOpacity onPress={handleCalendarPress}>
+            <View className="bg-white p-2 rounded-[30px] flex-row items-center">
+              <Text className="font-Qs-SemiBold font-bold text-[20px] mr-2">{selectedDate.format('DD MMMM')}</Text>
+              <Ionicons name="calendar-outline" size={30} color={'#6331FF'} />
+            </View>
+          </TouchableOpacity>
         </View>
 
-        <View className="absolute top-[30px] left-10">
+
+        <Calendar
+          selectedDate={selectedDate}
+          onDayPress={(day) => {
+            setSelectedDate(day);
+            setShowCalendar(false);
+          }}
+          showCalendar={showCalendar}
+        />
+
+
+
+        <View className="absolute top-[30px] left-5">
           <Text className="font-Qs-SemiBold font-bold text-[20px]">
             <Text>Bonjour, </Text>
             <Text className="text-primary-purple">{username}</Text>
@@ -189,7 +204,7 @@ const Home = () => {
 
         <View className="flex-row justify-center items-center mt-20">
           {daysOfWeek.map((day, index) => (
-            <TouchableOpacity key={index} onPress={() => handleDayPress(index)}>
+            <TouchableOpacity key={index} onPress={() => { handleDayPress(index); setShowCalendar(false) }}>
               <View className="flex items-center p-1 mx-2" style={{ backgroundColor: index === selectedDate.isoWeekday() - 1 ? '#855EFF' : '#EEEDFF', borderRadius: 10 }}>
                 <Text className="font-Qs-Regular text-[16px]" style={{ color: index === selectedDate.isoWeekday() - 1 ? '#FFFFFF' : '#000000' }}>{day}</Text>
                 <Text className="font-Qs-Bold text-[16px] mt-2" style={{ color: index === selectedDate.isoWeekday() - 1 ? '#FFFFFF' : '#000000' }}>{weekDates[index]}</Text>
@@ -252,7 +267,7 @@ const Home = () => {
           animationType="slide"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={() => setModalVisible(false)}
+          onRequestClose={handleModalClose}
         >
           <BlurView intensity={50} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View className="bg-primary-white border border-primary-purple rounded-[30px] px-10 py-5 w-[90%]">
