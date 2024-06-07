@@ -16,17 +16,10 @@ const HomeStack = () => {
   return (
     <stack.Navigator
       screenOptions={{
-        headerShown: true,
-        headerStyle: {
-          backgroundColor: '#F9F9FF',
-          borderBottomWidth: 0,
-        },
-        headerTitleStyle: {
-          fontSize: 20
-        },
+        headerShown: false
       }}
     >
-      <stack.Screen name="Home" component={Home} options={{ title: currentMonthYear }} />
+      <stack.Screen name="Home" component={Home} />
     </stack.Navigator>
   );
 };

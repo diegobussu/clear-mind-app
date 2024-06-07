@@ -37,7 +37,7 @@ function AuthenticatedApp() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, size }) => {
           let iconName; 
           let iconColor;
           if (route.name === 'Started') {
@@ -45,25 +45,27 @@ function AuthenticatedApp() {
           if (route.name === 'HomeStack') {
             iconName = 'home-outline';
             size = focused ? 30 : 25;
+            iconColor = "#6331FF";
           } else if (route.name === 'DataStack') {
             iconName = 'stats-chart-outline';
             size = focused ? 30 : 25;
+            iconColor = "#6331FF";
           } else if (route.name === 'JournalStack') {
-            iconName = 'add-circle';
-            size = 60;
-            focused = true;
+            iconName = 'book-outline';
+            size = 40;
+            iconColor = "#6331FF";
           } else if (route.name === 'RessourceStack') {
             iconName = 'document-text-outline';
             size = focused ? 30 : 25;
+            iconColor = "#6331FF";
           } else if (route.name === 'SettingStack') {
             iconName = 'settings-outline';
             size = focused ? 30 : 25;
+            iconColor = "#6331FF";
           }
 
           if (focused) {
-            iconColor = "#6331FF";
-          } else {
-            iconColor = "#828282";
+            iconName = iconName.replace('-outline', '');
           }
 
           const iconStyle = route.name === 'AddCircleScreen' ? styles.addCircleIcon : styles.defaultIcon;
@@ -93,7 +95,7 @@ function AuthenticatedApp() {
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: "#FFF",
-    height: 110,
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center'
   },
