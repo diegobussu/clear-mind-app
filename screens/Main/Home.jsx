@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, View, Image, ScrollView, Modal, TouchableOpacity, Alert, TextInput } from 'react-native';
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, collection, query, where, getDocs, setDoc, updateDoc, Timestamp } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
@@ -17,8 +17,9 @@ const moodImages = [
 
 const Home = () => {
   const [username, setUsername] = useState('');
-  const [currentDate, setCurrentDate] = useState('');
+  const [currentDate, setCurrentDate] = useState(moment().format('DD MMMM'));
   const [weekDates, setWeekDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(moment().startOf('day'));
   const [userMood, setUserMood] = useState('');
   const [userNote, setUserNote] = useState('');
   const [userEmotions, setUserEmotions] = useState([]);
@@ -43,8 +44,6 @@ const Home = () => {
     
     fetchUsername();
 
-    setCurrentDate(moment().format('DD MMMM'));
-
     const startOfWeek = moment().startOf('isoWeek');
     const dates = [];
     for (let i = 0; i < 7; i++) {
@@ -52,82 +51,50 @@ const Home = () => {
     }
     setWeekDates(dates);
 
+    const fetchDataForSelectedDate = async (date) => {
+      const formattedDate = date.format('DD-MM-YYYY');
+      const moodDoc = await getDoc(doc(db, 'users', userId, 'journals', formattedDate));
+      if (moodDoc.exists()) {
+        setUserMood(moodDoc.data().mood);
+        setUserNote(moodDoc.data().note);
+        setUserEmotions(moodDoc.data().emotions || []);
+        setUserActivities(moodDoc.data().activities || []);
+      } else {
+        setUserMood('');
+        setUserNote('');
+        setUserEmotions([]);
+        setUserActivities([]);
+      }
 
-    const fetchUserMood = async () => {
-      if (userId) {
-        const today = moment().format('DD-MM-YYYY');
-        const q = query(collection(db, 'users', userId, 'journals'), where('__name__', '==', today));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          setUserMood(doc.data().mood);
-        });
+      const challengeDoc = await getDoc(doc(db, 'users', userId, 'challenges', formattedDate));
+      if (challengeDoc.exists()) {
+        const { word_1, word_2, word_3 } = challengeDoc.data();
+        setPositiveAffirmations([word_1, word_2, word_3]);
+        setShowAcceptButton(false);
+      } else {
+        setPositiveAffirmations([]);
+        setShowAcceptButton(true);
       }
     };
 
-    const fetchUserNote = async () => {
-      if (userId) {
-        const today = moment().format('DD-MM-YYYY');
-        const q = query(collection(db, 'users', userId, 'journals'), where('__name__', '==', today));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          setUserNote(doc.data().note);
-        });
-      }
-    };
+    fetchDataForSelectedDate(selectedDate);
 
-    const fetchUserEmotionsAndActivities = async () => {
-      if (userId) {
-        const today = moment().format('DD-MM-YYYY');
-        const q = query(collection(db, 'users', userId, 'journals'), where('__name__', '==', today));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          setUserEmotions(doc.data().emotions || []);
-          setUserActivities(doc.data().activities || []);
-        });
-      }
-    };
-
-    const fetchChallenge = async () => {
-      if (userId) {
-        const today = moment().format('DD-MM-YYYY');
-        const q = query(collection(db, 'users', userId, 'challenges'), where('__name__', '==', today));
-        const querySnapshot = await getDocs(q);
-    
-        let affirmationsExist = false;
-        const affirmations = []; // Créez un tableau pour stocker les affirmations
-    
-        querySnapshot.forEach((doc) => {
-          const { word_1, word_2, word_3 } = doc.data(); // Destructure les données du document
-    
-          // Vérifiez si les affirmations existent et ajoutez-les au tableau
-          if (word_1 && word_2 && word_3) {
-            affirmations.push(word_1, word_2, word_3);
-            affirmationsExist = true;
-          }
-        });
-    
-        // Mettez à jour l'état des affirmations positives avec le tableau
-        setPositiveAffirmations(affirmations);
-    
-        if (affirmationsExist) {
-          setShowAcceptButton(false);
-        }
-      }
-    };    
-
-
-    fetchUserMood();
-    fetchUserNote();
-    fetchUserEmotionsAndActivities();
-    fetchChallenge();
-
-  }, [userId]);
+  }, [userId, selectedDate]);
 
   const daysOfWeek = [
     'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'
   ];
 
-  // Déterminer l'indice de l'image en fonction du mood
+  const handleDayPress = (index) => {
+    const selectedDay = moment().startOf('isoWeek').add(index, 'days');
+    const today = moment().startOf('day');
+    if (selectedDay.isAfter(today)) {
+      Alert.alert("Ce jour n'est pas encore arrivé");
+    } else {
+      setSelectedDate(selectedDay);
+    }
+  };
+
   let moodIndex;
   switch (userMood) {
     case "Super":
@@ -146,10 +113,9 @@ const Home = () => {
       moodIndex = 4;
       break;
     default:
-      moodIndex = -1; // Utiliser une image par défaut ou afficher un message d'erreur
+      moodIndex = -1;
   }
 
-  // Rendu de l'image de mood
   const moodImage = moodIndex !== -1 ? moodImages[moodIndex] : null;
 
   const [input1, setInput1] = useState('');
@@ -163,14 +129,11 @@ const Home = () => {
         try {
           const userId = auth.currentUser?.uid;
       
-          // Obtenir la date actuelle avec Moment.js
           const currentDate = moment().startOf('day');
           const currentFormattedDate = currentDate.format('DD-MM-YYYY');
       
-          // Créer une référence à la date actuelle dans la collection "challenges" de l'utilisateur
           const currentChallengeRef = doc(db, "users", userId, "challenges", currentFormattedDate);
       
-          // Vérifier si un document existe déjà pour la date actuelle
           const currentChallengeSnap = await getDoc(currentChallengeRef);
           if (currentChallengeSnap.exists()) {
             await updateDoc(currentChallengeRef, {
@@ -188,7 +151,6 @@ const Home = () => {
               updatedAt: Timestamp.now()
             };
             
-            // Créez une nouvelle référence pour le nouveau challenge
             await setDoc(currentChallengeRef, challengeData);
           }
 
@@ -205,14 +167,13 @@ const Home = () => {
       Alert.alert("Veuillez remplir tous les champs.");
     }
   };
-  
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <ScrollView contentContainerStyle={{ paddingVertical: 20, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
         <View className="absolute top-5 right-10 flex-row items-center">
           <View className="bg-white p-2 rounded-[30px] flex-row items-center">
-            <Text className="font-Qs-SemiBold font-bold text-[20px] mr-2">{currentDate}</Text>
+            <Text className="font-Qs-SemiBold font-bold text-[20px] mr-2">{selectedDate.format('DD MMMM')}</Text>
             <Ionicons name="calendar-outline" size={30} color={'#6331FF'} />
           </View>
         </View>
@@ -226,17 +187,19 @@ const Home = () => {
 
         <View className="flex-row justify-center items-center mt-20">
           {daysOfWeek.map((day, index) => (
-            <View key={index} className="flex items-center p-1 mx-2" style={{ backgroundColor: index === moment().isoWeekday() - 1 ? '#855EFF' : '#EEEDFF', borderRadius: 10 }}>
-              <Text className="font-Qs-Regular text-[16px]" style={{ color: index === moment().isoWeekday() - 1 ? '#FFFFFF' : '#000000' }}>{day}</Text>
-              <Text className="font-Qs-Bold text-[16px] mt-2" style={{ color: index === moment().isoWeekday() - 1 ? '#FFFFFF' : '#000000' }}>{weekDates[index]}</Text>
-            </View>
+            <TouchableOpacity key={index} onPress={() => handleDayPress(index)}>
+              <View className="flex items-center p-1 mx-2" style={{ backgroundColor: index === selectedDate.isoWeekday() - 1 ? '#855EFF' : '#EEEDFF', borderRadius: 10 }}>
+                <Text className="font-Qs-Regular text-[16px]" style={{ color: index === selectedDate.isoWeekday() - 1 ? '#FFFFFF' : '#000000' }}>{day}</Text>
+                <Text className="font-Qs-Bold text-[16px] mt-2" style={{ color: index === selectedDate.isoWeekday() - 1 ? '#FFFFFF' : '#000000' }}>{weekDates[index]}</Text>
+              </View>
+            </TouchableOpacity>
           ))}
         </View>
 
         <View className="bg-primary-white rounded-[30px] py-5 items-center mt-10 mx-5">
           {moodImage && <Image source={moodImage} className="w-[70px] h-[70px]" />}
           <Text className="text-center font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
-          <Text className="text-center font-Qs-Bold text-xl mt-3">{userMood}</Text>
+          <Text className="text-center font-Qs-Bold text-xl mt-3">{userMood || 'Aucune information'}</Text>
 
           <View className="flex-row mt-5">
             {userActivities.map((activity, index) => (
@@ -255,7 +218,7 @@ const Home = () => {
           </View>
 
           <Text className="text-center font-Qs-SemiBold text-[18px] mt-3">Note</Text>
-          <Text className="text-center font-Qs-SemiBold text-[14px] px-10 mt-3">{userNote}</Text>
+          <Text className="text-center font-Qs-SemiBold text-[14px] px-10 mt-3">{userNote || 'Aucune information'}</Text>
         </View>
 
         <View className="bg-primary-white rounded-[30px] py-5 items-center mt-10 mx-5">
@@ -282,9 +245,6 @@ const Home = () => {
             </TouchableOpacity>
           )}
         </View>
-
-
-
 
         <Modal
           animationType="slide"
@@ -331,9 +291,7 @@ const Home = () => {
             </View>
           </BlurView>
         </Modal>
-
-
-        </ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 };
