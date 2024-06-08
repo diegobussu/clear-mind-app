@@ -6,7 +6,7 @@ import Stress from '../../assets/img/ressources/stress.png'
 import BurnOut from '../../assets/img/ressources/burnout.png'
 import Screen from '../../assets/img/ressources/screen.png'
 import Friends from '../../assets/img/ressources/friends.png'
-import Sleep from '../../assets/img/ressources/friends.png'
+import Anxiety1 from '../../assets/img/ressources/anxiety-1.png'
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth} from "firebase/auth";
 import { app } from "../../firebaseConfig";
@@ -146,71 +146,75 @@ const Ressource = () => {
         {selected === 'Conseil' && (
           <View className="mt-3">
 
-            <View style={{backgroundColor: backgroundColor1, overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5">
+            <View style={{ backgroundColor: backgroundColor1, overflow: 'hidden' }} className="rounded-xl p-5 mx-5 mb-5">
+              <View className="flex-row">
 
-                <Text className="font-Qs-SemiBold text-xl text-white">{title1}</Text>
-                <Text className="font-Qs-Regular text-xl text-white mt-3">{subtitle1}</Text>
-                <TouchableOpacity className="mt-5">
-                  <Text className="underline font-Qs-Regular text-lg text-white mb-7">Lire</Text>
-                </TouchableOpacity>
+                <View style={{ width: '65%' }}>
+                  <Text className="font-Qs-SemiBold text-xl text-white mt-3">{title1}</Text>
+                  <Text className="font-Qs-Regular text-[15px] text-white mt-3">{subtitle1}</Text>
+                  <TouchableOpacity className="mt-10" onPress={() => checkPremiumStatus()}>
+                    <Text className="underline font-Qs-Bold text-lg text-white mb-7">Lire</Text>
+                  </TouchableOpacity>
+                </View>
 
-                <Image source={Insomnie} className="w-[200px] h-[140px] absolute bottom-[-10] right-[0]" />
-
-            </View>
-
-            <View style={{backgroundColor: backgroundColor2}} className="rounded-xl p-5 mx-5 mb-5">
-
-              <Text className="font-Qs-SemiBold text-xl text-white">{title2}</Text>
-              <Text className="font-Qs-Regular text-xl text-white mt-3">{subtitle2}</Text>
-
-              <TouchableOpacity className="mt-5">
-                <Text className="underline font-Qs-Regular text-lg text-white mb-7">Lire</Text>
-              </TouchableOpacity>
-
-              <Image source={Anxiety} className="w-[120px] h-[120px] absolute bottom-[1] right-[1]" />
-
-            </View>
-
-            <View style={{backgroundColor: backgroundColor3, overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5">
-
-              <View className="items-center">
-                <View className="flex-row rounded-xl p-2 bg-primary-white w-[50%]">
-                  <Ionicons name="diamond-outline" size={30} color="#6331FF"/>
-                  <Text className="font-Qs-SemiBold text-center text-xl text-primary-purple ml-3">Premium</Text>
+                <View style={{ width: '35%', alignItems: 'center', position: 'relative' }}>
+                  <Image source={Insomnie} className="w-[220px] h-[140px] absolute bottom-[-20] right-[-10]" />
                 </View>
               </View>
-
-              <Text className="font-Qs-SemiBold text-xl text-white mt-3">{title3}</Text>
-              <Text className="font-Qs-Regular text-xl text-white mt-3">{subtitle3}</Text>
-
-              <TouchableOpacity className="mt-5" onPress={() => checkPremiumStatus()}>
-              <Text className="underline font-Qs-Regular text-lg text-white mb-7">Lire</Text>
-              </TouchableOpacity>
-
-              <Image source={Stress} className="w-[100px] h-[100px] absolute bottom-[-5] right-[30]" />
-
             </View>
 
-            <View style={{backgroundColor: backgroundColor4, overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5">
+            <View style={{ backgroundColor: backgroundColor2, overflow: 'hidden' }} className="rounded-xl p-5 mx-5 mb-5">
+              <View className="flex-row">
 
-              <View className="items-center">
-                <View className="flex-row rounded-xl p-2 bg-primary-white w-[50%]">
-                  <Ionicons name="diamond-outline" size={30} color="#6331FF"/>
-                  <Text className="font-Qs-SemiBold text-center text-xl text-primary-purple ml-3">Premium</Text>
+                <View style={{ width: '65%' }}>
+                  <Text className="font-Qs-SemiBold text-xl text-white mt-3">{title2}</Text>
+                  <Text className="font-Qs-Regular text-[15px] text-white mt-3">{subtitle2}</Text>
+                  <TouchableOpacity className="mt-10" onPress={() => checkPremiumStatus()}>
+                    <Text className="underline font-Qs-Bold text-lg text-white mb-7">Lire</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ width: '35%', alignItems: 'center', position: 'relative' }}>
+                  <Image source={Anxiety} className="w-[150px] h-[170px] absolute bottom-[0] right-[0]" />
                 </View>
               </View>
-
-              <Text className="font-Qs-SemiBold text-xl text-white mt-3">{title4}</Text>
-              <Text className="font-Qs-Regular text-lg text-white mt-3">{subtitle4}</Text>
-
-              <TouchableOpacity className="mt-5" onPress={() => checkPremiumStatus()}>
-                <Text className="underline font-Qs-Regular text-lg text-white mb-7">Lire</Text>
-              </TouchableOpacity>
-
-              <Image source={BurnOut} className="w-[220px] h-[150px] absolute bottom-[0] right-[-40] z-[-1]" />
-
             </View>
-            
+
+            <View style={{ backgroundColor: backgroundColor3, overflow: 'hidden', borderWidth: 3, borderColor: "#6331FF" }} className="rounded-xl p-5 mx-5 mb-5">
+              <View className="flex-row">
+
+                <View style={{ width: '65%' }}>
+                  <Text className="font-Qs-SemiBold text-xl text-white mt-3">{title3}</Text>
+                  <Text className="font-Qs-Regular text-[15px] text-white mt-3">{subtitle3}</Text>
+                  <TouchableOpacity className="mt-10" onPress={() => checkPremiumStatus()}>
+                    <Text className="underline font-Qs-Bold text-lg text-white mb-7">Lire</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ width: '35%', alignItems: 'center', position: 'relative' }}>
+                  <Image source={Stress} className="w-[170px] h-[170px] absolute bottom-[-50] right-[-15]" />
+                </View>
+              </View>
+            </View>
+
+            <View style={{ backgroundColor: backgroundColor4, overflow: 'hidden', borderWidth: 3, borderColor: "#6331FF" }} className="rounded-xl p-5 mx-5 mb-5">
+              <View className="flex-row">
+
+                <View style={{ width: '90%' }}>
+                  <Text className="font-Qs-SemiBold text-xl text-white mt-3">{title4}</Text>
+                  <Text className="font-Qs-Regular text-[15px] text-white mt-3">{subtitle4}</Text>
+                  <TouchableOpacity className="mt-10" onPress={() => checkPremiumStatus()}>
+                    <Text className="underline font-Qs-Bold text-lg text-white mb-7">Lire</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ width: '10%', alignItems: 'center', position: 'relative' }}>
+                  <Image source={BurnOut} className="w-[220px] h-[150px] absolute bottom-[0] right-[-20]" />
+                </View>
+              </View>
+            </View>
+
+
           </View>
         )}
 
@@ -219,7 +223,7 @@ const Ressource = () => {
           <View className="mt-3">
 
           <View style={{ overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5 bg-primary-white">
-              <Image source={Sleep} className="w-[350px] h-[150px] rounded-xl absolute top-0 left-0" />
+              <Image source={Anxiety1} className="w-[350px] h-[150px] rounded-xl absolute top-0 left-0" />
 
               <Text className="mt-[150px] font-Qs-SemiBold text-center text-xl">{title1}</Text>
               <Text className="font-Qs-Regular text-center text-sm mt-3">{subtitle1}</Text>

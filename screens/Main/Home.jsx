@@ -8,6 +8,7 @@ import { BlurView } from 'expo-blur';
 import moment from 'moment';
 import Calendar from '../../components/Calendar';
 import { useNavigation } from '@react-navigation/native'; 
+import Psy from '../../assets/img/psy.png'
 
 const moodImages = [
   require('../../assets/img/mood/mood-1.png'),
@@ -205,6 +206,23 @@ const Home = () => {
     setShowCalendar(false);
   };
 
+  const checkPremiumStatus = async () => {
+    try {
+        const userRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            if (userData.isPremium == true) {
+            } else {
+              Alert.alert("Cette fonctionnalité est réservée aux utilisateurs premium.");
+            }
+        }
+    } catch (error) {
+        return false;
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <ScrollView contentContainerStyle={{ paddingVertical: 20, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
@@ -297,6 +315,29 @@ const Home = () => {
               </TouchableOpacity>
             )}
           </View>
+
+
+          <View style={{ backgroundColor: "#E4E4FF", overflow: 'hidden', borderWidth: 3, borderColor: "#6331FF" }} className="rounded-[30px] p-5 mx-5 mt-10 mb-5">
+              <View className="flex-row">
+
+                <View style={{ width: '65%' }}>
+                  <Text className="font-Qs-Bold text-xl mt-3">Discuter avec un psychologue</Text>
+                  <Text className="font-Qs-Regular text-[15px] mt-3">
+                    Accédez à des psychologues et bénéficiez de conseils personnalisés pour améliorer votre bien-être mental.
+                  </Text>
+
+
+                  <TouchableOpacity onPress={() => checkPremiumStatus()} className="mt-10 mb-10 p-2 rounded-[30px] bg-second-white-purple w-[60%] border border-[#B08FFF]">
+                    <Text className="font-Qs-SemiBold text-center text-primary-purple">Accéder</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ width: '35%', alignItems: 'center', position: 'relative' }} className="mt-20 z-[-1]">
+                  <Image source={Psy} className="w-[200px] h-[180px] bottom-[-70] right-[10]" />
+                </View>
+              </View>
+            </View>
+
 
           <Modal
             animationType="slide"
