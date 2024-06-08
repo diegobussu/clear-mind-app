@@ -12,19 +12,26 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dontitosama.clearmindapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/img/favicon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dontitosama.clearmindapp"
     },
     "web": {
       "favicon": "./assets/img/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ad275eaf-9e11-4de8-9880-251bf0f537ea"
+      }
+    }
   }
 }
