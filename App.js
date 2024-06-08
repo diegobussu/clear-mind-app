@@ -19,6 +19,8 @@ import Setting from './screens/Stacks/Setting';
 import Started from './screens/Stacks/Started';
 import Authentification from "./screens/Stacks/Authentification";
 
+import LoadingScreen from './screens/LoadingScreen';
+
 async function loadFonts() {
   await Font.loadAsync({
     'Qs-Bold': require('./assets/fonts/Quicksand-Bold.ttf'),
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
 });
 
 function MainNavigator() {
-
+  const [loading, setLoading] = useState(true);
   const [hasJournals, setHasJournalsWithEmotions] = useState(false);
 
   const auth = getAuth(app);
@@ -129,12 +131,18 @@ function MainNavigator() {
             }
           });
           setHasJournalsWithEmotions(found);
+          setLoading(false);
         })
         .catch((error) => {
           console.error('Error checking journal existence:', error);
+          setLoading(false);
         });
     }
   }, [auth, db]);
+  
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
