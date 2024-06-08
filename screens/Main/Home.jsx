@@ -56,7 +56,7 @@ const Home = () => {
           {
             text: 'Commencer',
             onPress: () => {
-              navigation.navigate,('JournalStack');
+              navigation.navigate('JournalStack', { selectedDate: date.format('DD-MM-YYYY') });
             }
           },
           {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity, Modal } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, AntDesign} from '@expo/vector-icons';
 import { getAuth } from "firebase/auth";
@@ -31,6 +31,7 @@ const Mood = () => {
     const [currentTime, setCurrentTime] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [username, setUsername] = useState('');
+    const route = useRoute();
     const auth = getAuth(app);
     const db = getFirestore(app);
     const userId = auth.currentUser?.uid;
