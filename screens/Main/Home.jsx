@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import moment from 'moment';
 import Calendar from '../../components/Calendar';
+import { useNavigation } from '@react-navigation/native'; 
 
 const moodImages = [
   require('../../assets/img/mood/mood-1.png'),
@@ -33,6 +34,8 @@ const Home = () => {
   const db = getFirestore(app);
   const userId = auth.currentUser?.uid;
 
+  const navigation = useNavigation();
+
   const fetchDataForSelectedDate = async (date) => {
     const formattedDate = date.format('DD-MM-YYYY');
     const moodDoc = await getDoc(doc(db, 'users', userId, 'journals', formattedDate));
@@ -46,6 +49,22 @@ const Home = () => {
       setUserNote('');
       setUserEmotions([]);
       setUserActivities([]);
+      Alert.alert(
+        'Journal manquant',
+        'Vous n\'avez pas encore saisi votre journal pour cette date.',
+        [
+          {
+            text: 'Commencer',
+            onPress: () => {
+              navigation.navigate,('JournalStack');
+            }
+          },
+          {
+            text: 'Annuler',
+            style: 'cancel'
+          }
+        ]
+      );
     }
 
     const challengeDoc = await getDoc(doc(db, 'users', userId, 'challenges', formattedDate));
@@ -136,8 +155,8 @@ const Home = () => {
   const [input3, setInput3] = useState('');
 
   const handleAccept = async () => {
-    if (input1 || input2 || input3) {
-      if (input1.length <= 20 || input2.length <= 20 || input3.length <= 20) {
+    if (input1 && input2 && input3) {
+      if (input1.length <= 20 && input2.length <= 20 && input3.length <= 20) {
 
         try {
           const userId = auth.currentUser?.uid;
@@ -164,10 +183,10 @@ const Home = () => {
         }
 
       } else {
-        Alert.alert("Veuillez entrer des valeurs valides (moins de 20 caractères).");
+        Alert.alert("Veuillez entrer des mots de moins de 20 caractères).");
       }
     } else {
-      Alert.alert("Veuillez saisir au moins un champs.");
+      Alert.alert("Veuillez saisir tous les champs.");
     }
   };
 

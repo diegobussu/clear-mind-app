@@ -26,7 +26,8 @@ const SettingStack = () => {
           borderBottomWidth: 0,
         },
         headerTitleStyle: {
-          fontSize: 20
+          fontSize: 20,
+          fontFamily: 'Qs-SemiBold'
         },
         headerLeft: () => {
           if (route.name !== 'Home') {

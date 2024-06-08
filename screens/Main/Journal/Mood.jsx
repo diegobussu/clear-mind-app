@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, Image, StyleSheet, Alert, FlatList, TouchableOpacity, Modal } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, AntDesign} from '@expo/vector-icons';
 import { getAuth } from "firebase/auth";
 import { Timestamp, doc, setDoc, getDoc, updateDoc, getFirestore } from "firebase/firestore";
-import { app } from "../../firebaseConfig";
-import Button from '../../components/Button';
+import { app } from "../../../firebaseConfig";
+import Button from '../../../components/Button';
 import moment from 'moment';
 
 const images = [
-  require('../../assets/img/mood/mood-1.png'),
-  require('../../assets/img/mood/mood-2.png'),
-  require('../../assets/img/mood/mood-3.png'),
-  require('../../assets/img/mood/mood-4.png'),
-  require('../../assets/img/mood/mood-5.png')
+  require('../../../assets/img/mood/mood-1.png'),
+  require('../../../assets/img/mood/mood-2.png'),
+  require('../../../assets/img/mood/mood-3.png'),
+  require('../../../assets/img/mood/mood-4.png'),
+  require('../../../assets/img/mood/mood-5.png')
 ];
 
 const texts = [
@@ -27,21 +27,66 @@ const texts = [
 
 const Mood = () => {
     const navigation = useNavigation();
-    const route = useRoute();
     const [currentDate, setCurrentDate] = useState('');
     const [currentTime, setCurrentTime] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(null);
-    const { userName } = route.params;
+    const [username, setUsername] = useState('');
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const userId = auth.currentUser?.uid;
+
+    const checkJournalEntry = useCallback(async () => {
+      if (userId) {
+        const currentDate = moment().startOf('day').format('DD-MM-YYYY');
+        const currentJournalRef = doc(db, 'users', userId, 'journals', currentDate);
+        const currentJournalSnap = await getDoc(currentJournalRef);
+        if (currentJournalSnap.exists()) {
+          Alert.alert(
+            'Journal déjà rempli',
+            'Vous avez déjà rempli votre journal pour aujourd\'hui. Vous pouvez l\'éditer ou annuler.',
+            [
+              {
+                text: 'Éditer'
+              },
+              {
+                text: 'Annuler',
+                onPress: () => {
+                  navigation.goBack();
+                },
+                style: 'cancel'
+              }
+            ]
+          );
+        }
+      }
+    }, [db, navigation, userId]);
 
     useEffect(() => {
       const date = new Date();
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       setCurrentDate(date.toLocaleDateString('fr-FR', options));
       setCurrentTime(date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}));
+
+      const fetchUsername = async () => {
+        if (userId) {
+          const userDoc = await getDoc(doc(db, 'users', userId));
+          if (userDoc.exists()) {
+            setUsername(userDoc.data().username);
+          }
+        }
+      };
+      
+      fetchUsername();
     }, []);
   
+    useEffect(() => {
+      const unsubscribe = navigation.addListener('focus', () => {
+        checkJournalEntry();
+      });
+  
+      return unsubscribe;
+    }, [navigation, checkJournalEntry]);
+
 
     const handleStart = async () => {
       if (selectedIndex === null) {
@@ -119,7 +164,7 @@ const Mood = () => {
     return (
       <SafeAreaView className="flex-1 justify-center px-5 bg-secondary-white">
         <View className="flex-1 justify-center items-center mt-[50px]">
-          <Text className="font-Qs-SemiBold text-[28px]">Bonjour {userName},</Text>
+          <Text className="font-Qs-SemiBold text-[28px]">Bonjour {username},</Text>
           <Text className="font-Qs-Medium text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>
           <View style={styles.dateContainer}>
             <View className="flex-row items-center">

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, PanResponder } from 'react-native';
+import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, PanResponder, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Button from '../../components/Button';
+import Button from '../../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuth } from "firebase/auth";
 import { Timestamp, doc, updateDoc, getFirestore } from "firebase/firestore";
-import { app } from "../../firebaseConfig";
+import { app } from "../../../firebaseConfig";
 
 const Emotion = ({ route }) => {
   const navigation = useNavigation();
@@ -13,11 +13,11 @@ const Emotion = ({ route }) => {
   const moods = ["Super", "Bien", "Bof", "Mal", "Terrible"];
   const mood = moods[moodIndex];
   const images = [
-    require('../../assets/img/mood/mood-1.png'),
-    require('../../assets/img/mood/mood-2.png'),
-    require('../../assets/img/mood/mood-3.png'),
-    require('../../assets/img/mood/mood-4.png'),
-    require('../../assets/img/mood/mood-5.png')
+    require('../../../assets/img/mood/mood-1.png'),
+    require('../../../assets/img/mood/mood-2.png'),
+    require('../../../assets/img/mood/mood-3.png'),
+    require('../../../assets/img/mood/mood-4.png'),
+    require('../../../assets/img/mood/mood-5.png')
   ];
   const selectedImage = images[moodIndex];
 
@@ -94,51 +94,51 @@ const Emotion = ({ route }) => {
 
   const iconsList = [
     [
-      require('../../assets/img/emotions/happy.png'),
-      require('../../assets/img/emotions/excited.png'),
-      require('../../assets/img/emotions/relaxed.png'),
-      require('../../assets/img/emotions/satisfied.png'),
-      require('../../assets/img/emotions/sleep.png'),
-      require('../../assets/img/emotions/angry.png'),
-      require('../../assets/img/emotions/stress.png'),
-      require('../../assets/img/emotions/anxious.png'),
-      require('../../assets/img/emotions/sad.png')
+      require('../../../assets/img/emotions/happy.png'),
+      require('../../../assets/img/emotions/excited.png'),
+      require('../../../assets/img/emotions/relaxed.png'),
+      require('../../../assets/img/emotions/satisfied.png'),
+      require('../../../assets/img/emotions/sleep.png'),
+      require('../../../assets/img/emotions/angry.png'),
+      require('../../../assets/img/emotions/stress.png'),
+      require('../../../assets/img/emotions/anxious.png'),
+      require('../../../assets/img/emotions/sad.png')
     ],
     [
-      require('../../assets/img/emotions/bored.png'),
-      require('../../assets/img/emotions/uncertain.png'),
-      require('../../assets/img/emotions/desperate.png'),
-      require('../../assets/img/emotions/confused.png'),
-      require('../../assets/img/emotions/frustrated.png'),
-      require('../../assets/img/emotions/depressed.png'),
-      require('../../assets/img/emotions/sick.png'),
-      require('../../assets/img/emotions/sad1.png'),
-      require('../../assets/img/emotions/inspired.png')
+      require('../../../assets/img/emotions/bored.png'),
+      require('../../../assets/img/emotions/uncertain.png'),
+      require('../../../assets/img/emotions/desperate.png'),
+      require('../../../assets/img/emotions/confused.png'),
+      require('../../../assets/img/emotions/frustrated.png'),
+      require('../../../assets/img/emotions/depressed.png'),
+      require('../../../assets/img/emotions/sick.png'),
+      require('../../../assets/img/emotions/sad1.png'),
+      require('../../../assets/img/emotions/inspired.png')
     ]
   ];
 
   const iconsList1 = [
     [
-      require('../../assets/img/emotions/happy-white.png'),
-      require('../../assets/img/emotions/excited-white.png'),
-      require('../../assets/img/emotions/relaxed-white.png'),
-      require('../../assets/img/emotions/satisfied-white.png'),
-      require('../../assets/img/emotions/sleep-white.png'),
-      require('../../assets/img/emotions/angry-white.png'),
-      require('../../assets/img/emotions/stress-white.png'),
-      require('../../assets/img/emotions/anxious-white.png'),
-      require('../../assets/img/emotions/sad-white.png')
+      require('../../../assets/img/emotions/happy-white.png'),
+      require('../../../assets/img/emotions/excited-white.png'),
+      require('../../../assets/img/emotions/relaxed-white.png'),
+      require('../../../assets/img/emotions/satisfied-white.png'),
+      require('../../../assets/img/emotions/sleep-white.png'),
+      require('../../../assets/img/emotions/angry-white.png'),
+      require('../../../assets/img/emotions/stress-white.png'),
+      require('../../../assets/img/emotions/anxious-white.png'),
+      require('../../../assets/img/emotions/sad-white.png')
     ],
     [
-      require('../../assets/img/emotions/bored-white.png'),
-      require('../../assets/img/emotions/uncertain-white.png'),
-      require('../../assets/img/emotions/desperate-white.png'),
-      require('../../assets/img/emotions/confused-white.png'),
-      require('../../assets/img/emotions/frustrated-white.png'),
-      require('../../assets/img/emotions/depressed-white.png'),
-      require('../../assets/img/emotions/sick-white.png'),
-      require('../../assets/img/emotions/sad1-white.png'),
-      require('../../assets/img/emotions/inspired-white.png')
+      require('../../../assets/img/emotions/bored-white.png'),
+      require('../../../assets/img/emotions/uncertain-white.png'),
+      require('../../../assets/img/emotions/desperate-white.png'),
+      require('../../../assets/img/emotions/confused-white.png'),
+      require('../../../assets/img/emotions/frustrated-white.png'),
+      require('../../../assets/img/emotions/depressed-white.png'),
+      require('../../../assets/img/emotions/sick-white.png'),
+      require('../../../assets/img/emotions/sad1-white.png'),
+      require('../../../assets/img/emotions/inspired-white.png')
     ]
   ];
 
@@ -239,35 +239,37 @@ const Emotion = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View style={styles.rectangle} className="mt-5">
-        <Image source={selectedImage} style={styles.image} resizeMode="contain" />
-        <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
-        <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
-      </View>
-      <View {...panResponder.panHandlers}>
-        <Text className="font-Qs-Medium text-[22px] text-center mb-5 mt-5">Comment te sens-tu ?</Text>
-        <Text className="font-Qs-Regular text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
-        <View style={styles.iconGrid}>
-          {renderIconGrid()}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.rectangle}>
+          <Image source={selectedImage} style={styles.image} resizeMode="contain" />
+          <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
+          <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
         </View>
-      </View>
-      <View className="flex-row mt-3">
-        <TouchableOpacity
-          onPress={() => handlePointPress(0)}
-          style={[
-            styles.point,
-            { backgroundColor: currentIndex === 0 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
-          ]}
-        />
-        <TouchableOpacity
-          onPress={() => handlePointPress(1)}
-          style={[
-            styles.point,
-            { backgroundColor: currentIndex === 1 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
-          ]}
-        />
-      </View>
-      <Button text="Continuer" onPress={continueHandler} />
+        <View {...panResponder.panHandlers}>
+          <Text className="font-Qs-Medium text-[22px] text-center mb-5 mt-5">Comment te sens-tu ?</Text>
+          <Text className="font-Qs-Regular text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
+          <View style={styles.iconGrid}>
+            {renderIconGrid()}
+          </View>
+        </View>
+        <View className="flex-row mt-3 justify-center">
+          <TouchableOpacity
+            onPress={() => handlePointPress(0)}
+            style={[
+              styles.point,
+              { backgroundColor: currentIndex === 0 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
+            ]}
+          />
+          <TouchableOpacity
+            onPress={() => handlePointPress(1)}
+            style={[
+              styles.point,
+              { backgroundColor: currentIndex === 1 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
+            ]}
+          />
+        </View>
+        <Button text="Continuer" onPress={continueHandler} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -317,7 +319,7 @@ const styles = StyleSheet.create({
   iconName: {
     textAlign: 'center',
     marginTop: 5,
-    fontFamily: 'Qs-Regular',
+    fontFamily: 'SF-Regular',
     fontSize: 13,
     color: '#6331FF'
   },

@@ -14,7 +14,7 @@ const Started = () => {
   const navigation = useNavigation();
   return (
     <Stack.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         headerShown: true,
         headerStyle: {
           backgroundColor: '#F9F9FF',
@@ -22,7 +22,7 @@ const Started = () => {
         },
         headerTitleStyle: {
           fontSize: 20,
-          fontFamily: 'Qs-SemiBold',
+          fontFamily: 'Qs-SemiBold'
         },
         headerLeft: () => (
           <Ionicons

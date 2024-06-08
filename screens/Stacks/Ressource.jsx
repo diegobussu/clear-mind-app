@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Ionicons } from '@expo/vector-icons';
 import Ressource from '../Main/Ressource';
 
 const stack = createNativeStackNavigator();
@@ -14,7 +13,8 @@ const RessourceStack = () => {
           borderBottomWidth: 0,
         },
         headerTitleStyle: {
-          fontSize: 20
+          fontSize: 20,
+          fontFamily: 'Qs-SemiBold'
         },
       })}
     >
