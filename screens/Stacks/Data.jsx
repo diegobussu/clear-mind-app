@@ -6,11 +6,18 @@ const stack = createNativeStackNavigator();
 const DataStack = () => {
   return (
     <stack.Navigator
-      screenOptions={{
-        headerShown: false
-      }}
+      screenOptions={() => ({
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: '#F9F9FF',
+          borderBottomWidth: 0,
+        },
+        headerTitleStyle: {
+          fontSize: 20
+        }
+      })}
     >
-      <stack.Screen name="Data" component={Data} />
+      <stack.Screen name="Data" component={Data} options={{ title: 'Données'}}/>
     </stack.Navigator>
   );
 };

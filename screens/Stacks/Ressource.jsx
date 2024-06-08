@@ -7,7 +7,7 @@ const stack = createNativeStackNavigator();
 const RessourceStack = () => {
   return (
     <stack.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={() => ({
         headerShown: true,
         headerStyle: {
           backgroundColor: '#F9F9FF',
@@ -15,19 +15,6 @@ const RessourceStack = () => {
         },
         headerTitleStyle: {
           fontSize: 20
-        },
-        headerLeft: () => {
-          if (route.name !== 'Ressource') {
-            return (
-              <Ionicons
-                name="arrow-back-circle"
-                size={30}
-                color="#6331FF"
-                style={{ marginLeft: 20 }}
-              />
-            );
-          }
-          return null;
         },
       })}
     >

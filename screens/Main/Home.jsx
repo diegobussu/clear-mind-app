@@ -136,8 +136,8 @@ const Home = () => {
   const [input3, setInput3] = useState('');
 
   const handleAccept = async () => {
-    if (input1 && input2 && input3) {
-      if (input1.length <= 20 && input2.length <= 20 && input3.length <= 20) {
+    if (input1 || input2 || input3) {
+      if (input1.length <= 20 || input2.length <= 20 || input3.length <= 20) {
 
         try {
           const userId = auth.currentUser?.uid;
@@ -157,17 +157,17 @@ const Home = () => {
             await setDoc(currentChallengeRef, challengeData);
 
           setModalVisible(false);
-          Alert.alert("Challenge confirmé.");
+          Alert.alert("Challenge validé.");
           fetchDataForSelectedDate(selectedDate);
         } catch (error) {
           Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du challenge.');
         }
 
       } else {
-        Alert.alert("Veuillez entrer des valeurs valides (moins de 20 caractères) pour tous les champs.");
+        Alert.alert("Veuillez entrer des valeurs valides (moins de 20 caractères).");
       }
     } else {
-      Alert.alert("Veuillez remplir tous les champs.");
+      Alert.alert("Veuillez saisir au moins un champs.");
     }
   };
 
