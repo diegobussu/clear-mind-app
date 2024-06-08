@@ -8,6 +8,7 @@ import { Timestamp, doc, setDoc, getDoc, updateDoc, getFirestore } from "firebas
 import { app } from "../../../firebaseConfig";
 import Button from '../../../components/Button';
 import moment from 'moment';
+import 'moment/locale/fr';
 
 const images = [
   require('../../../assets/img/mood/mood-1.png'),
@@ -25,26 +26,36 @@ const texts = [
   "Terrible"
 ];
 
-const Mood = () => {
+const Mood = ({ route }) => {
     const navigation = useNavigation();
     const [currentDate, setCurrentDate] = useState('');
     const [currentTime, setCurrentTime] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [username, setUsername] = useState('');
-    const route = useRoute();
+    const selectedDate = route.params && route.params.selectedDate;
+
     const auth = getAuth(app);
     const db = getFirestore(app);
     const userId = auth.currentUser?.uid;
 
     const checkJournalEntry = useCallback(async () => {
       if (userId) {
-        const currentDate = moment().startOf('day').format('DD-MM-YYYY');
+
+        let currentDate;
+        if (selectedDate) {
+          // Si selectedDate est défini, utilisez-le
+          currentDate = moment(selectedDate, 'DD/MM/YYYY').startOf('day').format('DD-MM-YYYY');
+        } else {
+          // Sinon, utilisez la date actuelle
+          currentDate = moment().startOf('day').format('DD-MM-YYYY');
+        }
+        
         const currentJournalRef = doc(db, 'users', userId, 'journals', currentDate);
         const currentJournalSnap = await getDoc(currentJournalRef);
         if (currentJournalSnap.exists()) {
           Alert.alert(
             'Journal déjà rempli',
-            'Vous avez déjà rempli votre journal pour aujourd\'hui. Vous pouvez l\'éditer ou annuler.',
+            'Vous avez déjà rempli votre journal pour aujourd\'hui.',
             [
               {
                 text: 'Éditer'
@@ -63,10 +74,22 @@ const Mood = () => {
     }, [db, navigation, userId]);
 
     useEffect(() => {
-      const date = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      setCurrentDate(date.toLocaleDateString('fr-FR', options));
-      setCurrentTime(date.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}));
+      moment.locale('fr');
+
+      if (selectedDate) {
+        // Si selectedDate est défini, utilisez-le pour mettre à jour la date actuelle
+        const parsedDate = moment(selectedDate, 'DD/MM/YYYY');
+        const formattedDate = parsedDate.format('DD MMMM');
+        setCurrentDate(formattedDate);
+      } else {
+        // Sinon, utilisez la date actuelle
+        const currentDate = moment().format('DD MMMM');
+        setCurrentDate(currentDate);
+      }
+    
+      // Mise à jour de l'heure actuelle avec Moment.js
+      const currentTime = moment().format('HH:mm');
+      setCurrentTime(currentTime);
 
       const fetchUsername = async () => {
         if (userId) {
@@ -76,9 +99,9 @@ const Mood = () => {
           }
         }
       };
-      
       fetchUsername();
-    }, []);
+    }, [selectedDate, userId]);
+    
   
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -99,12 +122,17 @@ const Mood = () => {
         const userId = auth.currentUser?.uid;
         const moodName = texts[selectedIndex];
     
-        // Obtenir la date actuelle avec Moment.js
-        const currentDate = moment().startOf('day');
-        const currentFormattedDate = currentDate.format('DD-MM-YYYY');
+        let currentDate;
+        if (selectedDate) {
+          // Si selectedDate est défini, utilisez-le
+          currentDate = moment(selectedDate, 'DD/MM/YYYY').startOf('day').format('DD-MM-YYYY');
+        } else {
+          // Sinon, utilisez la date actuelle
+          currentDate = moment().startOf('day').format('DD-MM-YYYY');
+        }
     
         // Créer une référence à la date actuelle dans la collection "journals" de l'utilisateur
-        const currentJournalRef = doc(db, "users", userId, "journals", currentFormattedDate);
+        const currentJournalRef = doc(db, "users", userId, "journals", currentDate);
     
         // Vérifier si un document existe déjà pour la date actuelle
         const currentJournalSnap = await getDoc(currentJournalRef);
@@ -126,7 +154,7 @@ const Mood = () => {
           await setDoc(currentJournalRef, journalData);
         }
     
-        navigation.navigate('Activity', { moodIndex: selectedIndex, journalID: currentFormattedDate });
+        navigation.navigate('Activity', { moodIndex: selectedIndex, journalID: currentDate });
       } catch (error) {
         Alert.alert('Erreur', 'Une erreur s\'est produite lors de l\'ajout du mood.');
       }

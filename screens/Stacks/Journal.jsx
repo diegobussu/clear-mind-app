@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const stack = createNativeStackNavigator();
 
-const JournalStack = () => {
+const JournalStack = ({selectedDate}) => {
   const navigation = useNavigation();
   return (
     <stack.Navigator
