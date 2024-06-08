@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image, Alert} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image, Alert, Vibration} from 'react-native';
 import Insomnie from '../../assets/img/ressources/insomnie.png'
 import Anxiety from '../../assets/img/ressources/anxiety.png'
 import Stress from '../../assets/img/ressources/stress.png'
 import BurnOut from '../../assets/img/ressources/burnout.png'
+import Screen from '../../assets/img/ressources/screen.png'
+import Friends from '../../assets/img/ressources/friends.png'
+import Sleep from '../../assets/img/ressources/friends.png'
 import { Ionicons } from '@expo/vector-icons';
 import { getAuth} from "firebase/auth";
 import { app } from "../../firebaseConfig";
@@ -69,16 +72,41 @@ const Ressource = () => {
   }
 
   if (selected === 'Quizz') {
-    title1 = 'Comment combattre l\'insomnie';
-    title2 = 'Comprendre et gérer l\'anxiété';
-    title3 = 'Comment Gérer son stress au quotidien';
-    title4 = 'L\'épuisement professionnel (Burnout)';
+    title1 = 'Questionnaire sur le sommeil';
+    title2 = 'Questionnaire sur l\'utilisation des écrans';
+    title3 = 'Questionnaire sur l\'entourage';
 
-    subtitle1 = 'Découvrez des méthodes éprouvées pour vaincre l\'insomnie.';
-    subtitle2 = 'Découvrez ce qu\'est l\'anxiété et des stratégies pratiques pour la gérer au quotidien.';
-    subtitle3 = 'Découvrez ce qu\'est le stress et comment le gérer au quotidien.';
-    subtitle4 = 'Identifiez les signes précoces du burnout et découvrez des méthodes pour le prévenir et le traiter.';
+    subtitle1 = 'Ce questionnaire aide à identifier les problèmes de sommeil et propose des solutions pour améliorer la qualité de votre sommeil et votre bien-être général.';
+    subtitle2 = 'Ce questionnaire examine le temps passé devant les écrans, que ce soit pour le travail, les jeux vidéo ou les réseaux sociaux. ';
+    subtitle3 = 'Évaluez l\'impact de votre entourage sur votre santé mentale avec ce questionnaire. Identifiez les sources de soutien et de stress dans vos relations personnelles, familiale et professionnelles.';
   }
+  
+
+  const [initialState, setInitialState] = useState(true);
+  const [timer, setTimer] = useState(1500);
+  const [isRunning, setIsRunning] = useState(false);
+  let interval = useRef(null);
+
+  const startTimer = () => {
+    setInitialState(false);
+    setIsRunning(true);
+    interval.current = setInterval(() => {
+      setTimer(prevTimer => prevTimer - 1);
+    }, 1000); 
+
+    setTimeout(() => {
+      clearInterval(interval.current);
+      Vibration.vibrate();
+      setIsRunning(false);
+    }, 1500000);
+  };
+
+  const stopTimer = () => {
+    setIsRunning(false);
+    clearInterval(interval.current);
+  };
+  
+  
   
   return (
     <SafeAreaView className="flex-1 justify-start items-center text-center px-5 bg-secondary-white">
@@ -99,21 +127,19 @@ const Ressource = () => {
 
 
         {selected === 'Conseil' && (
-          <View className="mt-10">
+          <View className="mt-3">
 
-          <View style={{backgroundColor: backgroundColor1, overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5">
+            <View style={{backgroundColor: backgroundColor1, overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5">
 
-              <Text className="font-Qs-SemiBold text-xl text-white">{title1}</Text>
-              <Text className="font-Qs-Regular text-xl text-white mt-3">{subtitle1}</Text>
-              <TouchableOpacity className="mt-5">
-                <Text className="underline font-Qs-Regular text-lg text-white mb-7">Lire</Text>
-              </TouchableOpacity>
+                <Text className="font-Qs-SemiBold text-xl text-white">{title1}</Text>
+                <Text className="font-Qs-Regular text-xl text-white mt-3">{subtitle1}</Text>
+                <TouchableOpacity className="mt-5">
+                  <Text className="underline font-Qs-Regular text-lg text-white mb-7">Lire</Text>
+                </TouchableOpacity>
 
-              <Image source={Insomnie} className="w-[200px] h-[140px] absolute bottom-[-10] right-[0]" />
+                <Image source={Insomnie} className="w-[200px] h-[140px] absolute bottom-[-10] right-[0]" />
 
-          </View>
-
-
+            </View>
 
             <View style={{backgroundColor: backgroundColor2}} className="rounded-xl p-5 mx-5 mb-5">
 
@@ -167,22 +193,25 @@ const Ressource = () => {
               <Image source={BurnOut} className="w-[220px] h-[150px] absolute bottom-[0] right-[-40] z-[-1]" />
 
             </View>
+            
           </View>
         )}
 
 
         {selected === 'Quizz' && (
-          <View className="mt-10">
+          <View className="mt-3">
 
           <View style={{ overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5 bg-primary-white">
+              <Image source={Sleep} className="w-[350px] h-[150px] rounded-xl absolute top-0 left-0" />
 
-              <Text className="font-Qs-SemiBold text-xl">{title1}</Text>
-              <Text className="font-Qs-Regular text-xl mt-3">{subtitle1}</Text>
-              <TouchableOpacity className="mt-5">
-                <Text className="underline font-Qs-Regular text-lg mb-7">Lire</Text>
-              </TouchableOpacity>
+              <Text className="mt-[150px] font-Qs-SemiBold text-center text-xl">{title1}</Text>
+              <Text className="font-Qs-Regular text-center text-sm mt-3">{subtitle1}</Text>
 
-              <Image source={Insomnie} className="w-[200px] h-[140px] absolute bottom-[-10] right-[0]" />
+              <View className="items-center">
+                <TouchableOpacity className="mt-5 p-2 rounded-[30px] bg-second-white-purple w-[40%]">
+                  <Text className="font-Qs-SemiBold text-center text-third-purple">Démarrer</Text>
+                </TouchableOpacity>
+              </View>
 
           </View>
 
@@ -190,33 +219,75 @@ const Ressource = () => {
 
             <View style={{ overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5 bg-primary-white">
 
-              <Text className="font-Qs-SemiBold text-xl">{title2}</Text>
-              <Text className="font-Qs-Regular text-xl mt-3">{subtitle2}</Text>
+              <Image source={Screen} className="w-[350px] h-[150px] rounded-xl absolute top-0 left-0" />
 
-              <TouchableOpacity className="mt-5">
-                <Text className="underline font-Qs-Regular text-lg mb-7">Lire</Text>
-              </TouchableOpacity>
+              <Text className="mt-[150px] font-Qs-SemiBold text-center text-xl">{title2}</Text>
+              <Text className="font-Qs-Regular text-center text-sm mt-3">{subtitle2}</Text>
 
-              <Image source={Anxiety} className="w-[120px] h-[120px] absolute bottom-[1] right-[1]" />
+              <View className="items-center">
+                <TouchableOpacity className="mt-5 p-2 rounded-[30px] bg-second-white-purple w-[40%]">
+                  <Text className="font-Qs-SemiBold text-center text-third-purple">Démarrer</Text>
+                </TouchableOpacity>
+              </View>
 
             </View>
 
             <View style={{ overflow: 'hidden'}} className="rounded-xl p-5 mx-5 mb-5 bg-primary-white">
 
-              <Text className="font-Qs-SemiBold text-xl">{title3}</Text>
-              <Text className="font-Qs-Regular text-xl mt-3">{subtitle3}</Text>
+              <Image source={Friends} className="w-[350px] h-[150px] rounded-xl absolute top-0 left-0" />
 
-              <TouchableOpacity className="mt-5" onPress={() => checkPremiumStatus()}>
-              <Text className="underline font-Qs-Regular text-lg mb-7">Lire</Text>
-              </TouchableOpacity>
+              <View className="items-center mt-[150px] mb-3">
+                <View className="flex-row rounded-full p-2 bg-second-white-purple w-[50%]">
+                  <Ionicons name="diamond-outline" size={30} color="#6331FF"/>
+                  <Text className="font-Qs-SemiBold text-center text-xl text-primary-purple ml-3">Premium</Text>
+                </View>
+              </View>
 
-              <Image source={Stress} className="w-[100px] h-[100px] absolute bottom-[-5] right-[30]" />
+              <Text className="font-Qs-SemiBold text-center text-xl">{title3}</Text>
+              <Text className="font-Qs-Regular text-center text-sm mt-3">{subtitle3}</Text>
+
+              <View className="items-center">
+                <TouchableOpacity onPress={() => checkPremiumStatus()} className="mt-5 p-2 rounded-[30px] bg-second-white-purple w-[40%]">
+                  <Text className="font-Qs-SemiBold text-center text-third-purple">Démarrer</Text>
+                </TouchableOpacity>
+              </View>
 
             </View>
+
           </View>
         )}
 
 
+
+
+
+        {selected === 'Concentration' && (
+          <View className="mt-3">
+            <View style={{ overflow: 'hidden'}} className="rounded-xl p-5 mx-10 mb-5 bg-primary-white">
+              <Text className="font-Qs-SemiBold text-center text-[50px]">{Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}{timer % 60}</Text>
+            </View>
+
+            <View className="items-center mb-10">
+              <TouchableOpacity onPress={isRunning ? stopTimer : startTimer} className="mt-5 p-2 py-3 px-10 rounded-[30px] bg-primary-purple">
+                <Text className="font-Qs-SemiBold text-[20px] text-center text-primary-white">{isRunning ? 'Arrêter' : initialState ? 'Démarrer' : 'Reprendre'}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ overflow: 'hidden'}} className="rounded-xl p-5 mx-10 mb-5 bg-primary-white">
+              <Text className="font-Qs-SemiBold text-center text-xl">Méthode Pomodoro</Text>
+              <Text className="font-Qs-Regular text-center text-sm mt-3">
+                La méthode Pomodoro vise à améliorer la productivité en alternant périodes de travail intensif et courtes pauses.
+              </Text>
+            </View>
+
+            <View style={{ overflow: 'hidden'}} className="rounded-xl p-5 mx-10 mb-5 bg-primary-white">
+              <Text className="font-Qs-SemiBold text-center text-xl">Perfomances</Text>
+              <Text className="font-Qs-Regular text-center text-sm mt-3">
+                Travailler en périodes de 25 minutes, suivies de courtes pauses de 5 minutes, pour maximiser la concentration et la productivité.
+              </Text>
+            </View>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
