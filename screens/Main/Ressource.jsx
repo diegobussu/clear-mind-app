@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image, Alert, Vibration} from 'react-native';
 import Insomnie from '../../assets/img/ressources/insomnie.png'
 import Anxiety from '../../assets/img/ressources/anxiety.png'
@@ -80,33 +80,50 @@ const Ressource = () => {
     subtitle2 = 'Ce questionnaire examine le temps passé devant les écrans, que ce soit pour le travail, les jeux vidéo ou les réseaux sociaux. ';
     subtitle3 = 'Évaluez l\'impact de votre entourage sur votre santé mentale avec ce questionnaire. Identifiez les sources de soutien et de stress dans vos relations personnelles, familiale et professionnelles.';
   }
-  
 
-  const [initialState, setInitialState] = useState(true);
-  const [timer, setTimer] = useState(1500);
+  const [mode, setMode] = useState('Travail'); // Mode initial est "Travail"
+  const [timer, setTimer] = useState(25 * 60); // Durée initiale de 25 minutes en secondes
   const [isRunning, setIsRunning] = useState(false);
-  let interval = useRef(null);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    let intervalId;
+
+    // Logique pour gérer le changement de mode une fois que le minuteur atteint 00:00
+    if (timer === 0) {
+      if (mode === 'Travail') {
+        // Si le mode actuel est "Travail", passer au mode "Pause" et réinitialiser le minuteur à 5 minutes
+        setMode('Pause');
+        setTimer(5 * 60);
+      } else {
+        // Si le mode actuel est "Pause", passer au mode "Travail" et réinitialiser le minuteur à 25 minutes
+        setMode('Travail');
+        setTimer(25 * 60);
+      }
+    }
+
+    // Démarrer le minuteur
+    if (isRunning) {
+      intervalId = setInterval(() => {
+        setTimer(prevTimer => prevTimer - 1);
+      }, 1000);
+    }
+
+    // Nettoyer l'intervalle lorsque le composant est démonté ou lorsque le minuteur est arrêté
+    return () => clearInterval(intervalId);
+  }, [timer, mode, isRunning]);
 
   const startTimer = () => {
-    setInitialState(false);
     setIsRunning(true);
-    interval.current = setInterval(() => {
-      setTimer(prevTimer => prevTimer - 1);
-    }, 1000); 
-
-    setTimeout(() => {
-      clearInterval(interval.current);
-      Vibration.vibrate();
-      setIsRunning(false);
-    }, 1500000);
   };
 
   const stopTimer = () => {
+    clearInterval(intervalRef.current);
     setIsRunning(false);
-    clearInterval(interval.current);
+    if (timer === 0) {
+      setTimer(mode === 'Travail' ? 25 * 60 : 5 * 60); // Réinitialiser le minuteur à la durée appropriée
+    }
   };
-  
-  
   
   return (
     <SafeAreaView className="flex-1 justify-start items-center text-center px-5 bg-secondary-white">
@@ -269,7 +286,7 @@ const Ressource = () => {
 
             <View className="items-center mb-10">
               <TouchableOpacity onPress={isRunning ? stopTimer : startTimer} className="mt-5 p-2 py-3 px-10 rounded-[30px] bg-primary-purple">
-                <Text className="font-Qs-SemiBold text-[20px] text-center text-primary-white">{isRunning ? 'Arrêter' : initialState ? 'Démarrer' : 'Reprendre'}</Text>
+                <Text className="font-Qs-SemiBold text-[20px] text-center text-primary-white">{isRunning ? 'Arrêter' : timer === 0 ? 'Redémarrer' : 'Démarrer'}</Text>
               </TouchableOpacity>
             </View>
 
@@ -286,6 +303,7 @@ const Ressource = () => {
                 Travailler en périodes de 25 minutes, suivies de courtes pauses de 5 minutes, pour maximiser la concentration et la productivité.
               </Text>
             </View>
+
           </View>
         )}
       </ScrollView>
