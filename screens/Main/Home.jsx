@@ -244,7 +244,7 @@ const Home = () => {
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <ScrollView contentContainerStyle={{ paddingVertical: 20, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
 
-        <View className="items-center mb-2">
+        <View className="items-center mt-10 mb-2">
           <TouchableOpacity onPress={handleCalendarPress}>
             <View className="bg-[#EEEDFF] p-2 rounded-[30px] flex-row items-center">
               <Text className="font-Qs-SemiBold font-bold text-[20px] mr-2">{selectedDate.format('DD MMMM')}</Text>

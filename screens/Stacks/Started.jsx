@@ -20,6 +20,7 @@ const Started = () => {
           backgroundColor: '#F9F9FF',
           borderBottomWidth: 0,
         },
+        headerTitleAlign: 'center',
         headerTitleStyle: {
           fontSize: 20,
           fontFamily: 'Qs-SemiBold'

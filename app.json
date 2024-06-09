@@ -7,20 +7,24 @@
     "icon": "./assets/img/favicon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/img/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dontitosama.clearmindapp"
+      "bundleIdentifier": "com.dontitosama.clearmindapp",
+      "splash": {
+        "image": "./assets/img/splash.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/img/favicon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.dontitosama.clearmindapp"
+      "package": "com.dontitosama.clearmindapp",
+      "splash": {
+        "image": "./assets/img/splash-1.png"
+      }
     },
     "web": {
       "favicon": "./assets/img/favicon.png"

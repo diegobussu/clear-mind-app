@@ -22,6 +22,7 @@ const JournalStack = ({selectedDate}) => {
           fontSize: 20,
           fontFamily: 'Qs-SemiBold'
         },
+        headerTitleAlign: 'center',
         headerLeft: () => {
           if (route.name !== 'Mood') {
             return (

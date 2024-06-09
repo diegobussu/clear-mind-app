@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -115,7 +115,7 @@ function AuthenticatedApp() {
         },
         tabBarShowLabel: false,
         headerShown: false,
-        tabBarStyle: styles.tabBar
+        tabBarStyle: styles.tabBar,
       })}
     >
       <Tab.Screen name="HomeStack" component={Home} />
@@ -128,17 +128,19 @@ function AuthenticatedApp() {
 }
 
 
+const tabBarHeight = Platform.OS === 'ios' ? 100 : 70;
+const tabBarBottom = Platform.OS === 'ios' ? 10 : 15;
 
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: "#FFF",
-    height: 100,
+    height: tabBarHeight,
     justifyContent: 'center',
     alignItems: 'center'
   },
   defaultIcon: {
     position: 'absolute',
-    bottom: 10
+    bottom: tabBarBottom
   },
   addCircleIcon: {
     position: 'absolute',
