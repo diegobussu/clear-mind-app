@@ -1,147 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View, ScrollView } from 'react-native';
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc, Timestamp, collection, query, addDoc, getDocs, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
-import moment from 'moment';
 
 const Data = ({ currentMonth, currentYear }) => {
+  const [totalEntries, setTotalEntries] = useState(0);
   const auth = getAuth(app);
   const db = getFirestore(app);
   const userId = auth.currentUser?.uid;
-  const [userEntries, setUserEntries] = useState([]);
-  const [totalEntries, setTotalEntries] = useState(0);
-  const [consecutiveEntries, setConsecutiveEntries] = useState(0);
-  const [longestStreak, setLongestStreak] = useState(0);
-  const [connectionDays, setConnectionDays] = useState([]);
 
   useEffect(() => {
-    const fetchUserEntries = async () => {
+    const fetchTotalEntries = async () => {
       try {
-        const userDocRef = doc(db, 'users', userId);
-        const userDocSnap = await getDoc(userDocRef);
-        if (userDocSnap.exists()) {
-          const entriesCollectionRef = collection(userDocRef, 'entries');
-          const entriesQuery = query(entriesCollectionRef);
-          const entriesSnapshot = await getDocs(entriesQuery);
-          const uniqueDates = new Set();
-          const entriesData = entriesSnapshot.docs.map(doc => {
-            const formattedDate = moment(doc.data().date.toDate()).format('YYYY-MM-DD');
-            uniqueDates.add(formattedDate);
-            return { ...doc.data(), id: doc.id, date: formattedDate };
-          });
-          setUserEntries(entriesData);
+        const startDate = new Date(currentYear, currentMonth - 1, 1);
+        const endDate = new Date(currentYear, currentMonth, 0);
 
-          const connectionDays = [...uniqueDates].filter(date => {
-            const [year, month] = date.split('-');
-            return Number(year) === currentYear && Number(month) === currentMonth;
-          });
-          setConnectionDays(connectionDays);
+        const entriesQuery = query(
+          collection(db, 'users', userId, 'entries'),
+          where('createdAt', '>=', startDate),
+          where('createdAt', '<=', endDate)
+        );
 
-          // Calculer les entrées consécutives, totales et la plus longue série
-          let currentConsecutiveEntries = 0;
-          let currentTotalEntries = 0;
-          let longestStreakCount = 0;
-          let currentStreakCount = 0;
-          let prevDate = null;
+        const entriesSnapshot = await getDocs(entriesQuery);
+        let total = 0;
 
-          for (const entry of entriesData) {
-            const entryDate = moment(entry.date);
-            if (entryDate.year() === currentYear && entryDate.month() + 1 === currentMonth) {
-              currentTotalEntries += entry.count;
-              if (!prevDate || entryDate.diff(prevDate, 'days') === 1) {
-                currentConsecutiveEntries += entry.count;
-                currentStreakCount += entry.count;
-              } else if (entryDate.diff(prevDate, 'days') > 1) {
-                currentConsecutiveEntries = entry.count;
-                currentStreakCount = entry.count;
-              }
-              longestStreakCount = Math.max(longestStreakCount, currentStreakCount);
-              prevDate = entryDate;
-            }
-          }
+        entriesSnapshot.forEach((doc) => {
+          total += doc.data().count;
+        });
 
-          setTotalEntries(currentTotalEntries);
-          setConsecutiveEntries(currentConsecutiveEntries);
-          setLongestStreak(longestStreakCount);
-        } else {
-          await setDoc(userDocRef, {});
-          setUserEntries([]);
-        }
+        setTotalEntries(total);
       } catch (error) {
-        console.error("Error fetching user entries:", error);
+        console.error("Error fetching entries: ", error);
       }
     };
 
-    fetchUserEntries();
-  }, [userId, currentMonth, currentYear]);
-
-
-  useEffect(() => {
-    const total = userEntries.reduce((acc, entry) => acc + entry.count, 0);
-    setTotalEntries(total);
-
-    let longestStreakCount = 0;
-    let currentStreakCount = 0;
-    let prevDate = null;
-
-    userEntries.sort((a, b) => moment(a.date).diff(moment(b.date)));
-
-    for (const entry of userEntries) {
-      const entryDate = moment(entry.date);
-      if (!prevDate || entryDate.diff(prevDate, 'days') === 1) {
-        currentStreakCount += entry.count;
-      } else if (entryDate.diff(prevDate, 'days') > 1) {
-        currentStreakCount = entry.count;
-      }
-      longestStreakCount = Math.max(longestStreakCount, currentStreakCount);
-      prevDate = entryDate;
+    if (userId) {
+      fetchTotalEntries();
     }
-
-    setConsecutiveEntries(currentStreakCount);
-    setLongestStreak(longestStreakCount);
-  }, [userEntries]);
-
-  const incrementEntryCount = async () => {
-    const today = moment().startOf('day');
-    const todayEntry = userEntries.find(entry => moment(entry.date).startOf('day').isSame(today, 'day'));
-
-    if (todayEntry) {
-      const entryRef = doc(db, 'users', userId, 'entries', todayEntry.id);
-      await updateDoc(entryRef, { count: todayEntry.count + 1 });
-      setUserEntries(prevEntries =>
-        prevEntries.map(entry =>
-          entry.id === todayEntry.id ? { ...entry, count: todayEntry.count + 1 } : entry
-        )
-      );
-    } else {
-      const newEntryRef = await addDoc(collection(db, 'users', userId, 'entries'), {
-        date: Timestamp.fromDate(today.toDate()),
-        count: 1
-      });
-      setUserEntries(prevEntries => [...prevEntries, { id: newEntryRef.id, date: today.toDate(), count: 1 }]);
-    }
-  };
-
-  useEffect(() => {
-    incrementEntryCount();
-  }, []);
+  }, [userId, currentMonth, currentYear, db]);
 
   return (
     <SafeAreaView className="flex-1 justify-start items-center text-center px-5 bg-[#EEEDFF]">
       <ScrollView contentContainerStyle={{ paddingVertical: 50, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
         <View className="rounded-xl p-5 mx-5 bg-primary-white">
-          <Text className="font-Qs-Bold text-xl mb-5">Entrée consécutive : {consecutiveEntries}</Text>
-
-          <Text className="font-Qs-SemiBold text-[18px] mt-3">Jours de connexion :</Text>
-          <View>
-            {connectionDays.map((day, index) => (
-              <Text key={index}>{moment(day).format('dddd DD')}</Text>
-            ))}
-          </View>
-
           <Text className="font-Qs-SemiBold text-[18px] mt-10">Entrées totales : {totalEntries}</Text>
-          <Text className="font-Qs-SemiBold text-[18px] mt-3">Plus longue série : {longestStreak}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

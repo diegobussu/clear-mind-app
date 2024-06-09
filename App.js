@@ -7,18 +7,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthContext, AuthProvider } from "./Authentification";
 import { app } from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, query, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, getDocs, setDoc, doc, updateDoc, getDoc, Timestamp } from "firebase/firestore";
 import * as Font from 'expo-font';
-
+import moment from 'moment';
 import Home from './screens/Stacks/Home';
 import Data from './screens/Stacks/Data';
 import Journal from './screens/Stacks/Journal';
 import Ressource from './screens/Stacks/Ressource';
 import Setting from './screens/Stacks/Setting';
-
 import Started from './screens/Stacks/Started';
 import Authentification from "./screens/Stacks/Authentification";
-
 import LoadingScreen from './screens/LoadingScreen';
 
 async function loadFonts() {
@@ -33,6 +31,44 @@ async function loadFonts() {
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+async function addNewEntry() {
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const userId = auth.currentUser?.uid;
+  if (userId) {
+    const date = moment(); 
+    const formattedDate = date.format('DD-MM-YYYY');
+    const entryRef = doc(db, 'users', userId, 'entries', formattedDate);
+
+    const entrySnap = await getDoc(entryRef);
+    if (entrySnap.exists()) {
+      const currentCount = entrySnap.data().count || 0;
+      const newCount = currentCount + 1;
+
+      try {
+        await updateDoc(entryRef, {
+          count: newCount
+        });
+      } catch (error) {
+        console.error('Error updating entry:', error);
+      }
+    } else {
+      const entryData = {
+        count: 1,
+        createdAt: Timestamp.now(),
+      };
+      try {
+        await setDoc(entryRef, entryData);
+      } catch (error) {
+        console.error('Error setting entry:', error);
+      }
+    }
+  }
+}
+
+
+
 
 function AuthenticatedApp() {
   return (
@@ -143,6 +179,9 @@ function MainNavigator() {
   if (loading) {
     return <LoadingScreen />;
   }
+
+  // Ajoute une nouvelle entrée lorsque l'utilisateur se connecte
+  addNewEntry();
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }}>
