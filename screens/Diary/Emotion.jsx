@@ -149,7 +149,7 @@ const Emotion = ({ route }) => {
       'Détendu',
       'Satisfait',
       'Fatigué',
-      'Enervé',
+      'Énervé',
       'Stressé',
       'Anxieux',
       'Triste'

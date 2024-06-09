@@ -137,7 +137,7 @@ const Activity = ({ route }) => {
       'Musique',
       'Sorties',
       'Voyage',
-      'Jeux vidéos',
+      'Jeux vidéo',
       'Bien-être',
       'Détente',
       'Animaux'
