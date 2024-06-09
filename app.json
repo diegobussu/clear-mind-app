@@ -4,7 +4,7 @@
     "slug": "clear-mind-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/favicon.png",
+    "icon": "./assets/img/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/img/splash.png",
@@ -17,13 +17,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/img/favicon.png",
+        "foregroundImage": "./assets/img/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.dontitosama.clearmindapp"
-    },
-    "web": {
-      "favicon": "./assets/img/favicon.png"
     },
     "plugins": [
       "expo-font"
