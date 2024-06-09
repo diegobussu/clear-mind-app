@@ -40,6 +40,23 @@ const Home = () => {
   const fetchDataForSelectedDate = async (date) => {
     const formattedDate = date.format('DD-MM-YYYY');
     const moodDoc = await getDoc(doc(db, 'users', userId, 'journals', formattedDate));
+    
+    if (date.isAfter(moment(), 'day')) {
+      Alert.alert(
+        "Date invalide",
+        "Ce jour n'est pas encore arrivé.",
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              setSelectedDate(moment());
+            }
+          }
+        ]
+      );
+      return;
+    }
+
     if (moodDoc.exists()) {
       setUserMood(moodDoc.data().mood);
       setUserNote(moodDoc.data().note);
@@ -111,7 +128,7 @@ const Home = () => {
     const selectedDay = moment(selectedDate).startOf('isoWeek').add(index, 'days');
     const today = moment().startOf('day');
     if (selectedDay.isAfter(today)) {
-      Alert.alert("Ce jour n'est pas encore arrivé");
+      Alert.alert("Ce jour n'est pas encore arrivé.");
     } else {
       setSelectedDate(selectedDay);
       generateDaysOfWeek(selectedDay);
