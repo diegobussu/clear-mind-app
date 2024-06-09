@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import moment from 'moment';
 

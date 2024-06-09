@@ -1,9 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, Text, View, ScrollView } from 'react-native';
 import { getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc, Timestamp, collection, query, where, addDoc, getDocs, updateDoc } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc, Timestamp, collection, query, addDoc, getDocs, updateDoc } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 import moment from 'moment';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
+
+LocaleConfig.locales['fr'] = {
+  monthNames: [
+    'Janvier',
+    'Février',
+    'Mars',
+    'Avril',
+    'Mai',
+    'Juin',
+    'Juillet',
+    'Août',
+    'Septembre',
+    'Octobre',
+    'Novembre',
+    'Décembre'
+  ],
+  monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+  dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+  dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+  today: "Aujourd'hui"
+};
+
+LocaleConfig.defaultLocale = 'fr';
 
 const Data = () => {
   const auth = getAuth(app);
@@ -41,12 +65,11 @@ const Data = () => {
     const total = userEntries.reduce((acc, entry) => acc + entry.count, 0);
     setTotalEntries(total);
 
-    let consecutiveCount = 0;
     let longestStreakCount = 0;
     let currentStreakCount = 0;
     let prevDate = null;
     
-    userEntries.sort((a, b) => moment(a.date).diff(moment(b.date))); // Sort entries by date
+    userEntries.sort((a, b) => moment(a.date).diff(moment(b.date)));
 
     for (const entry of userEntries) {
       const entryDate = moment(entry.date);
@@ -88,13 +111,27 @@ const Data = () => {
     incrementEntryCount();
   }, []);
 
+
+
   return (
-    <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View>
-        <Text>Entrées totales : {totalEntries}</Text>
-        <Text>Entrée consécutive : {consecutiveEntries}</Text>
-        <Text>Plus longue série : {longestStreak}</Text>
-      </View>
+    <SafeAreaView className="flex-1 justify-start items-center text-center px-5 bg-[#EEEDFF]">
+      <ScrollView contentContainerStyle={{ paddingVertical: 50, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
+        <View className="rounded-xl p-5 mx-5 bg-primary-white">
+          <Text className="font-Qs-Bold text-xl mb-5">Entrée consécutive : {consecutiveEntries}</Text>
+
+          <Calendar
+            locale="fr"
+            theme={{
+              arrowColor: '#6331FF'
+            }}
+            firstDay={1}
+            style={{ backgroundColor: '#FFF', width: 300 }}
+          />
+
+          <Text className="font-Qs-SemiBold text-[18px] mt-10">Entrées totales : {totalEntries}</Text>
+          <Text className="font-Qs-SemiBold text-[18px] mt-3">Plus longue série : {longestStreak}</Text>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
