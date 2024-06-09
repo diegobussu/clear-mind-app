@@ -37,6 +37,7 @@ const Data = () => {
   const [totalEntries, setTotalEntries] = useState(0);
   const [consecutiveEntries, setConsecutiveEntries] = useState(0);
   const [longestStreak, setLongestStreak] = useState(0);
+  const [markedDates, setMarkedDates] = useState({});
 
   useEffect(() => {
     const fetchUserEntries = async () => {
@@ -68,7 +69,14 @@ const Data = () => {
     let longestStreakCount = 0;
     let currentStreakCount = 0;
     let prevDate = null;
-    
+
+    const formattedDates = userEntries.map(entry => moment.utc(entry.date).utcOffset('+0200').format('YYYY-MM-DD'));
+    const markedDatesObj = formattedDates.reduce((acc, date) => {
+      acc[date] = { selected: true, selectedColor: '#6331FF' };
+      return acc;
+    }, {});
+    setMarkedDates(markedDatesObj);
+
     userEntries.sort((a, b) => moment(a.date).diff(moment(b.date)));
 
     for (const entry of userEntries) {
@@ -87,7 +95,7 @@ const Data = () => {
   }, [userEntries]);
 
   const incrementEntryCount = async () => {
-    const today = moment().startOf('day');
+    const today = moment().utcOffset('+0200').startOf('day');
     const todayEntry = userEntries.find(entry => moment(entry.date).startOf('day').isSame(today, 'day'));
 
     if (todayEntry) {
@@ -111,8 +119,6 @@ const Data = () => {
     incrementEntryCount();
   }, []);
 
-
-
   return (
     <SafeAreaView className="flex-1 justify-start items-center text-center px-5 bg-[#EEEDFF]">
       <ScrollView contentContainerStyle={{ paddingVertical: 50, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
@@ -126,6 +132,7 @@ const Data = () => {
             }}
             firstDay={1}
             style={{ backgroundColor: '#FFF', width: 300 }}
+            markedDates={markedDates}
           />
 
           <Text className="font-Qs-SemiBold text-[18px] mt-10">Entrées totales : {totalEntries}</Text>
