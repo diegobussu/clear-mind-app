@@ -23,7 +23,7 @@ const Review = () => {
                     <Ionicons
                         name={i <= rating ? "star" : "star-outline"}
                         size={30}
-                        color="#6331FF"
+                        color="#FFF"
                     />
                 </TouchableOpacity>
             );
@@ -49,6 +49,7 @@ const Review = () => {
                 if (currentReviewSnap.exists()) {
                     // If the document exists, prevent submitting a second review
                     Alert.alert("Attention", "Vous avez déjà soumis un avis aujourd'hui.");
+                    navigation.goBack();
                     return;
                 }
 
@@ -74,9 +75,9 @@ const Review = () => {
 
 
   return (
-    <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-        <View className="bg-white rounded-lg p-7 w-11/12">
-            <Text className="font-Qs-Bold text-center text-[22px] mb-5">Nous avons besoin de vous !</Text>
+    <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-white-purple">
+        <View className="bg-white-purple rounded-lg p-7 w-11/12 mb-20">
+            <Text className="font-Qs-Bold text-center text-white text-[22px] mb-5">Nous avons besoin de vous !</Text>
             <View className="flex-row justify-center mb-5">
                 {renderRatingStars()}
             </View>
@@ -85,12 +86,13 @@ const Review = () => {
                 placeholder="Écrire un avis"
                 value={review}
                 onChangeText={setReview}
+                placeholderTextColor={"#B08FFF"}
                 multiline
                 numberOfLines={4}
                 style={{ textAlignVertical: 'top', height: 80, width: '100%', marginBottom: 10 }}
             />
             <TouchableOpacity onPress={handleSubmit}>
-                <Text className="font-Qs-SemiBold text-[20px] mt-3 text-center text-primary-purple">Valider</Text>
+                <Text className="font-Qs-SemiBold text-[20px] mt-3 text-center text-white">Valider</Text>
             </TouchableOpacity>
         </View>
     </SafeAreaView>

@@ -73,37 +73,35 @@ const Security = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <ScrollView contentContainerStyle={{ paddingVertical: 20, paddingHorizontal: 5 }} showsVerticalScrollIndicator={false}>
-        <View className="bg-primary-white rounded-[30px] px-10 py-5 mb-5 mt-20">
-          <TouchableOpacity onPress={() => setEmailModalVisible(true)}>
-            <View className="flex-row justify-between items-center mb-10">
-              <Text className="font-Qs-SemiBold text-[20px] p-2">Modifier votre email</Text>
-              <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={handleChangePassword}>
-            <View className="flex-row justify-between items-center mb-10">
-              <Text className="font-Qs-SemiBold text-[20px] p-2">Modifier votre mot de passe</Text>
-              <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => setDeleteModalVisible(true)}>
-            <View className="flex-row justify-between items-center mb-10">
-              <Text className="font-Qs-SemiBold text-[20px] p-2">Supprimer votre compte</Text>
-              <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity
-          onPress={() => Linking.openURL('https://clear-mind.fr/pages/contact')}
-          className="bg-primary-purple mt-8 py-3 rounded-full shadow flex items-center justify-center w-[250px] mx-auto"
-        >
-          <Text className="text-white font-Qs-SemiBold text-lg">Signaler un problème ?</Text>
+      <View className="bg-primary-white rounded-[30px] px-10 mx-5 py-5 mb-10">
+        <TouchableOpacity onPress={() => setEmailModalVisible(true)}>
+          <View className="flex-row justify-between items-center mb-10">
+            <Text className="font-Qs-SemiBold text-[20px] p-2">Modifier votre email</Text>
+            <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
+          </View>
         </TouchableOpacity>
-      </ScrollView>
+
+        <TouchableOpacity onPress={handleChangePassword}>
+          <View className="flex-row justify-between items-center mb-10">
+            <Text className="font-Qs-SemiBold text-[20px] p-2">Modifier votre mot de passe</Text>
+            <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => setDeleteModalVisible(true)}>
+          <View className="flex-row justify-between items-center mb-10">
+            <Text className="font-Qs-SemiBold text-[20px] p-2">Supprimer votre compte</Text>
+            <Ionicons name="chevron-forward" size={30} color={'#6331FF'}/>
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity
+        onPress={() => Linking.openURL('https://clear-mind.fr/pages/contact')}
+        className="bg-primary-purple mt-8 py-3 rounded-full shadow flex items-center justify-center w-[250px] mx-auto"
+      >
+        <Text className="text-white font-Qs-SemiBold text-lg">Signaler un problème ?</Text>
+      </TouchableOpacity>
 
       <Modal
         animationType="slide"

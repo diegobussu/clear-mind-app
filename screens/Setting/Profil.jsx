@@ -7,7 +7,6 @@ import { doc, getFirestore, getDoc, Timestamp, updateDoc } from "firebase/firest
 import { app } from "../../firebaseConfig";
 import Button from '../../components/Button';
 import { BlurView } from 'expo-blur';
-import moment from 'moment';
 
 const Profil = () => {
     const navigation = useNavigation();
@@ -86,15 +85,17 @@ const Profil = () => {
 
             // Récupérer la date du dernier changement du pseudo de l'utilisateur depuis la base de données
             const userDataSnapshot = await getDoc(doc(db, "users", userId));
-            const lastUsernameChangeTimestamp = userDataSnapshot.data().usernameChangedAt.toMillis();
+            const lastUsernameChangeTimestamp = userDataSnapshot.data().usernameChangedAt;
 
-            // Calculer la différence en millisecondes entre maintenant et la dernière fois que le pseudo a été changé
-            const millisecondsInMonth = 30 * 24 * 60 * 60 * 1000;
-            const millisecondsSinceLastChange = Date.now() - lastUsernameChangeTimestamp;
+            if (lastUsernameChangeTimestamp) {
+                const lastChangeDate = lastUsernameChangeTimestamp.toDate().getTime();
+                const millisecondsInMonth = 30 * 24 * 60 * 60 * 1000;
+                const millisecondsSinceLastChange = Date.now() - lastChangeDate;
 
-            if (millisecondsSinceLastChange < millisecondsInMonth) {
-                Alert.alert("Vous ne pouvez changer votre pseudo qu'une fois par mois.");
-                return;
+                if (millisecondsSinceLastChange < millisecondsInMonth) {
+                    Alert.alert("Vous ne pouvez changer votre pseudo qu'une fois par mois.");
+                    return;
+                }
             }
 
             // Mettre à jour le nom d'utilisateur dans la base de données
@@ -109,7 +110,7 @@ const Profil = () => {
             navigation.navigate("Home");
             navigation.navigate("Profil");
         } catch (error) {
-            Alert.alert("Erreur lors du changement du pseudo." + error.message);
+            Alert.alert("Erreur lors du changement du pseudo. " + error.message);
         }
     };
 
