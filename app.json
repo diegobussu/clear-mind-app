@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Clear Mind",
-    "slug": "Clear Mind",
+    "slug": "Clear-Mind",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/img/icon.png",
@@ -27,7 +27,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "50a75656-63f7-42b7-840c-24af7a6e4cc7"
+        "projectId": "fba45474-7b38-467e-af64-05982146e48d"
       }
     }
   }
