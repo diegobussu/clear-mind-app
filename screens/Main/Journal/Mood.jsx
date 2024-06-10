@@ -191,8 +191,8 @@ const Mood = ({ route }) => {
     const ItemSeparator = () => <View style={{ width: 20 }} />;
 
     return (
-      <SafeAreaView className="flex-1 justify-center px-5 bg-secondary-white">
-        <View className="flex-1 justify-center items-center mt-[50px]">
+      <SafeAreaView className="flex-1 justify-start px-5 bg-secondary-white">
+        <View className="items-center mt-[50px] mb-10">
           <Text className="font-Qs-SemiBold text-[28px]">Bonjour {username},</Text>
           <Text className="font-Qs-Medium text-xl mt-10 mb-10">Comment vas-tu aujourd’hui ?</Text>
           <View style={styles.dateContainer}>

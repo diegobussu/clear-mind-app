@@ -220,7 +220,7 @@ const Activity = ({ route }) => {
         </View>
         <View {...panResponder.panHandlers}>
           <Text className="font-Qs-Medium text-[22px] text-center mb-5 mt-5">Quoi de neuf ?</Text>
-          <Text className="font-Qs-Regular text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
+          <Text className="font-Qs-Medium text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
           <View style={styles.iconGrid}>
             {renderIconGrid()}
           </View>

@@ -241,7 +241,10 @@ const Activity = ({ route }) => {
             ]}
           />
         </View>
-        <Button text="Continuer" onPress={continueHandler} />
+
+        <View className="mb-10">
+          <Button text="Continuer" onPress={continueHandler} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -275,7 +278,7 @@ const styles = StyleSheet.create({
   iconName: {
     textAlign: 'center',
     marginTop: 5,
-    fontFamily: 'SF-Regular',
+    fontFamily: 'Qs-Regular',
     fontSize: 13,
     color: '#6331FF'
   },

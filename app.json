@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "clear-mind-app",
-    "slug": "clear-mind-app",
+    "name": "Clear Mind",
+    "slug": "Clear Mind",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/img/icon.png",
