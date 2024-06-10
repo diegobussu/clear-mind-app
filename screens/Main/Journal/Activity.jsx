@@ -213,8 +213,8 @@ const Activity = ({ route }) => {
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.rectangle}>
-          <Image source={selectedImage} style={styles.image} resizeMode="contain" />
+        <View className="bg-[#EEEDFF] py-5 px-[50px] items-center rounded-[30px]">
+          <Image source={selectedImage} className="w-[70px] h-[70px]" resizeMode="contain" />
           <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
           <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
         </View>
@@ -248,18 +248,6 @@ const Activity = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  rectangle: {
-    backgroundColor: '#FFF',
-    borderRadius: 30,
-    paddingVertical: 30,
-    paddingHorizontal: 50,
-    alignItems: 'center'
-  },
-  image: {
-    width: 70,
-    height: 70,
-    marginBottom: 20
-  },
   iconGrid: {
     marginTop: 20,
     flexDirection: 'column',

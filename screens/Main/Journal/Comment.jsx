@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, Image, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -53,17 +53,18 @@ const Comment = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View style={styles.rectangle}>
-        <Image source={selectedImage} style={styles.image} resizeMode="contain" />
+      <View className="bg-[#EEEDFF] py-5 px-[50px] items-center rounded-[30px]">
+        <Image source={selectedImage} className="w-[70px] h-[70px]" resizeMode="contain" />
         <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
         <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
       </View>
       <Text className="font-Qs-Medium text-2xl mt-5">Note</Text>
-      <View className="w-[350px] h-[200px] bg-primary-white rounded-[30px] mt-5 mb-10">
+      <View className="w-[350px] h-[200px] bg-[#EEEDFF] rounded-[30px] mt-5 mb-10">
         <TextInput
-          className="font-Qs-Regular text-lg text-[#828282] top-5 left-5 w-screen"
+          className="font-Qs-Regular text-lg top-5 left-5 w-screen"
           placeholder="Ajouter une note..."
           onChangeText={setNote}
+          placeholderTextColor={"#000"}
           value={note}
         />
       </View>
@@ -71,20 +72,6 @@ const Comment = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  rectangle: {
-    backgroundColor: '#FFF',
-    borderRadius: 30,
-    paddingVertical: 30,
-    paddingHorizontal: 50,
-    alignItems: 'center'
-  },
-  image: {
-    width: 70,
-    height: 70
-  }
-});
 
 export default Comment;
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, PanResponder } from 'react-native';
+import { View, Text, Image, StyleSheet, Alert, TouchableOpacity, PanResponder, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../../components/Button';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -239,52 +239,42 @@ const Emotion = ({ route }) => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center text-center px-5 bg-secondary-white">
-      <View style={styles.rectangle} className="mt-5">
-        <Image source={selectedImage} style={styles.image} resizeMode="contain" />
-        <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
-        <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
-      </View>
-      <View {...panResponder.panHandlers}>
-        <Text className="font-Qs-Medium text-[22px] text-center mb-5 mt-5">Comment te sens-tu ?</Text>
-        <Text className="font-Qs-Regular text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
-        <View style={styles.iconGrid}>
-          {renderIconGrid()}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className="bg-[#EEEDFF] py-5 px-[50px] items-center rounded-[30px]">
+          <Image source={selectedImage} className="w-[70px] h-[70px]" resizeMode="contain" />
+          <Text className="font-Qs-Medium text-xl mt-3">Aujourd'hui, je me sens</Text>
+          <Text className="font-Qs-Bold text-xl mt-3">{mood}</Text>
         </View>
-      </View>
-      <View className="flex-row mt-3">
-        <TouchableOpacity
-          onPress={() => handlePointPress(0)}
-          style={[
-            styles.point,
-            { backgroundColor: currentIndex === 0 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
-          ]}
-        />
-        <TouchableOpacity
-          onPress={() => handlePointPress(1)}
-          style={[
-            styles.point,
-            { backgroundColor: currentIndex === 1 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
-          ]}
-        />
-      </View>
-      <Button text="Continuer" onPress={continueHandler} />
+        <View {...panResponder.panHandlers}>
+          <Text className="font-Qs-Medium text-[22px] text-center mb-5 mt-5">Comment te sens-tu ?</Text>
+          <Text className="font-Qs-Regular text-primary-grey text-2lg text-center">Plusieurs sélections possibles</Text>
+          <View style={styles.iconGrid}>
+            {renderIconGrid()}
+          </View>
+        </View>
+        <View className="flex-row mt-3 justify-center">
+          <TouchableOpacity
+            onPress={() => handlePointPress(0)}
+            style={[
+              styles.point,
+              { backgroundColor: currentIndex === 0 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
+            ]}
+          />
+          <TouchableOpacity
+            onPress={() => handlePointPress(1)}
+            style={[
+              styles.point,
+              { backgroundColor: currentIndex === 1 ? '#6F26FF' : 'rgba(86, 0, 255, 0.17)' }
+            ]}
+          />
+        </View>
+        <Button text="Continuer" onPress={continueHandler} />
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  rectangle: {
-    backgroundColor: '#FFF',
-    borderRadius: 30,
-    paddingVertical: 30,
-    paddingHorizontal: 50,
-    alignItems: 'center'
-  },
-  image: {
-    width: 70,
-    height: 70,
-    marginBottom: 20
-  },
   iconGrid: {
     marginTop: 20,
     width: 300,

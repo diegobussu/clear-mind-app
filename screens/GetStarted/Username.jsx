@@ -59,7 +59,7 @@ const Username = () => {
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center px-5 bg-secondary-white">
-      <View className="items-center justify-center mb-[110px]">
+      <View className="items-center justify-center mb-[160px]">
         <Image
           source={images[0]}
           className="w-[330px] h-[280px] mb-5"
@@ -71,7 +71,7 @@ const Username = () => {
           placeholderTextColor="#6331FF"
           onChangeText={text => setUserName(text)}
           value={userName}
-          className="text-center text-primary-purple bg-[#F2EDFF] p-3 mb-[120px] w-[250px] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple"
+          className="text-center text-primary-purple bg-[#F2EDFF] p-3 mb-[50px] w-[250px] font-Qs-Regular text-[16px] rounded-[15px] border border-primary-purple"
         />
         <ButtonWhite text="Continuer" onPress={handleStart} />
       </View>
