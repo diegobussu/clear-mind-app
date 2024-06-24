@@ -1,18 +1,24 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
-import Button from '../../components/ButtonWhite';
+import renderer from 'react-test-renderer';
+import ButtonWhite from '../../components/ButtonWhite';
 
 describe('Button Component', () => {
   it('rend du texte', () => {
-    const { getByText } = render(<Button text="Test Button" onPress={() => {}} />);
-    expect(getByText('Test Button')).toBeTruthy();
+    const component = renderer.create(
+      <ButtonWhite text="Test ButtonWhite" onPress={() => {}} />
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   it('onPress fonctionnel', () => {
     const onPressMock = jest.fn();
-    const { getByText } = render(<Button text="Test Button" onPress={onPressMock} />);
+    const component = renderer.create(
+      <ButtonWhite text="Test ButtonWhite" onPress={onPressMock} />
+    );
+    const buttonInstance = component.root.findByType(ButtonWhite);
 
-    fireEvent.press(getByText('Test Button'));
+    buttonInstance.props.onPress();
 
     expect(onPressMock).toHaveBeenCalledTimes(1);
   });

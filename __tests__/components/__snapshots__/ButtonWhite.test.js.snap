@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Component rend du texte 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#fff",
+      "borderBottomColor": "#B08FFF",
+      "borderBottomLeftRadius": 9999,
+      "borderBottomRightRadius": 9999,
+      "borderBottomWidth": 1,
+      "borderLeftColor": "#B08FFF",
+      "borderLeftWidth": 1,
+      "borderRightColor": "#B08FFF",
+      "borderRightWidth": 1,
+      "borderTopColor": "#B08FFF",
+      "borderTopLeftRadius": 9999,
+      "borderTopRightRadius": 9999,
+      "borderTopWidth": 1,
+      "display": "flex",
+      "justifyContent": "center",
+      "marginLeft": "auto",
+      "marginRight": "auto",
+      "marginTop": 12,
+      "opacity": 1,
+      "paddingBottom": 8,
+      "paddingTop": 8,
+      "shadowColor": "rgba(0, 0, 0, 0.1)",
+      "shadowOffset": {
+        "height": 2,
+        "width": 0,
+      },
+      "shadowOpacity": 1,
+      "shadowRadius": 6,
+      "width": 192,
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#B08FFF",
+        },
+        {
+          "fontFamily": "Qs-SemiBold",
+        },
+        {
+          "fontSize": 18,
+          "lineHeight": 28,
+        },
+      ]
+    }
+  >
+    Test ButtonWhite
+  </Text>
+</View>
+`;
