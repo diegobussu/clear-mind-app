@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import ButtonWhite from '../../components/ButtonWhite';
 
 describe('Button Component', () => {
-  it('rend du texte', () => {
+  it('rendu du texte', () => {
     const component = renderer.create(
       <ButtonWhite text="Test ButtonWhite" onPress={() => {}} />
     );

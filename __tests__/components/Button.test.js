@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import Button from '../../components/Button';
 
 describe('Button Component', () => {
-  it('rend du texte', () => {
+  it('rendu du texte', () => {
     const component = renderer.create(
       <Button text="Test Button" onPress={() => {}} />
     );

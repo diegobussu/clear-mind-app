@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button Component rend du texte 1`] = `
+exports[`Button Component rendu du texte 1`] = `
 <View
   accessibilityState={
     {

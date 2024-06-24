@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
   },
   loadingImage: {
     flex: 1,
-    width: Dimensions.get('window').width, // Utilise toute la largeur de l'écran
-    height: Dimensions.get('window').height, // Utilise toute la hauteur de l'écran
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });
 
